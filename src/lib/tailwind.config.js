@@ -2,7 +2,7 @@ const colors = require("tailwindcss/colors");
 const config = {
   content: [
     "./src/**/*.{html,js,svelte,ts}",
-    "./node_modules/grid-uikit/src/**/*.{html,js,svelte,ts}"
+    "./node_modules/grid-uikit/src/**/*.{html,js,svelte,ts}",
   ],
   darkMode: "class",
   theme: {

@@ -24,8 +24,6 @@
       oldTarget = target = $checked;
     }
   }
-
-  // }
 </script>
 
 <label
