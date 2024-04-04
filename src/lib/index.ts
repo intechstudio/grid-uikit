@@ -1,6 +1,7 @@
 export { default as BlockBody } from "./BlockBody.svelte";
 export { default as BlockTitle } from "./BlockTitle.svelte";
 export { default as BlockRow } from "./BlockRow.svelte";
+export { default as BlockColumn } from "./BlockColumn.svelte";
 export { default as Block } from "./Block.svelte";
 export { default as MeltCheckbox } from "./MeltCheckbox.svelte";
 export { default as MeltRadio } from "./MeltRadio.svelte";
