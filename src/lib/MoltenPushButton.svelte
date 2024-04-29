@@ -1,9 +1,4 @@
 <script lang="ts">
-  const dispatch = (name: string, payload?: any) => {
-    const event = new Event(name, payload);
-    dispatchEvent(event);
-  };
-
   type StyleMap = {
     [key: string]: {
       enabled: string;
@@ -37,26 +32,23 @@
   export let popup: { duration?: number } | undefined = undefined;
   export let ratio = "normal";
   export let snap = "auto";
+  export let click: (...args: any) => void;
 
-  let button: HTMLElement;
   let showPopup: boolean = false;
-
-  function handleClick(e: any) {
-    if (!showPopup) {
-      showPopup = true;
-      setTimeout(() => {
-        showPopup = false;
-      }, popup?.duration ?? 3000);
-    }
-    dispatch("click");
-  }
 </script>
 
 <container class="relative" class:w-full={snap === "full"}>
   <button
-    bind:this={button}
     class:selected
-    on:click={handleClick}
+    on:click={() => {
+      if (!showPopup) {
+        showPopup = true;
+        setTimeout(() => {
+          showPopup = false;
+        }, popup?.duration ?? 3000);
+      }
+      click();
+    }}
     {disabled}
     class="{disabled
       ? styleMap[style].disabled
