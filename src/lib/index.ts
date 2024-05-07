@@ -9,3 +9,5 @@ export { default as MeltSlider } from "./MeltSlider.svelte";
 export { default as MeltSelect } from "./MeltSelect.svelte";
 export { default as MoltenButton } from "./MoltenButton.svelte";
 export { default as MoltenInput } from "./MoltenInput.svelte";
+export { default as MoltenTooltip } from "./MoltenTooltip.svelte";
+export { default as MoltenPushButton } from "./MoltenPushButton.svelte";
