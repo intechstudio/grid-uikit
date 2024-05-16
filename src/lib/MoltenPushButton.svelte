@@ -47,6 +47,11 @@
           showPopup = false;
         }, popup?.duration ?? 3000);
       }
+
+      if (typeof click === "undefined") {
+        return;
+      }
+
       click();
     }}
     {disabled}
