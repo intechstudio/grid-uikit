@@ -185,7 +185,7 @@
             <MoltenPushButton
               text={button.label}
               snap={"full"}
-              on:click={() => {
+              click={() => {
                 if (typeof button.handler !== "undefined") {
                   button.handler();
                 }
