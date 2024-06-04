@@ -144,7 +144,7 @@
 </script>
 
 <Popover
-  bind:isOpen={showTooltip}
+  bind:isOpen={showTooltip || true}
   triggerEvents={["manual"]}
   {referenceElement}
   bind:placement
