@@ -1,9 +1,9 @@
-name: Version Increment2
+name: Version Increment
 
 on:
   push:
     branches:
-      - feat/Increment
+      - main
 
 jobs:
   version:
