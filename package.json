@@ -2,13 +2,13 @@
   "name": "@intechstudio/grid-uikit",
   "version": "0.0.12",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build && npm run package",
+    "dev": "vite",
+    "build": "vite build",
     "preview": "vite preview",
-    "package": "svelte-kit sync && svelte-package && publint",
+    "prepareCss": "postcss --dir ./dist --config ./postcss.config.js ./dist/*.css && postcss src/app.css -o dist/app.css",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "package": "svelte-package && publint",
     "prepublishOnly": "npm run package",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check .",
     "format": "prettier --write ."
   },
@@ -25,25 +25,23 @@
   ],
   "dependencies": {
     "@melt-ui/svelte": "^0.42.0",
-    "svelte-easy-popover": "^1.0.0",
-    "tailwindcss": "^3.1.8"
-  },
-  "peerDependencies": {
-    "svelte": "^4.0.0"
+    "svelte": "^4.2.12",
+    "svelte-easy-popover": "^1.0.0"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^3.0.0",
-    "@sveltejs/kit": "^2.0.0",
     "@sveltejs/package": "^2.0.0",
-    "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@tsconfig/svelte": "^5.0.2",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
     "prettier": "^3.1.1",
     "prettier-plugin-svelte": "^3.1.2",
     "publint": "^0.1.9",
-    "svelte": "^4.2.7",
-    "svelte-check": "^3.6.0",
-    "tslib": "^2.4.1",
-    "typescript": "^5.0.0",
-    "vite": "^5.0.11"
+    "svelte-check": "^3.6.7",
+    "tailwindcss": "^3.4.4",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
   },
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
