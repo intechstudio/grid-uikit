@@ -40,7 +40,8 @@ jobs:
         with:
           node-version: "18.16.1"
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm publish
+      - run: npm version $(date +1.%Y%m%d.%-H%M) --no-git-tag-version
+      - run: npm ci      
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
