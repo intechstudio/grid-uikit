@@ -1,6 +1,6 @@
 {
   "name": "@intechstudio/grid-uikit",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -24,6 +24,7 @@
     "!dist/**/*.spec.*"
   ],
   "dependencies": {
+    "@intechstudio/grid-protocol": "^1.20240715.801",
     "@melt-ui/svelte": "^0.42.0",
     "svelte": "^4.2.12",
     "svelte-easy-popover": "^1.0.0"
