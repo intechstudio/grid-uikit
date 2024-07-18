@@ -1,6 +1,5 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import { GridScript } from "@intechstudio/grid-protocol";
 
     const dispatch = createEventDispatcher();
   
@@ -21,9 +20,9 @@
     let focus : any;
   
     function handleValueChange(value : any) {
-      const newValue = GridScript.humanize(String(value));
-      if (newValue !== displayText) {
-        displayText = newValue;
+      //const newValue = GridScript.humanize(String(value));
+      if (value !== displayText) {
+        displayText = value;
       }
       infoValue = suggestions.find(
         (s) => String(s.value).trim() == String(value).trim()
@@ -44,7 +43,7 @@
     }
   
     function sendData(value : any) {
-      dispatch("change", GridScript.shortify(value));
+      dispatch("change", value);
     }
   
     function handleFocus(e : any) {

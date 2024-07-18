@@ -24,7 +24,6 @@
     "!dist/**/*.spec.*"
   ],
   "dependencies": {
-    "@intechstudio/grid-protocol": "^1.20240715.801",
     "@melt-ui/svelte": "^0.42.0",
     "svelte": "^4.2.12",
     "svelte-easy-popover": "^1.0.0"
