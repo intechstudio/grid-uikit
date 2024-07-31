@@ -7,7 +7,8 @@
     "preview": "vite preview",
     "prepareCss": "postcss --dir ./dist --config ./postcss.config.js ./dist/*.css && postcss src/app.css -o dist/app.css",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "package": "svelte-package && publint",
+    "copy-files": "copyfiles -u 1 src/assets/**/* dist",
+    "package": "svelte-package && publint && npm run copy-files",
     "prepublishOnly": "npm run package",
     "lint": "prettier --check .",
     "format": "prettier --write ."
@@ -33,6 +34,7 @@
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "@tsconfig/svelte": "^5.0.2",
     "autoprefixer": "^10.4.19",
+    "copyfiles": "^2.4.1",
     "postcss": "^8.4.38",
     "prettier": "^3.1.1",
     "prettier-plugin-svelte": "^3.1.2",
