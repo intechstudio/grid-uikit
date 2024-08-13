@@ -88,7 +88,7 @@
         {isError
       ? 'border-error focus:outline-error'
       : 'focus:border-select border-secondary'} bg-secondary text-white py-0.5 pl-2 rounded-none"
-    class:text-opacity-75={disabled}
+    class:text-opacity-50={disabled}
   />
 
   <div class=" py-1">
