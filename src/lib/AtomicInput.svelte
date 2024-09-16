@@ -3,9 +3,8 @@
 
   const dispatch = createEventDispatcher();
 
-  export let inputValue = "";
+  export let value = "";
   export let suggestions: { value: string; info: string }[] = [];
-  export let customClasses = "";
   export let placeholder = "";
   export let suggestionTarget: Element | undefined = undefined;
   export let validator = (text: string) => {
@@ -19,34 +18,23 @@
 
   let focus: any;
 
-  function handleValueChange(value: any) {
-    //const newValue = GridScript.humanize(String(value));
-    if (value !== displayText) {
-      displayText = value;
-    }
+  $: handleValueChange(value);
+
+  function handleValueChange(value: string) {
     infoValue =
       suggestions.find((s) => String(s.value).trim() == String(value).trim())
         ?.info ?? "";
 
     isError = !validator(displayText);
     dispatch("validator", { isError: isError });
-  }
-
-  $: {
-    handleValueChange(inputValue);
-  }
-
-  function handleBlur(e) {
-    if (inputValue !== displayText) {
-      sendData(displayText);
-    }
-  }
-
-  function sendData(value: any) {
     dispatch("change", value);
   }
 
-  function handleFocus(e: any) {
+  function handleBlur() {
+    dispatch("blur");
+  }
+
+  function handleFocus() {
     dispatch("focus");
     updateSuggestions();
   }
@@ -65,9 +53,7 @@
   }
 
   function handleSuggestionSelected(e: any) {
-    const { value } = e.detail;
-    displayText = value;
-    sendData(displayText);
+    value = e.detail.value;
   }
 
   let inputComponent;
@@ -77,13 +63,13 @@
   <input
     bind:this={inputComponent}
     {disabled}
-    bind:value={displayText}
+    bind:value
     on:focus={handleFocus}
     on:blur={handleBlur}
     on:suggestion-select={handleSuggestionSelected}
     type="text"
     {placeholder}
-    class="{customClasses} w-full border
+    class="w-full border
         focus:neumorph focus:rounded-lg
         {isError
       ? 'border-error focus:outline-error'
