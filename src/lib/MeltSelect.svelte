@@ -1,10 +1,9 @@
 <script lang="ts">
   import { createSelect, melt } from "@melt-ui/svelte";
-  import { Writable } from "svelte/store";
   export let options: SelectOption[];
   export let target: any;
   export let size: "auto" | "full" = "auto";
-  export let disabled: Writable<boolean>;
+  export let disabled: any;
 
   type SelectOption = { title: string; value: any };
 
