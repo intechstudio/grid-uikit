@@ -1,8 +1,10 @@
 <script lang="ts">
   import { createSelect, melt } from "@melt-ui/svelte";
+  import { Writable } from "svelte/store";
   export let options: SelectOption[];
   export let target: any;
   export let size: "auto" | "full" = "auto";
+  export let disabled: Writable<boolean>;
 
   type SelectOption = { title: string; value: any };
 
@@ -16,6 +18,7 @@
     states: { selected, selectedLabel, open },
     helpers: { isSelected },
   } = createSelect({
+    disabled: disabled,
     forceVisible: true,
     positioning: {
       placement: "bottom",
