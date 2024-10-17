@@ -48,7 +48,7 @@
       {#each items as item}
         {@const disabled = item.isDisabled ? item.isDisabled() : false}
         <button
-          class="text-white flex flex-row gap-2 {disabled
+          class="text-white text-xs flex flex-row gap-2 {disabled
             ? ''
             : 'hover:bg-white/40 hover:text-white'} items-center whitespace-nowrap w-full px-2 py-2 text-left cursor-default"
           class:opacity-75={!disabled}
