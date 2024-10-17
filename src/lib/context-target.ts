@@ -1,29 +1,19 @@
 import type { Action } from "svelte/action";
 import ContextMenu, { type ContextMenuItem } from "./ContextMenu.svelte";
-import { type Writable, writable, get } from "svelte/store";
 
 interface ContextMenuOptions {
   items: ContextMenuItem[];
   data: any;
 }
 
-export let contextMenu = create_context_menu();
-function create_context_menu() {
-  const store: Writable<{ component: HTMLElement; data?: any } | undefined> =
-    writable();
+// Store the currently open context menu instance
+let currentContextMenu: ContextMenu | null = null;
 
-  const close = () => {
-    const data = get(store);
-    if (typeof data === "undefined") {
-      return;
-    }
-    data!.component.parentNode?.removeChild(data!.component);
-    contextMenu.set(undefined);
-  };
-  return {
-    ...store,
-    close: close,
-  };
+export function destroyContextMenu() {
+  if (currentContextMenu) {
+    currentContextMenu.$destroy();
+    currentContextMenu = null;
+  }
 }
 
 export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
@@ -32,23 +22,21 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
 ): any => {
   const handleMouseUp = (e: MouseEvent) => {
     if (e.button === 2) {
-      createContextMenu(e.offsetX, e.offsetY);
+      createContextMenu(e.clientX, e.clientY);
     }
     e.stopPropagation();
   };
 
   const createContextMenu = async (x: number, y: number) => {
-    contextMenu.close();
-    const menu = document.createElement("div");
-    document.body.appendChild(menu);
-    contextMenu.set({ component: menu, data: options.data });
+    // If a context menu is already open, destroy it
+    destroyContextMenu();
 
-    new ContextMenu({
-      target: menu,
+    currentContextMenu = new ContextMenu({
+      target: node,
       props: {
         target: node,
         items: options.items,
-        offset: { x: x, y: y },
+        coord: { x: x, y: y },
       },
     });
   };
@@ -58,6 +46,8 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
   return {
     destroy() {
       node.removeEventListener("mouseup", handleMouseUp);
+      // Clean up the current context menu if the node is destroyed
+      destroyContextMenu();
     },
   };
 };
