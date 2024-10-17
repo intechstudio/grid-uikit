@@ -11,7 +11,7 @@
 <script lang="ts">
   import Popover from "svelte-easy-popover/dist/ts/Popover.svelte";
   import { onMount } from "svelte";
-  import { destroyContextMenu } from "./context-target";
+  import { contextMenu } from "./context-target";
   export let target: HTMLElement;
   export let items: ContextMenuItem[] = [];
   export let coord: { x: number; y: number };
@@ -22,15 +22,15 @@
 
   function handleItemClicked(item: ContextMenuItem) {
     item.handler();
-    destroyContextMenu();
+    contextMenu.close();
   }
 
   function handleBlur() {
-    destroyContextMenu();
+    contextMenu.close();
   }
 
   function handleClickOutside() {
-    destroyContextMenu();
+    contextMenu.close();
   }
 
   let offset = { x: 0, y: 0 };

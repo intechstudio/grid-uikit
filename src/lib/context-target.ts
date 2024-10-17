@@ -1,19 +1,33 @@
 import type { Action } from "svelte/action";
 import ContextMenu, { type ContextMenuItem } from "./ContextMenu.svelte";
+import { get, writable, type Writable } from "svelte/store";
 
 interface ContextMenuOptions {
   items: ContextMenuItem[];
   data: any;
 }
 
-// Store the currently open context menu instance
-let currentContextMenu: ContextMenu | null = null;
+interface ContextMenuWritable extends Writable<ContextMenu | null> {
+  close: () => void;
+}
 
-export function destroyContextMenu() {
-  if (currentContextMenu) {
-    currentContextMenu.$destroy();
-    currentContextMenu = null;
-  }
+export let contextMenu: ContextMenuWritable = createContextMenuStore();
+
+function createContextMenuStore(): ContextMenuWritable {
+  const store: Writable<ContextMenu | null> = writable(null);
+
+  const close = () => {
+    const cm = get(store);
+    if (cm) {
+      cm.$destroy(); // Ensure that the context menu has a $destroy method
+      store.set(null);
+    }
+  };
+
+  return {
+    ...store,
+    close,
+  };
 }
 
 export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
@@ -29,16 +43,18 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
 
   const createContextMenu = async (x: number, y: number) => {
     // If a context menu is already open, destroy it
-    destroyContextMenu();
+    contextMenu.close();
 
-    currentContextMenu = new ContextMenu({
-      target: node,
-      props: {
+    contextMenu.set(
+      new ContextMenu({
         target: node,
-        items: options.items,
-        coord: { x: x, y: y },
-      },
-    });
+        props: {
+          target: node,
+          items: options.items,
+          coord: { x: x, y: y },
+        },
+      }),
+    );
   };
 
   node.addEventListener("mouseup", (event) => handleMouseUp(event));
@@ -47,7 +63,7 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
     destroy() {
       node.removeEventListener("mouseup", handleMouseUp);
       // Clean up the current context menu if the node is destroyed
-      destroyContextMenu();
+      contextMenu.close();
     },
   };
 };
