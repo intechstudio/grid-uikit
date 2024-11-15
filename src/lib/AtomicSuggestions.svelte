@@ -13,10 +13,6 @@
       suggestions = data;
     }
   
-    function handleClickOutside(e : any) {
-      suggestions = [];
-    }
-  
     function handleSuggestionSelected(value : any) {
       const event = new CustomEvent("suggestion-select", {
         detail: {
@@ -33,8 +29,6 @@
     class:hidden={suggestions.length === 0}
     bind:this={component}
     on:display={handleDisplay}
-    use:clickOutside={{ useCapture: false }}
-    on:click-outside={handleClickOutside}
   >
     <div class="w-full p-1 neumorph rounded-lg border border-select bg-secondary">
       <ul

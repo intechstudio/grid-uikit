@@ -36,10 +36,19 @@
     handleValueChange(inputValue);
   }
 
+  $: displayText, suggestions, filterSuggestions();
+
+  function filterSuggestions(){
+    let searchTerm = displayText.toLowerCase();
+    let filteredSuggestions = suggestions.filter((e) => e.info.toLowerCase().includes(searchTerm) || e.value.toLowerCase().includes(searchTerm));
+    updateSuggestions(filteredSuggestions);
+  }
+
   function handleBlur(e) {
     if (inputValue !== displayText) {
       sendData(displayText);
     }
+    updateSuggestions([]);
   }
 
   function sendData(value: any) {
@@ -48,10 +57,10 @@
 
   function handleFocus(e: any) {
     dispatch("focus");
-    updateSuggestions();
+    updateSuggestions(suggestions);
   }
 
-  function updateSuggestions() {
+  function updateSuggestions(suggestions) {
     if (typeof suggestionTarget !== "undefined") {
       const event = new CustomEvent("display", {
         detail: {
