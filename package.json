@@ -25,8 +25,7 @@
     "!dist/**/*.spec.*"
   ],
   "dependencies": {
-    "@melt-ui/pp": "^0.3.2",
-    "@melt-ui/svelte": "^0.84.0",
+    "@melt-ui/svelte": "^0.42.0",
     "svelte": "^4.2.12",
     "svelte-easy-popover": "^1.0.0"
   },
