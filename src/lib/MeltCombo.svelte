@@ -6,7 +6,7 @@
     type ComboboxOptionProps,
   } from "@melt-ui/svelte";
 
-  export let value: any;
+  export let value: string;
   export let size: "auto" | "full" = "auto";
   export let suggestions: Array<MeltComboOption> = [];
   export let placeholder = "";
@@ -22,7 +22,7 @@
   };
   export let title = "";
 
-  type MeltComboOption = { info: string; value: any };
+  type MeltComboOption = { info: string; value: string };
 
   const toOption = (
     option: MeltComboOption,
@@ -36,7 +36,7 @@
   let isError = false;
   let infoValue = "";
 
-  let oldValue: any = undefined;
+  let oldValue: string | undefined = undefined;
 
   const {
     elements: { menu, input, option, label },
@@ -48,7 +48,7 @@
 
   $: handleValueChange(value);
   $: handleSelectionChange($selected?.value);
-  $: handleInputChange($inputValue);
+  $: handleInputChange($inputValue.value);
 
   function handleValueChange(value: any) {
     if ($inputValue === value || !value) {
@@ -71,7 +71,7 @@
     infoValue =
       suggestions.find((s) => String(s.value).trim() == String(input).trim())
         ?.info || "";
-    isError = !validator($inputValue);
+    isError = !validator($inputValue.value);
 
     if (oldValue === undefined) {
       oldValue = value;
@@ -90,7 +90,7 @@
   function handleChange() {
     if (oldValue !== undefined && oldValue !== value) {
       oldValue = undefined;
-      dispatch("change", postProcessor($inputValue));
+      dispatch("change", postProcessor($inputValue.value));
     }
   }
 </script>
@@ -123,7 +123,7 @@
           {...$option(toOption(suggestion))}
           use:option
           class="cursor-pointer truncate hover:bg-white/40 p-2 hover:text-white {$isSelected(
-            suggestion.value,
+            suggestion,
           )
             ? 'bg-white/10'
             : ' '}"
