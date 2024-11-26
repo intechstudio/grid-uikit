@@ -47,7 +47,7 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
 
     contextMenu.set(
       new ContextMenu({
-        target: node,
+        target: document.body,
         props: {
           target: node,
           items: options.items,
