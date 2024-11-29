@@ -52,7 +52,7 @@
 <div
   {...$root}
   use:root
-  class="text-white overflow-auto
+  class="text-white overflow-visible
     {size == 'full' && orientation == 'horizontal' ? 'w-full' : ''}
     {orientation === 'vertical'
     ? 'grid grid-flow-row my-2 gap-4'
