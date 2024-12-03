@@ -13,10 +13,6 @@
       suggestions = data;
     }
   
-    function handleClickOutside(e : any) {
-      suggestions = [];
-    }
-  
     function handleSuggestionSelected(value : any) {
       const event = new CustomEvent("suggestion-select", {
         detail: {
@@ -33,8 +29,6 @@
     class:hidden={suggestions.length === 0}
     bind:this={component}
     on:display={handleDisplay}
-    use:clickOutside={{ useCapture: false }}
-    on:click-outside={handleClickOutside}
   >
     <div class="w-full p-1 neumorph rounded-lg border border-select bg-secondary">
       <ul
@@ -44,7 +38,7 @@
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
           <li
-            on:click={() => handleSuggestionSelected(suggestion.value)}
+            on:mousedown={() => handleSuggestionSelected(suggestion.value)}
             class="hover:bg-black p-1 pl-2"
           >
             {suggestion.info}
