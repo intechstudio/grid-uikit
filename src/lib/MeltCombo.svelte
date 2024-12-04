@@ -63,11 +63,15 @@
       return;
     }
 
-    handleInputChange(option.value);
+    handleInputChange(option.value, true);
     handleChange();
   }
 
-  function handleInputChange(input: string) {
+  function handleInputChange(input: string, selectionChange = false) {
+    if (!$open && !selectionChange) {
+      return;
+    }
+
     infoValue =
       suggestions.find((s) => String(s.value).trim() == String(input).trim())
         ?.info || "";
@@ -92,6 +96,10 @@
       oldValue = undefined;
       dispatch("change", postProcessor($inputValue.value));
     }
+  }
+
+  $: if (!$open) {
+    inputValue.set(value);
   }
 </script>
 
