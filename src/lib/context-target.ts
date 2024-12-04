@@ -7,20 +7,20 @@ interface ContextMenuOptions {
   data: any;
 }
 
-interface ContextMenuWritable extends Writable<ContextMenu | null> {
+interface ContextMenuWritable extends Writable<ContextMenu | undefined> {
   close: () => void;
 }
 
 export let contextMenu: ContextMenuWritable = createContextMenuStore();
 
 function createContextMenuStore(): ContextMenuWritable {
-  const store: Writable<ContextMenu | null> = writable(null);
+  const store: Writable<ContextMenu | undefined> = writable(undefined);
 
   const close = () => {
     const cm = get(store);
     if (cm) {
       cm.$destroy(); // Ensure that the context menu has a $destroy method
-      store.set(null);
+      store.set(undefined);
     }
   };
 
