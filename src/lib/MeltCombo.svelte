@@ -1,10 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import {
-    createCombobox,
-    melt,
-    type ComboboxOptionProps,
-  } from "@melt-ui/svelte";
+  import { createPopover, melt, createLabel } from "@melt-ui/svelte";
+  import { fade } from "svelte/transition";
+  import { writable, type Writable } from "svelte/store";
 
   export let value: string;
   export let size: "auto" | "full" = "auto";
@@ -24,38 +22,40 @@
 
   type MeltComboOption = { info: string; value: string };
 
-  const toOption = (
-    option: MeltComboOption,
-  ): ComboboxOptionProps<MeltComboOption> => ({
-    value: option,
-    label: option.info,
-  });
-
   const dispatch = createEventDispatcher();
 
   let isError = false;
   let infoValue = "";
 
   let oldValue: string | undefined = undefined;
+  let inputValue: string;
+  let selected: Writable<MeltComboOption> = writable();
 
   const {
-    elements: { menu, input, option, label },
-    states: { open, inputValue, selected },
-    helpers: { isSelected },
-  } = createCombobox<MeltComboOption>({
+    elements: { trigger, content, arrow, close },
+    states: { open },
+  } = createPopover({
     forceVisible: true,
+    positioning: {
+      placement: "bottom",
+    },
+    disableFocusTrap: true,
   });
 
+  const {
+    elements: { root },
+  } = createLabel();
+
   $: handleValueChange(value);
-  $: handleSelectionChange($selected?.value);
-  $: handleInputChange($inputValue.value);
+  $: handleSelectionChange($selected);
+  $: handleInputChange(inputValue);
 
   function handleValueChange(value: any) {
-    if ($inputValue === value || !value) {
+    if (inputValue === value || !value) {
       return;
     }
 
-    inputValue.set(preProcessor(value));
+    inputValue = preProcessor(value);
   }
 
   function handleSelectionChange(option: MeltComboOption | undefined) {
@@ -63,19 +63,15 @@
       return;
     }
 
-    handleInputChange(option.value, true);
+    handleInputChange(option.value);
     handleChange();
   }
 
-  function handleInputChange(input: string, selectionChange = false) {
-    if (!$open && !selectionChange) {
-      return;
-    }
-
+  function handleInputChange(input: string) {
     infoValue =
       suggestions.find((s) => String(s.value).trim() == String(input).trim())
         ?.info || "";
-    isError = !validator($inputValue.value);
+    isError = !validator(input);
 
     if (oldValue === undefined) {
       oldValue = value;
@@ -86,7 +82,7 @@
     }
 
     value = input;
-    inputValue.set(value);
+    inputValue = input;
     dispatch("validator", { isError });
     dispatch("input", postProcessor(input));
   }
@@ -94,27 +90,24 @@
   function handleChange() {
     if (oldValue !== undefined && oldValue !== value) {
       oldValue = undefined;
-      dispatch("change", postProcessor($inputValue.value));
+      dispatch("change", postProcessor(inputValue));
     }
-  }
-
-  $: if (!$open) {
-    inputValue.set(value);
   }
 </script>
 
 <div class="flex flex-col relative" class:flex-grow={size === "full"}>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label
-    use:melt={$label}
+    use:melt={$root}
     class="text-white text-sm pb-1 truncate items-center"
-    class:hidden={label.length === 0}
+    class:hidden={title.length === 0}
   >
     {title}
   </label>
   <input
     type="text"
-    use:melt={$input}
+    use:melt={$trigger}
+    bind:value={inputValue}
     on:change={handleChange}
     class="w-full flex flex-row border mb-1 {isError && !disabled
       ? 'border-error'
@@ -125,20 +118,21 @@
     {disabled}
   />
   {#if $open && !disabled && suggestions.length > 0}
-    <div {...$menu} use:menu class="menu">
-      {#each suggestions as suggestion}
-        <div
-          {...$option(toOption(suggestion))}
-          use:option
-          class="cursor-pointer truncate hover:bg-white/40 p-2 hover:text-white {$isSelected(
-            suggestion,
-          )
-            ? 'bg-white/10'
-            : ' '}"
-        >
-          {suggestion.info}
-        </div>
-      {/each}
+    <div
+      {...$content}
+      use:content
+      transition:fade={{ duration: 100 }}
+      class="menu"
+    >
+      <div>
+        {#each suggestions as suggestion}
+          <button
+            use:melt={$close}
+            class="cursor-pointer truncate hover:bg-white/40 flex w-full py-1 px-2 hover:text-white"
+            on:click={() => selected.set(suggestion)}>{suggestion.info}</button
+          >
+        {/each}
+      </div>
     </div>
   {/if}
 
@@ -149,7 +143,7 @@
 
 <style lang="postcss">
   .menu {
-    @apply bg-gray-900 text-white/80 border border-white/50 rounded z-40 max-h-32 overflow-y-auto;
+    @apply bg-gray-900 text-white/80 border border-white/50 rounded z-40 max-h-32 flex flex-col overflow-y-auto;
     @apply min-w-[8%] w-fit max-w-[13%] !important;
   }
 </style>
