@@ -24,9 +24,7 @@
     if (value !== displayText) {
       displayText = value;
     }
-    infoValue =
-      suggestions.find((s) => String(s.value).trim() == String(value).trim())
-        ?.info ?? "";
+    updateInfoValue();
 
     isError = !validator(displayText);
     dispatch("validator", { isError: isError });
@@ -71,6 +69,13 @@
 
       suggestionTarget.dispatchEvent(event);
     }
+    updateInfoValue();
+  }
+
+  function updateInfoValue(){
+    infoValue =
+      suggestions.find((s) => String(s.value).trim() == String(displayText).trim())
+        ?.info ?? "";
   }
 
   function handleSuggestionSelected(e: any) {
