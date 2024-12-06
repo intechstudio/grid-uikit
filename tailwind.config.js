@@ -1,4 +1,4 @@
-const colors = require("tailwindcss/colors");
+import * as colors from "tailwindcss/colors";
 const config = {
   content: [
     "./src/**/*.{html,js,svelte,ts}",

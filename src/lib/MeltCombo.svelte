@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { createPopover, melt, createLabel } from "@melt-ui/svelte";
+  import { createPopover, melt } from "@melt-ui/svelte";
   import { fade } from "svelte/transition";
   import { writable, type Writable } from "svelte/store";
 
@@ -42,9 +42,6 @@
     disableFocusTrap: true,
   });
 
-  const {
-    elements: { root },
-  } = createLabel();
 
   $: handleValueChange(value);
   $: handleSelectionChange($selected);
@@ -95,21 +92,21 @@
   }
 </script>
 
+
 <div class="flex flex-col relative" class:flex-grow={size === "full"}>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label
-    use:melt={$root}
     class="text-white text-sm pb-1 truncate items-center"
     class:hidden={title.length === 0}
   >
     {title}
-  </label>
+
   <input
     type="text"
     use:melt={$trigger}
     bind:value={inputValue}
     on:change={handleChange}
-    class="w-full flex flex-row border mb-1 {isError && !disabled
+    class="trigger w-full flex flex-row border mb-1 {isError && !disabled
       ? 'border-error'
       : 'border-black'} p-2 {disabled
       ? 'bg-black/20 text-white/40'
@@ -117,23 +114,24 @@
     {placeholder}
     {disabled}
   />
+</label>
   {#if $open && !disabled && suggestions.length > 0}
-    <div
+    <datalist 
       {...$content}
       use:content
       transition:fade={{ duration: 100 }}
       class="menu"
     >
-      <div>
+  <div>
         {#each suggestions as suggestion}
-          <button
+          <option
             use:melt={$close}
-            class="cursor-pointer truncate hover:bg-white/40 flex w-full py-1 px-2 hover:text-white"
-            on:click={() => selected.set(suggestion)}>{suggestion.info}</button
+            class="cursor-pointer truncate hover:bg-white/40 flex w-full px-2 py-1 hover:text-white"
+            on:click={() => selected.set(suggestion)}>{suggestion.info}</option
           >
         {/each}
       </div>
-    </div>
+</datalist>
   {/if}
 
   <div class="text-white/60 text-sm truncate">
@@ -145,5 +143,9 @@
   .menu {
     @apply bg-gray-900 text-white/80 border border-white/50 rounded z-40 max-h-32 flex flex-col overflow-y-auto;
     @apply min-w-[8%] w-fit max-w-[13%] !important;
+  }
+
+  .trigger {
+    @apply cursor-auto outline-none !important;
   }
 </style>
