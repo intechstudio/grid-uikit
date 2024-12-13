@@ -5,13 +5,16 @@
   import AtomicInput from "./lib/AtomicInput.svelte";
   import AtomicSuggestions from "./lib/AtomicSuggestions.svelte";
     import MoltenButton from "./lib/MoltenButton.svelte";
+    import MeltCombo from "./lib/MeltCombo.svelte";
 
   let t = false;
   let suggestionElement : any;
   let input1Value = "test1";
   let input2Value = "";
+  let input3Value = "";
   let suggestion1 = [{info: "Test 12", value: "test1"}, {info: "Test 2", value: "test2"}, {info: "ASD3", value: "asd3"}];
   let suggestion2 = [{info: "Test 2", value: "test2"}];
+  let suggestion3 = suggestion1;
 
   function switchSuggestions(){
     let tmp = suggestion1;
@@ -20,7 +23,7 @@
   }
 </script>
 
-<main class="p-20 bg-black text-white">
+<main class="p-20 bg-gray-400 text-white">
   <Block>
     <span class="text-white">yooo</span></Block
   >
@@ -46,4 +49,10 @@
   <MoltenButton
     title={"Press Me"}
     click={switchSuggestions} />
+
+  <MeltCombo
+    title={"Test Field"}
+    bind:value={input3Value}
+    suggestions={suggestion3}
+    />
 </main>

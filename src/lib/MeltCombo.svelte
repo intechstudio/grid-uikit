@@ -19,6 +19,7 @@
     return value;
   };
   export let title = "";
+  export let searchable = false;
 
   type MeltComboOption = { info: string; value: string };
 
@@ -30,6 +31,8 @@
   let oldValue: string | undefined = undefined;
   let inputValue: string;
   let selected: Writable<MeltComboOption> = writable();
+
+  let inputElement : any;
 
   const {
     elements: { trigger, content, arrow, close },
@@ -46,6 +49,10 @@
   $: handleValueChange(value);
   $: handleSelectionChange($selected);
   $: handleInputChange(inputValue);
+
+  $: filteredSuggestions = searchable ? suggestions.filter((e) => 
+    e.info.toLowerCase().includes(inputValue?.toLowerCase()) || e.value.toLowerCase().includes(inputValue?.toLowerCase())
+  ) : suggestions;
 
   function handleValueChange(value: any) {
     if (inputValue === value || !value) {
@@ -90,6 +97,13 @@
       dispatch("change", postProcessor(inputValue));
     }
   }
+
+  function handleFocus() {
+    filteredSuggestions = suggestions;
+    if (searchable){
+      inputElement.select();
+    }
+  }
 </script>
 
 
@@ -102,10 +116,12 @@
     {title}
 
   <input
+    bind:this={inputElement}
     type="text"
     use:melt={$trigger}
     bind:value={inputValue}
     on:change={handleChange}
+    on:focus={handleFocus}
     class="trigger w-full flex flex-row border mb-1 {isError && !disabled
       ? 'border-error'
       : 'border-black'} p-2 {disabled
@@ -123,7 +139,7 @@
       class="menu"
     >
   <div>
-        {#each suggestions as suggestion}
+        {#each filteredSuggestions as suggestion}
           <option
             use:melt={$close}
             class="cursor-pointer truncate hover:bg-white/40 flex w-full px-2 py-1 hover:text-white"
