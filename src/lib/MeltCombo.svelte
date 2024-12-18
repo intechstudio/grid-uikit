@@ -26,7 +26,6 @@
   const dispatch = createEventDispatcher();
 
   let isError = false;
-  let infoValue = "";
 
   let oldValue: string | undefined = undefined;
   let inputValue: string;
@@ -54,6 +53,10 @@
     e.info.toLowerCase().includes(inputValue?.toLowerCase()) || e.value.toLowerCase().includes(inputValue?.toLowerCase())
   ) : suggestions;
 
+  $: infoValue =
+      suggestions.find((s) => String(s.value).trim() == String(inputValue).trim())
+        ?.info || "";
+
   function handleValueChange(value: any) {
     if (inputValue === value || !value) {
       return;
@@ -72,9 +75,6 @@
   }
 
   function handleInputChange(input: string) {
-    infoValue =
-      suggestions.find((s) => String(s.value).trim() == String(input).trim())
-        ?.info || "";
     isError = !validator(input);
 
     if (oldValue === undefined) {
