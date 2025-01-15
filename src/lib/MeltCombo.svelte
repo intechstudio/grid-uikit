@@ -122,6 +122,7 @@
     bind:value={inputValue}
     on:change={handleChange}
     on:focus={handleFocus}
+    on:m-keydown={(e) => {e.preventDefault()}}
     class="trigger w-full flex flex-row border mb-1 {isError && !disabled
       ? 'border-error'
       : 'border-black'} p-2 {disabled
