@@ -1,8 +1,12 @@
 <script lang="ts">
   import { createCheckbox, melt } from "@melt-ui/svelte";
+  import { createEventDispatcher } from 'svelte'
 
   export let target;
   export let title;
+  export let style = "box";
+
+  const dispatch = createEventDispatcher()
 
   const {
     elements: { root, input },
@@ -22,12 +26,14 @@
 
     if (target !== $checked) {
       oldTarget = target = $checked;
+      dispatch('change', target);
     }
+    console.log("HELLOKA");
   }
 </script>
 
 <label
-  class="my-4 bg-black bg-opacity-10 border border-black border-opacity-20 group flex text-white items-center cursor-pointer p-2"
+  class="my-4 {style == "box" ? "bg-black bg-opacity-10 border border-black border-opacity-20" : ""} group flex text-white items-center cursor-pointer p-2"
 >
   <button {...$root} use:root class="">
     <div
@@ -43,11 +49,13 @@
     <input {...$input} use:input />
   </button>
 
-  <div
-    class="pl-2 text-white group-hover:text-opacity-100 {target
-      ? 'text-opacity-100'
-      : 'text-opacity-80'}"
-  >
-    {title}
-  </div>
+  {#if title}
+    <div
+      class="pl-2 text-white group-hover:text-opacity-100 {target
+        ? 'text-opacity-100'
+        : 'text-opacity-80'}"
+    >
+      {title}
+    </div>
+  {/if}
 </label>
