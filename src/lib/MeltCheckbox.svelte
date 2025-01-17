@@ -28,7 +28,6 @@
       oldTarget = target = $checked;
       dispatch('change', target);
     }
-    console.log("HELLOKA");
   }
 </script>
 
