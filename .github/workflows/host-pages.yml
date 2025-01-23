@@ -1,3 +1,5 @@
+name: Host Github Pages  
+  
   deploy-simulator:
     if: github.ref == 'refs/heads/main'
     needs: build
