@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: ./dist # Adjust this path to your build output folder
+          path: ./dist # Adjust this to the actual path of your build output folder
 
   deploy-simulator:
     if: github.ref == 'refs/heads/main'
