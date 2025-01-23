@@ -37,16 +37,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Pages
-        uses: actions/configure-pages@v4 # Updated to the latest version
+        uses: actions/configure-pages@v4 # Ensure this is the latest version
 
       - name: Download build artifact
         uses: actions/download-artifact@v4
 
       - name: Upload to GitHub Pages
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3 # Use the latest version
         with:
           path: ./build-output
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3 # Updated to the latest version
+        uses: actions/deploy-pages@v3 # Use the latest version
