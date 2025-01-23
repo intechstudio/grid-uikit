@@ -12,6 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug Action Versions
+        run: |
+          echo "Running actions/upload-artifact version: v4"
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -24,10 +28,10 @@ jobs:
         run: npm run build
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4 # Correct version
+        uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: ./dist # Replace with your actual build output path
+          path: ./dist # Adjust this to the actual path of your build output folder
 
   deploy-simulator:
     if: github.ref == 'refs/heads/main'
@@ -39,8 +43,12 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
+      - name: Debug Artifact Download Action
+        run: |
+          echo "Running actions/download-artifact version: v4"
+
       - name: Download build artifact
-        uses: actions/download-artifact@v4 # Correct version
+        uses: actions/download-artifact@v4
         with:
           name: build-output
 
