@@ -1,0 +1,28 @@
+deploy-simulator:
+  if: github.ref == 'refs/heads/main'
+  needs: build
+  environment:
+    name: github-pages
+    url: ${{ steps.deployment.outputs.page_url }}
+  runs-on: ubuntu-latest
+  steps:
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+    - name: Download reports' artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: download
+
+    - name: Collecting files
+      run: |
+        cd download
+        ls
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
+      with:
+        # Upload entire repository
+        path: "./download/grid-uikit/"
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
