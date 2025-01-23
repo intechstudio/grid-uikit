@@ -1,30 +1,54 @@
-name: Host Github Pages  
-  
+name: Host GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.16.1"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: ./dist # Adjust this path to your build output folder
+
   deploy-simulator:
     if: github.ref == 'refs/heads/main'
     needs: build
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v3
-      - name: Download reports' artifacts
+
+      - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
-          path: download
+          name: build-output
 
-      - name: Collecting files
-        run: |
-          cd download
-          ls
-
-      - name: Upload artifact
+      - name: Upload to GitHub Pages
         uses: actions/upload-pages-artifact@v2
         with:
-          # Upload entire repository
-          path: './download/grid-fw nightly/'
+          path: ./build-output # Path where the artifact was downloaded
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
