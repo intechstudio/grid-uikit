@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: read
+  pages: write # Add this to enable Pages deployment
+
 jobs:
   build:
     runs-on: ubuntu-latest
