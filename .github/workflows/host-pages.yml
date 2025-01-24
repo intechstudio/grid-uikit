@@ -6,9 +6,9 @@ on:
       - main
 
 permissions:
-  id-token: write
+  id-token: write # Required for OIDC token generation (needed for `deploy-pages`)
   contents: read
-  pages: write # Add this to enable Pages deployment
+  pages: write # Required for GitHub Pages deployment
 
 jobs:
   build:
@@ -29,7 +29,7 @@ jobs:
         run: npm run build
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4 # Updated to v4
         with:
           name: dist
           path: dist
@@ -41,8 +41,8 @@ jobs:
       name: github-pages
     runs-on: ubuntu-latest
     permissions:
-      pages: write # Ensure Pages-specific permission for this job
-      contents: read # Read permission for repo contents
+      id-token: write # Required for `deploy-pages`
+      pages: write
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -59,7 +59,7 @@ jobs:
           ls -R download
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v4 # Updated to v4
         with:
           path: download
 
