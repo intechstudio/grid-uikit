@@ -40,12 +40,18 @@ jobs:
       name: github-pages
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: dist
 
+      - name: Extract the artifact
+        run: unzip dist.zip -d dist # Explicitly extract the artifact
+
       - name: Deploy to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: dist # Ensure the extracted directory matches
