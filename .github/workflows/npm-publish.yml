@@ -6,7 +6,7 @@ name: Publish to NPM
 on:
   push:
     branches:
-      - main2
+      - main
 
 jobs:
   build:
