@@ -6,19 +6,19 @@ on:
       - main
 
 permissions:
-  id-token: write # Required for OIDC token generation (needed for `deploy-pages`)
+  id-token: write
   contents: read
-  pages: write # Required for GitHub Pages deployment
+  pages: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: "18.16.1"
 
@@ -29,7 +29,7 @@ jobs:
         run: npm run build
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3 # Updated to v4
+        uses: actions/upload-artifact@v3
         with:
           name: dist
           path: dist
@@ -41,14 +41,14 @@ jobs:
       name: github-pages
     runs-on: ubuntu-latest
     permissions:
-      id-token: write # Required for `deploy-pages`
+      id-token: write
       pages: write
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: dist
           path: download
@@ -65,4 +65,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v3
