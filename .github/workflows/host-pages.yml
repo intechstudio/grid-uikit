@@ -31,26 +31,21 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: ./dist # Replace with your actual build output directory
+          path: ./dist
 
-  deploy-simulator:
+  deploy:
     if: github.ref == 'refs/heads/main'
     needs: build
     environment:
       name: github-pages
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Pages
-        uses: actions/configure-pages@v4 # Ensure this is the latest version
-
       - name: Download build artifact
         uses: actions/download-artifact@v4
-
-      - name: Upload to GitHub Pages
-        uses: actions/upload-pages-artifact@v3 # Use the latest version
         with:
-          path: ./build-output
+          name: build-output
 
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v3 # Use the latest version
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build-output
