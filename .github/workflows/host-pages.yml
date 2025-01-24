@@ -27,31 +27,31 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist # Ensure the correct build directory is specified
-
-  deploy:
+ deploy:
     if: github.ref == 'refs/heads/main'
     needs: build
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download build artifact
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Download reports' artifacts
         uses: actions/download-artifact@v4
         with:
-          name: dist
+          path: dist
 
-      - name: Verify downloaded files (debugging)
-        run: ls -R dist # Debugging: List all files in the downloaded directory
+      - name: Collecting files
+        run: |
+          cd dist
+          ls
 
-      - name: Deploy to GitHub Pages
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist # Use the downloaded `dist` directory for deployment
+          # Upload entire repository
+          path: './download/dist/'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
