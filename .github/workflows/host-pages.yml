@@ -28,7 +28,7 @@ jobs:
         run: npm run build
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist
@@ -43,21 +43,23 @@ jobs:
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v3
-      - name: Download reports' artifacts
+
+      - name: Download build artifact
         uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: download
+
+      - name: Debug downloaded files
+        run: |
+          echo "Contents of the downloaded folder:"
+          ls -R download
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
         with:
           path: download
 
-      - name: Collecting files
-        run: |
-          cd download
-          ls
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          # Upload entire repository
-          path: "./download/dist/"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
