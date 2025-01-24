@@ -43,23 +43,21 @@ jobs:
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v3
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v3
+      - name: Download reports' artifacts
+        uses: actions/download-artifact@v4
         with:
-          name: build
-          path: dist
+          path: download
 
       - name: Collecting files
         run: |
-          cd dist
+          cd download
           ls
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          path: dist
-
+          # Upload entire repository
+          path: "./download/dist/"
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v2
