@@ -5,10 +5,6 @@ on:
     branches:
       - main
 
-permissions:
-  id-token: write
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,7 +23,13 @@ jobs:
       - name: Build project
         run: npm run build
 
- deploy:
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: dist
+
+  deploy:
     if: github.ref == 'refs/heads/main'
     needs: build
     environment:
@@ -37,9 +39,11 @@ jobs:
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v3
-      - name: Download reports' artifacts
-        uses: actions/download-artifact@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
         with:
+          name: build
           path: dist
 
       - name: Collecting files
@@ -47,11 +51,11 @@ jobs:
           cd dist
           ls
 
-      - name: Upload artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: './download/dist/'
+          path: dist
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v3
