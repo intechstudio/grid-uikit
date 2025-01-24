@@ -8,7 +8,7 @@
   export let step;
 
   const {
-    elements: { root, range, thumb },
+    elements: { root, range, thumbs },
     states: { value },
   } = createSlider({
     min: min,
@@ -42,8 +42,8 @@
     />
   </span>
   <span
-    {...$thumb()}
-    use:thumb
+    {...$thumbs[0]}
+    use:thumbs
     class="block h-5 w-5 rounded-full bg-neutral-500 focus:ring-2 focus:ring-black/40"
   />
 </span>

@@ -31,7 +31,7 @@
   let inputValue: string;
   let selected: Writable<MeltComboOption> = writable();
 
-  let inputElement : any;
+  let inputElement: any;
 
   const {
     elements: { trigger, content, arrow, close },
@@ -44,18 +44,21 @@
     disableFocusTrap: true,
   });
 
-
   $: handleValueChange(value);
   $: handleSelectionChange($selected);
   $: handleInputChange(inputValue);
 
-  $: filteredSuggestions = searchable ? suggestions.filter((e) => 
-    e.info.toLowerCase().includes(inputValue?.toLowerCase()) || e.value.toLowerCase().includes(inputValue?.toLowerCase())
-  ) : suggestions;
+  $: filteredSuggestions = searchable
+    ? suggestions.filter(
+        (e) =>
+          e.info.toLowerCase().includes(inputValue?.toLowerCase()) ||
+          e.value.toLowerCase().includes(inputValue?.toLowerCase()),
+      )
+    : suggestions;
 
   $: infoValue =
-      suggestions.find((s) => String(s.value).trim() == String(inputValue).trim())
-        ?.info || "";
+    suggestions.find((s) => String(s.value).trim() == String(inputValue).trim())
+      ?.info || "";
 
   function handleValueChange(value: any) {
     if (inputValue === value || !value) {
@@ -100,12 +103,11 @@
 
   function handleFocus() {
     filteredSuggestions = suggestions;
-    if (searchable){
+    if (searchable) {
       inputElement.select();
     }
   }
 </script>
-
 
 <div class="flex flex-col relative" class:flex-grow={size === "full"}>
   <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -115,40 +117,44 @@
   >
     {title}
 
-  <input
-    bind:this={inputElement}
-    type="text"
-    use:melt={$trigger}
-    bind:value={inputValue}
-    on:change={handleChange}
-    on:focus={handleFocus}
-    on:m-keydown={(e) => {e.preventDefault()}}
-    class="trigger w-full flex flex-row border mb-1 {isError && !disabled
-      ? 'border-error'
-      : 'border-black'} p-2 {disabled
-      ? 'bg-black/20 text-white/40'
-      : 'bg-transparent text-white'}"
-    {placeholder}
-    {disabled}
-  />
-</label>
+    <input
+      bind:this={inputElement}
+      type="text"
+      {...$trigger}
+      use:trigger
+      bind:value={inputValue}
+      on:change={handleChange}
+      on:focus={handleFocus}
+      on:m-keydown={(e) => {
+        e.preventDefault();
+      }}
+      class="trigger w-full flex flex-row border mb-1 {isError && !disabled
+        ? 'border-error'
+        : 'border-black'} p-2 {disabled
+        ? 'bg-black/20 text-white/40'
+        : 'bg-transparent text-white'}"
+      {placeholder}
+      {disabled}
+    />
+  </label>
   {#if $open && !disabled && suggestions.length > 0}
-    <datalist 
+    <datalist
       {...$content}
       use:content
       transition:fade={{ duration: 100 }}
       class="menu"
     >
-  <div>
+      <div>
         {#each filteredSuggestions as suggestion}
           <option
-            use:melt={$close}
+            {...$close}
+            use:close
             class="cursor-pointer truncate hover:bg-white/40 flex w-full px-2 py-1 hover:text-white"
             on:click={() => selected.set(suggestion)}>{suggestion.info}</option
           >
         {/each}
       </div>
-</datalist>
+    </datalist>
   {/if}
 
   <div class="text-white/60 text-sm truncate">
