@@ -1,4 +1,5 @@
 import * as colors from "tailwindcss/colors";
+
 const config = {
   content: [
     "./src/**/*.{html,js,svelte,ts}",
@@ -140,10 +141,6 @@ const config = {
           "darkness-40": "#191f22",
           "darkness-50": "#151a1d",
         },
-        normal: "#cfdbd5",
-        thirdery: {
-          DEFAULT: "#31313F",
-        },
         highlight: {
           DEFAULT: "#CC5B5B",
           100: "#edc5c5",
@@ -152,35 +149,6 @@ const config = {
           400: "#c95050",
           500: "#af3636",
           600: "#882a2a",
-        },
-        important: {
-          DEFAULT: "#e4d203",
-          100: "#fffde6",
-          200: "#fef8b3",
-          300: "#fdf381",
-          400: "#fdef4f",
-          500: "#fcea1c",
-          600: "#e3d103",
-          700: "#b0a202",
-        },
-        configs: {
-          cb: "#887880",
-          glc: "#88A096",
-          glp: "#BBAB8B",
-          l: "#EF8275",
-          gks: "#9AD4D6",
-          gms: "#DBCBD8",
-          sbc: "#065A82",
-          sec: "#963D5A",
-          glut: "#78BC61",
-        },
-        newPrimary: {
-          100: "#525252",
-          200: "#454545",
-          300: "#383838",
-          400: "#2C2C2C",
-          500: "#1F1F1F",
-          600: "#121212",
         },
       },
     },
