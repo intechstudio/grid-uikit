@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { createPopover, melt } from "@melt-ui/svelte";
   import { fade } from "svelte/transition";
-  import { writable, type Writable } from "svelte/store";
+  import { get, writable, type Writable } from "svelte/store";
 
   export let value: string;
   export let size: "auto" | "full" = "auto";
@@ -42,6 +42,11 @@
       placement: "bottom",
     },
     disableFocusTrap: true,
+    closeFocus: () => {
+      // This is important
+      // Override focus behaviour to not regain focus when closing on blur
+      return null;
+    },
   });
 
   $: handleValueChange(value);
@@ -107,6 +112,10 @@
       inputElement.select();
     }
   }
+
+  function handleBlur() {
+    open.set(false);
+  }
 </script>
 
 <div class="flex flex-col relative" class:flex-grow={size === "full"}>
@@ -125,6 +134,7 @@
       bind:value={inputValue}
       on:change={handleChange}
       on:focus={handleFocus}
+      on:blur={handleBlur}
       on:m-keydown={(e) => {
         e.preventDefault();
       }}
