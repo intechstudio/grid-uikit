@@ -89,7 +89,6 @@
     }
 
     value = input;
-    console.log("yay", typeof input);
     inputValue = input;
     dispatch("validator", { isError });
     dispatch("input", postProcessor(input));
