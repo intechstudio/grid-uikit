@@ -28,7 +28,7 @@
   let isError = false;
 
   let oldValue: string | undefined = undefined;
-  let inputValue: string;
+  let inputValue: string = "";
   let selected: Writable<MeltComboOption> = writable();
 
   let inputElement: any;
@@ -89,6 +89,7 @@
     }
 
     value = input;
+    console.log("yay", typeof input);
     inputValue = input;
     dispatch("validator", { isError });
     dispatch("input", postProcessor(input));
