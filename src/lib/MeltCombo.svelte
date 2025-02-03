@@ -33,9 +33,10 @@
 
   let inputElement: any;
 
+  const open = writable(false);
+
   const {
     elements: { trigger, content, arrow, close },
-    states: { open },
   } = createPopover({
     forceVisible: true,
     positioning: {
@@ -46,6 +47,11 @@
       // This is important
       // Override focus behaviour to not regain focus when closing on blur
       return null;
+    },
+    open,
+    onOpenChange: ({ curr, next }) => {
+      //Disable melt state management, use own instead
+      return curr;
     },
   });
 
@@ -80,6 +86,7 @@
 
     handleInputChange(option.value);
     handleChange();
+    open.set(false);
   }
 
   function handleInputChange(input: string) {
@@ -111,6 +118,7 @@
     if (searchable) {
       inputElement.select();
     }
+    open.set(true);
   }
 
   function handleBlur() {
@@ -151,6 +159,7 @@
     <datalist
       {...$content}
       use:content
+      on:mousedown|preventDefault
       transition:fade={{ duration: 100 }}
       class="menu"
     >

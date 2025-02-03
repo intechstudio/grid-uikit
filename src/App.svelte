@@ -22,6 +22,7 @@
   let suggestionElement: any;
   let input2Value = "";
   let input3Value = "";
+  let input4Value = "";
   let suggestion1 = [
     { info: "Test 12", value: "test1" },
     { info: "Test 2", value: "test2" },
@@ -29,6 +30,7 @@
   ];
   let suggestion2 = [{ info: "Test 2", value: "test2" }];
   let suggestion3 = suggestion1;
+  let suggestion4 = suggestion1;
 
   function switchSuggestions() {
     let tmp = suggestion1;
@@ -119,9 +121,14 @@
     <div class="flex flex-col gap-2 w-72 border border-black">
       <span class="text-white">Meltcombo:</span>
       <MeltCombo
-        title={"Test Field"}
+        title={"Field 1"}
         bind:value={input3Value}
         suggestions={suggestion3}
+      />
+      <MeltCombo
+        title={"Field 2"}
+        bind:value={input4Value}
+        suggestions={suggestion4}
       />
     </div>
 
