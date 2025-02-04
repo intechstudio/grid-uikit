@@ -17,6 +17,7 @@
   import Tree from "./lib/Tree.svelte";
   import { setContext } from "svelte";
   import { createTreeView } from "@melt-ui/svelte";
+  import MoltenPushButton from "./lib/MoltenPushButton.svelte";
 
   let t = false;
   let suggestionElement: any;
@@ -114,6 +115,9 @@
     <div class="flex flex-col gap-2 w-72 border border-black">
       <span class="text-white">MoltenButton:</span>
       <MoltenButton title={"Press Me"} click={switchSuggestions} />
+      <MoltenPushButton click={() => {}} text={"Normal"} style={"normal"} />
+      <MoltenPushButton click={() => {}} text={"Accept"} style={"accept"} />
+      <MoltenPushButton click={() => {}} text={"Outlined"} style={"outlined"} />
     </div>
 
     <div class="flex flex-col gap-2 w-72 border border-black">
