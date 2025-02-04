@@ -5,10 +5,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "prepareCss": "postcss --dir ./dist --config ./postcss.config.js ./dist/*.css && postcss src/app.css -o dist/app.css",
+    "build-css": "npx postcss src/*.css --dir ./dist --config ./postcss.config.js && postcss src/app.css -o dist/app.css",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "copy-files": "copyfiles -u 1 src/lib/assets/**/* dist",
-    "package": "svelte-package && publint && npm run copy-files",
+    "package": "svelte-package && publint && npm run build-css && npm run copy-files",
     "prepublishOnly": "npm run package",
     "lint": "prettier --check .",
     "format": "prettier --write ."
@@ -16,8 +16,10 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "svelte": "./dist/index.js"
+      "svelte": "./dist/index.js",
+      "style": "./dist/app.css"
     },
+    "./dist/app.css": "./dist/app.css",
     "./tailwind.config": "./tailwind.config.js"
   },
   "files": [
@@ -35,9 +37,10 @@
     "@sveltejs/package": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "@tsconfig/svelte": "^5.0.2",
-    "autoprefixer": "^10.4.19",
+    "autoprefixer": "^10.4.20",
     "copyfiles": "^2.4.1",
-    "postcss": "^8.4.38",
+    "postcss": "^8.5.1",
+    "postcss-cli": "^11.0.0",
     "prettier": "^3.1.1",
     "prettier-plugin-svelte": "^3.1.2",
     "publint": "^0.1.9",
