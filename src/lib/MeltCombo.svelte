@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { createPopover, melt } from "@melt-ui/svelte";
   import { fade } from "svelte/transition";
-  import { writable, type Writable } from "svelte/store";
+  import { get, writable, type Writable } from "svelte/store";
 
   export let value: string;
   export let size: "auto" | "full" = "auto";
@@ -33,15 +33,26 @@
 
   let inputElement: any;
 
+  const open = writable(false);
+
   const {
     elements: { trigger, content, arrow, close },
-    states: { open },
   } = createPopover({
     forceVisible: true,
     positioning: {
       placement: "bottom",
     },
     disableFocusTrap: true,
+    closeFocus: () => {
+      // This is important
+      // Override focus behaviour to not regain focus when closing on blur
+      return null;
+    },
+    open,
+    onOpenChange: ({ curr, next }) => {
+      //Disable melt state management, use own instead
+      return curr;
+    },
   });
 
   $: handleValueChange(value);
@@ -75,6 +86,7 @@
 
     handleInputChange(option.value);
     handleChange();
+    open.set(false);
   }
 
   function handleInputChange(input: string) {
@@ -106,6 +118,11 @@
     if (searchable) {
       inputElement.select();
     }
+    open.set(true);
+  }
+
+  function handleBlur() {
+    open.set(false);
   }
 </script>
 
@@ -125,6 +142,7 @@
       bind:value={inputValue}
       on:change={handleChange}
       on:focus={handleFocus}
+      on:blur={handleBlur}
       on:m-keydown={(e) => {
         e.preventDefault();
       }}
@@ -141,6 +159,7 @@
     <datalist
       {...$content}
       use:content
+      on:mousedown|preventDefault
       transition:fade={{ duration: 100 }}
       class="menu"
     >
