@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+  export type MeltComboOption = { info: string; value: string };
+</script>
+
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { createPopover, melt } from "@melt-ui/svelte";
@@ -20,8 +24,6 @@
   };
   export let title = "";
   export let searchable = false;
-
-  type MeltComboOption = { info: string; value: string };
 
   const dispatch = createEventDispatcher();
 
