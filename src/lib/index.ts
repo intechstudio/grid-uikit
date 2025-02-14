@@ -16,4 +16,7 @@ export { default as AtomicSuggestions } from "./AtomicSuggestions.svelte";
 export { contextMenu, contextTarget } from "./context-target";
 export { default as SvgIcon } from "./SvgIcon.svelte";
 export { default as Tree } from "./Tree.svelte";
-export { default as MeltCombo } from "./MeltCombo.svelte";
+export {
+  default as MeltCombo,
+  type MeltComboSuggestion,
+} from "./MeltCombo.svelte";

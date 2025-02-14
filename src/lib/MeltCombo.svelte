@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  export type MeltComboOption = { info: string; value: string };
+  export type MeltComboSuggestion = { info: string; value: string };
 </script>
 
 <script lang="ts">
@@ -10,7 +10,7 @@
 
   export let value: string;
   export let size: "auto" | "full" = "auto";
-  export let suggestions: Array<MeltComboOption> = [];
+  export let suggestions: Array<MeltComboSuggestion> = [];
   export let placeholder = "";
   export let validator = (value: string) => {
     return true;
@@ -31,7 +31,7 @@
 
   let oldValue: string | undefined = undefined;
   let inputValue: string = "";
-  let selected: Writable<MeltComboOption> = writable();
+  let selected: Writable<MeltComboSuggestion> = writable();
 
   let inputElement: any;
 
@@ -81,7 +81,7 @@
     inputValue = preProcessor(value);
   }
 
-  function handleSelectionChange(option: MeltComboOption | undefined) {
+  function handleSelectionChange(option: MeltComboSuggestion | undefined) {
     if (!option) {
       return;
     }
