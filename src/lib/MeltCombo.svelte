@@ -105,13 +105,19 @@
     value = input;
     inputValue = input;
     dispatch("validator", { isError });
-    dispatch("input", postProcessor(input));
+    dispatch("input", {
+      value: postProcessor(input),
+      validationError: isError,
+    });
   }
 
   function handleChange() {
     if (oldValue !== undefined && oldValue !== value) {
       oldValue = undefined;
-      dispatch("change", postProcessor(inputValue));
+      dispatch("change", {
+        value: postProcessor(inputValue),
+        validationError: isError,
+      });
     }
   }
 
@@ -158,7 +164,8 @@
     />
   </label>
   {#if $open && !disabled && suggestions.length > 0}
-    <datalist
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div
       {...$content}
       use:content
       on:mousedown|preventDefault
@@ -175,7 +182,7 @@
           >
         {/each}
       </div>
-    </datalist>
+    </div>
   {/if}
 
   <div class="text-white/60 text-sm truncate">
