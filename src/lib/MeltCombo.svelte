@@ -148,6 +148,9 @@
       on:m-keydown={(e) => {
         e.preventDefault();
       }}
+      on:click={() => {
+        open.set(true);
+      }}
       class="trigger w-full flex flex-row border mb-1 {isError && !disabled
         ? 'border-error'
         : 'border-black'} p-2 {disabled
