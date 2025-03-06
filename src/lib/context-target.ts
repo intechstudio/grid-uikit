@@ -34,11 +34,10 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
   node: HTMLElement,
   options: ContextMenuOptions,
 ): any => {
-  const handleMouseUp = (e: MouseEvent) => {
-    if (e.button === 2) {
-      createContextMenu(e.clientX, e.clientY);
-    }
-    e.stopPropagation();
+  const handleContextMenu = (e: MouseEvent) => {
+    console.log("yay ;)");
+    e.preventDefault();
+    createContextMenu(e.clientX, e.clientY);
   };
 
   const createContextMenu = async (x: number, y: number) => {
@@ -57,11 +56,11 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
     );
   };
 
-  node.addEventListener("mouseup", (event) => handleMouseUp(event));
+  node.addEventListener("contextmenu", (event) => handleContextMenu(event));
 
   return {
     destroy() {
-      node.removeEventListener("mouseup", handleMouseUp);
+      node.removeEventListener("contextmenu", handleContextMenu);
       // Clean up the current context menu if the node is destroyed
       contextMenu.close();
     },
