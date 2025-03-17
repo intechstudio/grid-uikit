@@ -10,7 +10,6 @@
   import BlockTitle from "./lib/BlockTitle.svelte";
   import { contextTarget } from "./lib";
   import SvgIcon from "./lib/SvgIcon.svelte";
-  import Counter from "./lib/Counter.svelte";
   import MeltSlider from "./lib/MeltSlider.svelte";
   import MeltSelect from "./lib/MeltSelect.svelte";
   import MeltRadio from "./lib/MeltRadio.svelte";
@@ -184,10 +183,6 @@
         />
         <SvgIcon iconPath="edit" fill="#0000FF" width={45} height={45} />
       </div>
-    </div>
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">Counter:</span>
-      <Counter />
     </div>
     <div class="flex flex-col gap-2 w-72 border border-black">
       <span class="text-white">MeltSlider:</span>

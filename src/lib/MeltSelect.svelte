@@ -72,7 +72,7 @@
           {...$option({ value: item.value, label: item.title })}
           use:option
           class="cursor-pointer hover:bg-white/40 p-2 hover:text-white {$isSelected(
-            item.value
+            item.value,
           )
             ? 'bg-white/10'
             : ' '}"
