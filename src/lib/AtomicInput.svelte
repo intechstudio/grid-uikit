@@ -36,9 +36,13 @@
 
   $: displayText, suggestions, filterSuggestions();
 
-  function filterSuggestions(){
+  function filterSuggestions() {
     let searchTerm = displayText.toLowerCase();
-    let filteredSuggestions = suggestions.filter((e) => e.info.toLowerCase().includes(searchTerm) || e.value.toLowerCase().includes(searchTerm));
+    let filteredSuggestions = suggestions.filter(
+      (e) =>
+        e.info.toLowerCase().includes(searchTerm) ||
+        e.value.toLowerCase().includes(searchTerm),
+    );
     updateSuggestions(filteredSuggestions);
   }
 
@@ -72,10 +76,11 @@
     updateInfoValue();
   }
 
-  function updateInfoValue(){
+  function updateInfoValue() {
     infoValue =
-      suggestions.find((s) => String(s.value).trim() == String(displayText).trim())
-        ?.info ?? "";
+      suggestions.find(
+        (s) => String(s.value).trim() == String(displayText).trim(),
+      )?.info ?? "";
   }
 
   function handleSuggestionSelected(e: any) {

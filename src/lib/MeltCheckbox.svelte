@@ -1,12 +1,12 @@
 <script lang="ts">
   import { createCheckbox, melt } from "@melt-ui/svelte";
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher } from "svelte";
 
   export let target;
   export let title;
   export let style = "box";
 
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher();
 
   const {
     elements: { root, input },
@@ -26,13 +26,15 @@
 
     if (target !== $checked) {
       oldTarget = target = $checked;
-      dispatch('change', target);
+      dispatch("change", target);
     }
   }
 </script>
 
 <label
-  class="my-4 {style == "box" ? "bg-black bg-opacity-10 border border-black border-opacity-20" : ""} group flex text-white items-center cursor-pointer p-2"
+  class="my-4 {style == 'box'
+    ? 'bg-black bg-opacity-10 border border-black border-opacity-20'
+    : ''} group flex text-white items-center cursor-pointer p-2"
 >
   <button {...$root} use:root class="">
     <div
