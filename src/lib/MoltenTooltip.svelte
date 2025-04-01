@@ -89,6 +89,24 @@
     e.stopPropagation();
   }
 
+  function handleReferenceElementFocus(e: any) {
+    console.log("YAY");
+    if (triggerEvents.includes("focus")) {
+      clearTimeout(closeTimeout);
+      showTooltip = true;
+    }
+    e.stopPropagation();
+  }
+
+  function handleReferenceElementBlur(e: any) {
+    if (triggerEvents.includes("focus")) {
+      closeTimeout = setTimeout(() => {
+        showTooltip = false;
+      }, 100);
+    }
+    e.stopPropagation();
+  }
+
   onMount(() => {
     referenceElement.addEventListener(
       "mouseenter",
@@ -99,6 +117,8 @@
       handleReferenceElementMouseLeave,
     );
     referenceElement.addEventListener("click", handleReferenceElementClick);
+    referenceElement.addEventListener("focus", handleReferenceElementFocus);
+    referenceElement.addEventListener("blur", handleReferenceElementBlur);
   });
 
   onDestroy(() => {
@@ -111,6 +131,8 @@
       handleReferenceElementMouseLeave,
     );
     referenceElement.removeEventListener("click", handleReferenceElementClick);
+    referenceElement.removeEventListener("focus", handleReferenceElementFocus);
+    referenceElement.removeEventListener("blur", handleReferenceElementBlur);
   });
 
   function interceptEvent(e: any) {
@@ -150,7 +172,9 @@
   bind:placement
   spaceAway={10}
 >
-  <button
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <div
     on:mouseenter={handleMouseEnter}
     on:mouseleave={handleMouseLeave}
     on:click={handleClick}
@@ -196,7 +220,7 @@
         </div>
       {/if}
     </div>
-  </button>
+  </div>
   <div
     transition:fade|global={{
       duration: instant ? 0 : duration,
