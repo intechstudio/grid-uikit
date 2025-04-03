@@ -1,12 +1,29 @@
 <script lang="ts" context="module">
   export type MeltComboSuggestion = { info: string; value: string };
+
+  export type MeltComboData = {
+    value: string;
+    suggestions?: MeltComboSuggestion[];
+    title?: string;
+    validator?: {
+      value: boolean;
+      func?: (e: string) => boolean;
+    };
+    preProcessor?: (value: string) => string;
+    postProcessor?: (value: string) => string;
+    size?: "auto" | "full";
+    searchable?: boolean;
+    placeholder?: string;
+    disabled: boolean;
+    valueInfoEnabled?: boolean;
+  };
 </script>
 
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { createPopover, melt } from "@melt-ui/svelte";
+  import { createPopover } from "@melt-ui/svelte";
   import { fade } from "svelte/transition";
-  import { get, writable, type Writable } from "svelte/store";
+  import { writable, type Writable } from "svelte/store";
 
   export let value: string;
   export let size: "auto" | "full" = "auto";
@@ -24,6 +41,7 @@
   };
   export let title = "";
   export let searchable = false;
+  export let valueInfoEnabled = true;
 
   const dispatch = createEventDispatcher();
 
@@ -135,12 +153,13 @@
 </script>
 
 <div class="flex flex-col relative" class:flex-grow={size === "full"}>
-  <!-- svelte-ignore a11y-label-has-associated-control -->
-  <label
-    class="text-white text-sm pb-1 truncate items-center"
-    class:hidden={title.length === 0}
-  >
-    {title}
+  <div class="flex flex-col gap-1">
+    <span
+      class="text-white text-sm truncate items-center"
+      class:hidden={title?.length === 0}
+    >
+      {title}
+    </span>
 
     <input
       bind:this={inputElement}
@@ -154,18 +173,18 @@
       on:m-keydown={(e) => {
         e.preventDefault();
       }}
-      on:click={() => {
+      on:click|stopPropagation={() => {
         open.set(true);
       }}
-      class="trigger w-full flex flex-row border mb-1 {isError && !disabled
+      class="trigger w-full flex flex-row border {isError && !disabled
         ? 'border-error'
         : 'border-black'} p-2 {disabled
-        ? 'bg-black/20 text-white/40'
-        : 'bg-transparent text-white'}"
+        ? 'bg-black/50 text-white/40'
+        : 'bg-black/25 text-white'}"
       {placeholder}
       {disabled}
     />
-  </label>
+  </div>
   {#if $open && !disabled && suggestions.length > 0}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
@@ -188,7 +207,7 @@
     </div>
   {/if}
 
-  <div class="text-white/60 text-sm truncate">
+  <div class="text-white/60 text-sm truncate" class:hidden={!valueInfoEnabled}>
     {infoValue}
   </div>
 </div>
