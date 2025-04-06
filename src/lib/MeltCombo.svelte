@@ -154,37 +154,60 @@
 
 <div class="flex flex-col relative" class:flex-grow={size === "full"}>
   <div class="flex flex-col gap-1">
-    <span
-      class="text-white text-sm truncate items-center"
-      class:hidden={title?.length === 0}
-    >
-      {title}
-    </span>
-
-    <input
-      bind:this={inputElement}
-      type="text"
-      {...$trigger}
-      use:trigger
-      bind:value={inputValue}
-      on:change={handleChange}
-      on:focus={handleFocus}
-      on:blur={handleBlur}
-      on:m-keydown={(e) => {
-        e.preventDefault();
-      }}
-      on:click|stopPropagation={() => {
-        open.set(true);
-      }}
-      class="trigger w-full flex flex-row border {isError && !disabled
-        ? 'border-error'
-        : 'border-black'} p-2 {disabled
-        ? 'bg-black/50 text-white/40'
-        : 'bg-black/25 text-white'}"
-      {placeholder}
-      {disabled}
-    />
+    {#if title?.length > 0}
+      <label class="text-white text-sm truncate items-center">
+        {title}
+        <input
+          bind:this={inputElement}
+          type="text"
+          {...$trigger}
+          use:trigger
+          bind:value={inputValue}
+          on:change={handleChange}
+          on:focus={handleFocus}
+          on:blur={handleBlur}
+          on:m-keydown={(e) => {
+            e.preventDefault();
+          }}
+          on:click|stopPropagation={() => {
+            open.set(true);
+          }}
+          class="trigger w-full flex flex-row border {isError && !disabled
+            ? 'border-error'
+            : 'border-black'} p-2 {disabled
+            ? 'bg-black/50 text-white/40'
+            : 'bg-black/25 text-white'} mt-1"
+          {placeholder}
+          {disabled}
+        />
+      </label>
+    {:else}
+      <input
+        bind:this={inputElement}
+        type="text"
+        {...$trigger}
+        use:trigger
+        bind:value={inputValue}
+        on:change={handleChange}
+        on:focus={handleFocus}
+        on:blur={handleBlur}
+        on:m-keydown={(e) => {
+          e.preventDefault();
+        }}
+        on:click|stopPropagation={() => {
+          open.set(true);
+        }}
+        class="trigger w-full flex flex-row border {isError && !disabled
+          ? 'border-error'
+          : 'border-black'} p-2 {disabled
+          ? 'bg-black/50 text-white/40'
+          : 'bg-black/25 text-white'}"
+        {placeholder}
+        {disabled}
+      />
+    {/if}
   </div>
+
   {#if $open && !disabled && suggestions.length > 0}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
