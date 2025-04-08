@@ -40,6 +40,10 @@
       oldValue = value;
     }
   }
+
+  function handleKeydown(e: KeyboardEvent) {
+    dispatch("keydown", e);
+  }
 </script>
 
 <input
@@ -49,4 +53,5 @@
   bind:value={target}
   on:change={handleChange}
   on:click|stopPropagation
+  on:keydown={handleKeydown}
 />
