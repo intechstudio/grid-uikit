@@ -1,6 +1,14 @@
 <script lang="ts">
 </script>
 
-<div class="text-white py-2">
+<div>
   <slot />
 </div>
+
+<style>
+  div {
+    color: white;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+</style>

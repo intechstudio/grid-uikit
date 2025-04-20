@@ -1,6 +1,17 @@
 <script lang="ts">
 </script>
 
-<div class="flex flex-col w-full gap-y-4 py-2">
+<div>
   <slot />
 </div>
+
+<style>
+  div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+</style>

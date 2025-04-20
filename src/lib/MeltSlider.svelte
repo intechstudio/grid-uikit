@@ -33,17 +33,49 @@
   // }
 </script>
 
-<span {...$root} use:root class="relative flex w-[200px] items-center h-[26px]">
-  <span class="block h-[3px] w-full bg-white rounded-full h-[8px]">
+<span {...$root} use:root class="container">
+  <span class="range-full">
     <span
       {...$range}
       use:range
-      class="h-[3px] bg-neutral-500 rounded-full h-[8px]"
+      class="range-selected"
     />
   </span>
   <span
     {...$thumbs[0]}
     use:thumbs
-    class="block h-5 w-5 rounded-full bg-neutral-500 focus:ring-2 focus:ring-black/40"
+    class="thumb"
   />
 </span>
+
+<style>
+  span.container {
+    position: relative;
+    display: flex;
+    width: 200px;
+    align-items: center;
+    height: 26px;
+  }
+  span.range-full {
+    display: block;
+    width: 100%;
+    background-color: white;
+    border-radius: 9999px;
+    height: 8px;
+  }
+  span.range-selected {
+    height: 8px;
+    background-color: rgba(115, 115, 115, 1);
+    border-radius: 9999px;
+  }
+  span.thumb {
+    display: block;
+    height: 1.25rem;
+    width: 1.25rem;
+    border-radius: 9999px;
+    background-color: rgba(115, 115, 115, 1);
+  }
+  span.thumb:focus {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 1);
+  }
+</style>

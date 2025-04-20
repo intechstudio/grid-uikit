@@ -58,34 +58,33 @@
 </script>
 
 <main
-  class="p-20 bg-secondary h-screen overflow-y-auto"
   on:contextmenu|preventDefault
 >
-  <div class=" text-white flex flex-wrap flex-row gap-2">
-    <div class="grid grid-cols-4 gap-2 w-72 border border-black items-center">
+  <div class="main-container">
+    <div class="color-container">
       <span>Primary</span>
-      <div class="h-10 w-10 bg-primary border border-black" />
+      <div class="color bg-primary" />
 
       <span>Secondary</span>
-      <div class="h-10 w-10 bg-secondary border border-black" />
+      <div class="color bg-secondary" />
 
       <span>Error</span>
-      <div class="h-10 w-10 bg-error border border-black" />
+      <div class="color bg-error" />
 
       <span>Warning</span>
-      <div class="h-10 w-10 bg-warning border border-black" />
+      <div class="color bg-warning" />
 
       <span>Pick</span>
-      <div class="h-10 w-10 bg-pick border border-black" />
+      <div class="color bg-pick" />
 
       <span>Select</span>
-      <div class="h-10 w-10 bg-select border border-black" />
+      <div class="color bg-select" />
 
       <span>Commit</span>
-      <div class="h-10 w-10 bg-commit border border-black" />
+      <div class="color bg-commit" />
 
       <span>Unsaved Change</span>
-      <div class="h-10 w-10 bg-unsavedchange border border-black" />
+      <div class="color bg-unsavedchange" />
     </div>
     <div class="flex flex-col gap-2 w-72 border border-black">
       <span class="text-white">Block:</span>
@@ -337,3 +336,33 @@
     </div>
   </div>
 </main>
+
+<style>
+  main {
+    padding: 5rem;
+    background-color: rgba(42, 52, 57, 1.0);
+    height: 100vh;
+    overflow-y: auto;
+  }
+  div.main-container {
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  div.color-container {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+    width: 18rem;
+    border: 1px solid black;
+    align-items: center;
+  }
+
+  div.color {
+    height: 2.5rem;
+    width: 2.5rem;
+    border: 1px solid black;
+  }
+</style>

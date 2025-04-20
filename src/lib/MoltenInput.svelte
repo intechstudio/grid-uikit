@@ -49,9 +49,25 @@
 <input
   bind:this={input}
   {disabled}
-  class="w-full flex px-2 py-2 text-white text-opacity-80 flex-grow bg-black/25 border border-black border-opacity-20 focus:border-green-500 focus:outline-none"
   bind:value={target}
   on:change={handleChange}
   on:click|stopPropagation
   on:keydown={handleKeydown}
 />
+
+<style>
+  input {
+    width: 100%;
+    display: flex;
+    padding: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  input:focus{
+    border-color: rgba(34, 197, 94, 1.0);
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+</style>

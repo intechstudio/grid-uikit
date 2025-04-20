@@ -7,7 +7,10 @@
   export let fill: string | undefined = undefined;
 </script>
 
-<svg style="width: {width}px; height: {height}px; fill: {fill};">
+<svg
+  style:fill
+  style:width={`${width}px`}
+  style:height={`${height}px`}>
   <g>
     {#if iconMap[iconPath]}
       {@html iconMap[iconPath]}
