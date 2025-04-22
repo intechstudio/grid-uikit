@@ -1,5 +1,4 @@
 <script lang="ts">
-  import "./app.css";
   import Block from "./lib/Block.svelte";
   import MeltCheckbox from "./lib/MeltCheckbox.svelte";
   import AtomicInput from "./lib/AtomicInput.svelte";
@@ -61,45 +60,20 @@
   on:contextmenu|preventDefault
 >
   <div class="main-container">
-    <div class="color-container">
-      <span>Primary</span>
-      <div class="color bg-primary" />
-
-      <span>Secondary</span>
-      <div class="color bg-secondary" />
-
-      <span>Error</span>
-      <div class="color bg-error" />
-
-      <span>Warning</span>
-      <div class="color bg-warning" />
-
-      <span>Pick</span>
-      <div class="color bg-pick" />
-
-      <span>Select</span>
-      <div class="color bg-select" />
-
-      <span>Commit</span>
-      <div class="color bg-commit" />
-
-      <span>Unsaved Change</span>
-      <div class="color bg-unsavedchange" />
-    </div>
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">Block:</span>
+    <div class="component-container">
+      <span>Block:</span>
       <Block>
         <BlockTitle>This is a BlockTitle</BlockTitle>
         <BlockBody>This is a BlockBody</BlockBody></Block
       >
     </div>
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">MeltCheckbox:</span>
+    <div class="component-container">
+      <span>MeltCheckbox:</span>
       <MeltCheckbox target={t} title={"whatever"} />
     </div>
 
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">AtomicInput: </span>
+    <div class="component-container">
+      <span>AtomicInput: </span>
       <AtomicInput
         inputValue={input2Value}
         suggestionTarget={suggestionElement}
@@ -108,20 +82,20 @@
           input2Value = e.detail;
         }}
       />
-      <span class="text-white">AtomicSuggestions: </span>
+      <span>AtomicSuggestions: </span>
       <AtomicSuggestions bind:component={suggestionElement} />
     </div>
 
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">MoltenButton:</span>
+    <div class="component-container">
+      <span>MoltenButton:</span>
       <MoltenButton title={"Press Me"} click={switchSuggestions} />
       <MoltenPushButton click={() => {}} text={"Normal"} style={"normal"} />
       <MoltenPushButton click={() => {}} text={"Accept"} style={"accept"} />
       <MoltenPushButton click={() => {}} text={"Outlined"} style={"outlined"} />
     </div>
 
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">Meltcombo:</span>
+    <div class="component-container">
+      <span>Meltcombo:</span>
       <MeltCombo
         title={"Field 1"}
         bind:value={input3Value}
@@ -134,8 +108,8 @@
       />
     </div>
 
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">ContextMenu and context-target:</span>
+    <div class="component-container">
+      <span>ContextMenu and context-target:</span>
       <span
         use:contextTarget={{
           items: [
@@ -167,30 +141,25 @@
             },
           ],
         }}
-        class="font-bold"
-        style="color: {textColor};">Right Click ME!</span
+        style="color: {textColor}; font-weight: 700;">Right Click ME!</span
       >
     </div>
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">SvgIcon:</span>
-      <div class="flex flex-row">
-        <SvgIcon iconPath="edit" fill="#FFF" width={15} height={15} /><SvgIcon
-          iconPath="edit"
-          fill="#FF0000"
-          width={30}
-          height={30}
-        />
-        <SvgIcon iconPath="edit" fill="#0000FF" width={45} height={45} />
+    <div class="component-container">
+      <span>SvgIcon:</span>
+      <div class="svg-row">
+        <SvgIcon iconPath="edit" fill="#FFF" width={15} height={15} />
+        <SvgIcon iconPath="edit" fill="#F00" width={30} height={30} />
+        <SvgIcon iconPath="edit" fill="#00F" width={45} height={45} />
       </div>
     </div>
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">MeltSlider:</span>
+    <div class="component-container">
+      <span>MeltSlider:</span>
       <span>Value: {sliderValue}</span>
       <MeltSlider bind:target={sliderValue} min={0} max={100} step={1} />
     </div>
 
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">MeltSelect:</span>
+    <div class="component-container">
+      <span>MeltSelect:</span>
       <span>Enabled:</span>
       <MeltSelect
         bind:target={meltSelectValue1}
@@ -214,8 +183,8 @@
         disabled={true}
       />
     </div>
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">MeltRadio:</span>
+    <div class="component-container">
+      <span>MeltRadio:</span>
       <MeltRadio
         bind:target={meltRadioValue1}
         style="button"
@@ -261,8 +230,8 @@
         ]}
       />
     </div>
-    <div class="flex flex-col gap-2 w-72 border border-black">
-      <span class="text-white">Tree:</span>
+    <div class="component-container">
+      <span>Tree:</span>
       <Tree
         treeItems={[
           {
@@ -304,16 +273,16 @@
       >
         <svelte:fragment slot="folder" let:child let:isExpanded let:level>
           <div
-            class="flex w-full items-center mb-1 border-b h-5 border-white/40"
+            class="folder-container"
           >
-            <div class="flex-grow text-left text-white/80 truncate">
+            <div class="folder-title">
               {child.title}
             </div>
             <div>
               <svg
                 width="14"
                 height="11"
-                class={isExpanded ? "" : "-rotate-90"}
+                style:transform={`rotate(${isExpanded ? '0' : '-90deg'})`}
                 viewBox="0 0 14 11"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -344,6 +313,9 @@
     height: 100vh;
     overflow-y: auto;
   }
+  span {
+    color: white;
+  }
   div.main-container {
     color: white;
     display: flex;
@@ -351,18 +323,32 @@
     flex-direction: row;
     gap: 0.5rem;
   }
-  div.color-container {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  div.component-container {
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
     width: 18rem;
     border: 1px solid black;
-    align-items: center;
   }
-
-  div.color {
-    height: 2.5rem;
-    width: 2.5rem;
-    border: 1px solid black;
+  div.svg-row {
+    display: flex;
+    flex-direction: row;
+  }
+  div.folder-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 0.25rem;
+    border-bottom-width: 1px;
+    height: 1.25rem;
+    border-color: rgb(255 255 255 / 0.4);
+  }
+  div.folder-title {
+    flex-grow: 1;
+    text-align: left;
+    color: rgb(255 255 255 / 0.8);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 </style>
