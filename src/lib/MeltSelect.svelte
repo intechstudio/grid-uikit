@@ -52,7 +52,7 @@
   }
 </script>
 
-<div class="container flex-grow" class:container-grow={size === "full"}>
+<div class="container" class:container-grow={size === "full"}>
   <button
     {...$trigger}
     use:trigger

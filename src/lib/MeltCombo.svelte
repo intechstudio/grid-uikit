@@ -155,7 +155,7 @@
 <div class="container" class:flex-grow={size === "full"}>
   <div class="content">
     {#if title?.length > 0}
-      <label class="text-white text-sm truncate items-center">
+      <label>
         {title}
         <input
           bind:this={inputElement}
