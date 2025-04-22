@@ -56,9 +56,7 @@
   setContext("tree", ctx);
 </script>
 
-<main
-  on:contextmenu|preventDefault
->
+<main on:contextmenu|preventDefault>
   <div class="main-container">
     <div class="component-container">
       <span>Block:</span>
@@ -272,9 +270,7 @@
         ]}
       >
         <svelte:fragment slot="folder" let:child let:isExpanded let:level>
-          <div
-            class="folder-container"
-          >
+          <div class="folder-container">
             <div class="folder-title">
               {child.title}
             </div>
@@ -282,7 +278,7 @@
               <svg
                 width="14"
                 height="11"
-                style:transform={`rotate(${isExpanded ? '0' : '-90deg'})`}
+                style:transform={`rotate(${isExpanded ? "0" : "-90deg"})`}
                 viewBox="0 0 14 11"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -309,7 +305,7 @@
 <style>
   main {
     padding: 5rem;
-    background-color: rgba(42, 52, 57, 1.0);
+    background-color: rgba(42, 52, 57, 1);
     height: 100vh;
     overflow-y: auto;
   }

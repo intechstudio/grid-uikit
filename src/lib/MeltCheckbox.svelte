@@ -31,27 +31,17 @@
   }
 </script>
 
-<label
-  class:checkbox-box={style === 'box'}
->
+<label class:checkbox-box={style === "box"}>
   <button {...$root} use:root>
-    <div
-      class="checkbox-outer"
-    >
-      <div
-        style:display={target ? 'block' : 'none'}
-        class="checkbox-inner"
-      />
+    <div class="checkbox-outer">
+      <div style:display={target ? "block" : "none"} class="checkbox-inner" />
     </div>
 
     <input {...$input} use:input />
   </button>
 
   {#if title}
-    <div
-      class:checkbox-title-selected={target}
-      class="checkbox-title"
-    >
+    <div class:checkbox-title-selected={target} class="checkbox-title">
       {title}
     </div>
   {/if}
@@ -68,7 +58,7 @@
     padding: 0.5rem;
   }
   label:hover {
-    --title-text-opacity: 1.0;
+    --title-text-opacity: 1;
   }
 
   .checkbox-box {
@@ -98,6 +88,6 @@
     color: rgba(255, 255, 255, var(--title-text-opacity, 0.8));
   }
   .checkbox-title-selected {
-    --title-text-opacity: 1.0;
+    --title-text-opacity: 1;
   }
 </style>

@@ -35,17 +35,9 @@
 
 <span {...$root} use:root class="container">
   <span class="range-full">
-    <span
-      {...$range}
-      use:range
-      class="range-selected"
-    />
+    <span {...$range} use:range class="range-selected" />
   </span>
-  <span
-    {...$thumbs[0]}
-    use:thumbs
-    class="thumb"
-  />
+  <span {...$thumbs[0]} use:thumbs class="thumb" />
 </span>
 
 <style>

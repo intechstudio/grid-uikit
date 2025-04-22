@@ -183,7 +183,10 @@
       duration: instant ? 0 : duration, //Make it instant when explicitly clicked
     }}
   >
-    <div class="tooltip-container-content" class:tooltip-gap-2={buttons.length > 0}>
+    <div
+      class="tooltip-container-content"
+      class:tooltip-gap-2={buttons.length > 0}
+    >
       {#if typeof component === "undefined"}
         <div
           class="tooltip-container-text"
@@ -244,7 +247,7 @@
     border-radius: 0.375rem;
     z-index: 99;
   }
-  
+
   div.tooltip-container-content {
     display: flex;
     flex-direction: column;
@@ -326,5 +329,5 @@
     border-bottom: 10px solid transparent;
 
     border-right: 10px solid var(--tooltip-bg-color);
-  }  
+  }
 </style>

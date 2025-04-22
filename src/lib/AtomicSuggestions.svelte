@@ -31,9 +31,7 @@
   on:display={handleDisplay}
 >
   <div class="suggestion-list-container">
-    <ul
-      class="scrollbar suggestion-list"
-    >
+    <ul class="scrollbar suggestion-list">
       {#each suggestions as suggestion}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -64,8 +62,8 @@
       -2px -2px 10px #242c30,
       2px 2px 10px #303c42;
     border-radius: 0.5rem;
-    border: 1px solid rgba(71, 87, 95, 1.0);
-    background-color: rgba(42, 52, 57, 1.0);
+    border: 1px solid rgba(71, 87, 95, 1);
+    background-color: rgba(42, 52, 57, 1);
   }
   ul.suggestion-list {
     max-height: 10rem;

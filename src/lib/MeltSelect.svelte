@@ -53,20 +53,12 @@
 </script>
 
 <div class="container" class:container-grow={size === "full"}>
-  <button
-    {...$trigger}
-    use:trigger
-    class="select"
-  >
+  <button {...$trigger} use:trigger class="select">
     <span>{$selectedLabel || " "}</span>
     <span>&#9660;</span>
   </button>
   {#if $open}
-    <div
-      {...$menu}
-      use:menu
-      class="menu"
-    >
+    <div {...$menu} use:menu class="menu">
       {#each options as item}
         <div
           {...$option({ value: item.value, label: item.title })}

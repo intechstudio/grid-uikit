@@ -173,7 +173,7 @@
             open.set(true);
           }}
           class:error={isError && !disabled}
-          class:disabled={disabled}
+          class:disabled
           {placeholder}
           {disabled}
         />
@@ -195,7 +195,7 @@
           open.set(true);
         }}
         class:error={isError && !disabled}
-        class:disabled={disabled}
+        class:disabled
         {placeholder}
         {disabled}
       />
@@ -236,12 +236,12 @@
     position: relative;
   }
   div.flex-grow {
-    flex-grow: 1
+    flex-grow: 1;
   }
   div.content {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem
+    gap: 0.25rem;
   }
   label {
     color: white;
@@ -261,13 +261,13 @@
     flex-direction: row;
     border-width: 1px;
     padding: 0.5rem;
-    border-color: rgba(0, 0, 0, 1.0);
+    border-color: rgba(0, 0, 0, 1);
     color: white;
     background-color: rgba(0, 0, 0, 0.25);
     margin-top: 0.25rem;
   }
   input.error {
-    border-color: rgba(220, 38, 38, 1.0);
+    border-color: rgba(220, 38, 38, 1);
   }
   input.disabled {
     background-color: rgba(0, 0, 0, 0.5);

@@ -29,9 +29,7 @@
       click();
     }}
     {disabled}
-    class="{disabled
-      ? `${style}-disabled`
-      : `${style}-enabled`}"
+    class={disabled ? `${style}-disabled` : `${style}-enabled`}
     class:px-4={ratio === "normal"}
     class:px-1={ratio === "box"}
     class:w-full={snap === "full"}
@@ -83,7 +81,7 @@
     border: 1px solid rgba(0, 0, 0, 0.4);
   }
   .normal-enabled:hover {
-    background-color: rgba(0, 0, 0, 0.4)
+    background-color: rgba(0, 0, 0, 0.4);
   }
   .normal-disabled {
     color: rgba(250, 250, 250, 0.25);
@@ -96,20 +94,20 @@
     color: white;
   }
   .outlined-enabled:hover {
-    background-color: rgba(0, 111, 83, 1.0);
-    border-color: rgba(27, 164, 135)
+    background-color: rgba(0, 111, 83, 1);
+    border-color: rgba(27, 164, 135);
   }
   .outlined-disabled {
-    border: 1px solid rgba(0, 163, 130, 1.0);
+    border: 1px solid rgba(0, 163, 130, 1);
     color: rgba(255, 255, 255, 0.5);
   }
 
   .accept-enabled {
     color: white;
-    background-color: rgba(11, 164, 132, 1.0)
+    background-color: rgba(11, 164, 132, 1);
   }
   .accept-enabled:hover {
-    background-color: rgba(0, 111, 83, 1.0)
+    background-color: rgba(0, 111, 83, 1);
   }
   .accept-disabled {
     color: rgba(255, 255, 255, 0.5);

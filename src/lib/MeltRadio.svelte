@@ -52,10 +52,10 @@
 <div
   {...$root}
   use:root
-  class:container-full={size == 'full' && orientation == 'horizontal'}
-  class:container-vertical={orientation === 'vertical'}
-  class:container-button={style === 'button'}
-  class:radio-border={style !== 'button' && orientation !== 'vertical'}
+  class:container-full={size == "full" && orientation == "horizontal"}
+  class:container-vertical={orientation === "vertical"}
+  class:container-button={style === "button"}
+  class:radio-border={style !== "button" && orientation !== "vertical"}
   class="container"
 >
   {#each options as option}
@@ -63,18 +63,16 @@
     {@const value = option.value.toString()}
     {@const title = option.title}
     <label
-      class:radio-border={orientation === 'vertical'}
-      class:vertical-padding={orientation === 'vertical'}
-      class:horizontal-padding={style !== 'button'}
+      class:radio-border={orientation === "vertical"}
+      class:vertical-padding={orientation === "vertical"}
+      class:horizontal-padding={style !== "button"}
       class="row"
     >
       {#if style === "radio"}
         <button {...$item(value)} use:item id={title}>
-          <div
-            class="style-radio"
-          >
+          <div class="style-radio">
             <div
-              style:display={$isChecked(value) ? 'block' : 'none'}
+              style:display={$isChecked(value) ? "block" : "none"}
               class="style-radio-inside"
             />
           </div>
@@ -124,14 +122,14 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     background-color: rgba(0, 0, 0, 0.1);
   }
-  label.row{
+  label.row {
     cursor: pointer;
     display: flex;
     align-items: center;
   }
   label.vertical-padding {
     padding-top: 0.5rem;
-    padding-bottom: 0.5rem
+    padding-bottom: 0.5rem;
   }
   label.horizontal-padding {
     padding-left: 0.5rem;

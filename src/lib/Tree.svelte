@@ -40,10 +40,7 @@
   </button>
 
   {#if $isExpanded(child.id)}
-    <div
-      class="subtree"
-      class:root-subtree={level === 0}
-    >
+    <div class="subtree" class:root-subtree={level === 0}>
       {#if child.children && child.children.length > 0}
         <div {...$group({ id: child.id })} use:group class="subtree-child">
           <svelte:self treeItems={child.children} level={level + 1}>

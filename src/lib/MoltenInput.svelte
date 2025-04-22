@@ -65,8 +65,8 @@
     background-color: rgba(0, 0, 0, 0.25);
     border: 1px solid rgba(0, 0, 0, 0.2);
   }
-  input:focus{
-    border-color: rgba(34, 197, 94, 1.0);
+  input:focus {
+    border-color: rgba(34, 197, 94, 1);
     outline: 2px solid transparent;
     outline-offset: 2px;
   }

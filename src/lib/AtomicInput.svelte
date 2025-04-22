@@ -101,7 +101,7 @@
     on:suggestion-select={handleSuggestionSelected}
     {placeholder}
     class:error={isError}
-    class:disabled={disabled}
+    class:disabled
   />
 
   <div class="info-value">
@@ -122,8 +122,8 @@
   input {
     width: 100%;
     border-width: 1px;
-    border-color: rgba(42, 52, 57, 1.0);
-    background-color: rgba(42, 52, 57, 1.0);
+    border-color: rgba(42, 52, 57, 1);
+    background-color: rgba(42, 52, 57, 1);
     color: white;
     padding-top: 0.125rem;
     padding-bottom: 0.125rem;
@@ -135,13 +135,13 @@
       -2px -2px 10px #242c30,
       2px 2px 10px #303c42;
     border-radius: 0.5rem;
-    border-color: rgba(71, 87, 95, 1.0);
+    border-color: rgba(71, 87, 95, 1);
   }
   input.error {
-    border-color: rgba(220, 38, 38, 1.0);
+    border-color: rgba(220, 38, 38, 1);
   }
   input.error:focus {
-    outline-color: #DC2626;
+    outline-color: #dc2626;
   }
   input.disabled {
     color: rgba(255, 255, 255, 0.5);
@@ -153,7 +153,7 @@
   div.info-text {
     font-size: 0.875rem;
     line-height: 1.25rem;
-    color: rgba(82, 82, 82, 1.0);
+    color: rgba(82, 82, 82, 1);
   }
 
   ::-webkit-scrollbar {

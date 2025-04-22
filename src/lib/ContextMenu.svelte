@@ -59,9 +59,7 @@
   spaceAway={-offset.x}
   spaceAlong={-offset.y}
 >
-  <div
-    bind:this={menu}
-  >
+  <div bind:this={menu}>
     {#each items as item}
       {@const disabled = item.isDisabled ? item.isDisabled() : false}
       <button
@@ -81,8 +79,7 @@
         <!-- Spacer for alignment -->
         <span
           style:width={`${maxLength - item.text[0].length}ch`}
-          style:visibility="hidden"
-          >{item.text[0]}</span
+          style:visibility="hidden">{item.text[0]}</span
         >
         <span>{item.text[1]}</span>
       </button>
