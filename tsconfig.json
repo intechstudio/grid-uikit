@@ -15,12 +15,7 @@
     "checkJs": true,
     "isolatedModules": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.svelte",
-    "tailwind.config.js"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
   "references": [
     {
       "path": "./tsconfig.node.json"
