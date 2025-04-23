@@ -112,6 +112,14 @@
     padding: 0.5rem;
     text-align: left;
     cursor: default;
+    font-family: inherit; /* 1 */
+    font-feature-settings: inherit; /* 1 */
+    font-variation-settings: inherit; /* 1 */
+    font-weight: inherit; /* 1 */
+    letter-spacing: inherit; /* 1 */
+    margin: 0; /* 2 */
+    background-color: transparent; /* 2 */
+    cursor: pointer;
   }
   button:hover {
     background-color: rgba(255, 255, 255, 0.4);

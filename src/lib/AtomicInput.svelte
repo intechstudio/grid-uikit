@@ -125,10 +125,20 @@
     border-color: rgba(42, 52, 57, 1);
     background-color: rgba(42, 52, 57, 1);
     color: white;
+    padding: 0.125rem 0rem 0.125rem 0.5rem;
     padding-top: 0.125rem;
     padding-bottom: 0.125rem;
     padding-left: 0.5rem;
     border-radius: 0px;
+
+    font-family: inherit; /* 1 */
+    font-feature-settings: inherit; /* 1 */
+    font-variation-settings: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    font-weight: inherit; /* 1 */
+    line-height: inherit; /* 1 */
+    letter-spacing: inherit; /* 1 */
+    margin: 0; /* 2 */
   }
   input:focus {
     box-shadow:

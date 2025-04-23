@@ -67,6 +67,18 @@
     display: flex;
     align-items: center;
     width: 100%;
+    font-family: inherit; /* 1 */
+    font-feature-settings: inherit; /* 1 */
+    font-variation-settings: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    font-weight: inherit; /* 1 */
+    line-height: inherit; /* 1 */
+    letter-spacing: inherit; /* 1 */
+    color: inherit; /* 1 */
+    margin: 0; /* 2 */
+    padding: 0; /* 3 */
+    background-color: transparent; /* 2 */
+    cursor: pointer;
   }
   div.subtree {
     display: flex;
