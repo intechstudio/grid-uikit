@@ -178,16 +178,19 @@
     on:mouseenter={handleMouseEnter}
     on:mouseleave={handleMouseLeave}
     on:click={handleClick}
-    class="{$$props.class} tooltip-bg cursor-default flex flex-col relative rounded-md z-[99]"
+    class="{$$props.class} tooltip-container"
     transition:fade|global={{
       duration: instant ? 0 : duration, //Make it instant when explicitly clicked
     }}
   >
-    <div class="flex flex-col w-full h-full" class:gap-2={buttons.length > 0}>
+    <div
+      class="tooltip-container-content"
+      class:tooltip-gap-2={buttons.length > 0}
+    >
       {#if typeof component === "undefined"}
         <div
-          class="text-white text-left font-normal"
-          class:whitespace-nowrap={nowrap}
+          class="tooltip-container-text"
+          class:tooltip-whitespace-nowrap={nowrap}
         >
           {text}
         </div>
@@ -195,7 +198,7 @@
         <svelte:component
           this={component.object}
           {...component.props}
-          class="z-10"
+          class="tooltip-container-component"
           on:event={interceptEvent}
         />
       {/if}
@@ -203,7 +206,7 @@
       {#if showbuttons}
         <div
           transition:slide|global={{ duration: instant ? 0 : 100 }}
-          class="gap-2 flex flex-row w-full"
+          class="tooltip-container-buttons"
         >
           {#each buttons as button}
             <MoltenPushButton
@@ -225,21 +228,59 @@
     transition:fade|global={{
       duration: instant ? 0 : duration,
     }}
-    class="absolute"
+    class="tooltip-absolute"
     id="arrow"
     data-popper-arrow
   >
-    <div class="absolute" id="arrow_face" />
+    <div class="tooltip-absolute" id="arrow_face" />
   </div>
 </Popover>
 
 <style global>
-  :root {
+  div.tooltip-container {
     --tooltip-bg-color: rgba(14, 20, 24, 0.8);
+    background-color: var(--tooltip-bg-color);
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-radius: 0.375rem;
+    z-index: 99;
   }
 
-  .tooltip-bg {
-    background-color: var(--tooltip-bg-color);
+  div.tooltip-container-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+
+  div.tooltip-gap-2 {
+    gap: 0.5rem;
+  }
+
+  div.tooltip-container-text {
+    color: white;
+    text-align: left;
+    font-weight: 400;
+  }
+  div.tooltip-whitespace-nowrap {
+    white-space: nowrap;
+  }
+
+  .tooltip-container-component {
+    z-index: 10;
+  }
+
+  div.tooltip-container-buttons {
+    gap: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  div.tooltip-absolute {
+    position: absolute;
   }
 
   .svelte-easy-popover[data-popper-placement^="top"] > #arrow {

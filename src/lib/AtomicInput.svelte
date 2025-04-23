@@ -5,7 +5,6 @@
 
   export let inputValue = "";
   export let suggestions: { value: string; info: string }[] = [];
-  export let customClasses = "";
   export let placeholder = "";
   export let suggestionTarget: Element | undefined = undefined;
   export let validator = (text: string) => {
@@ -92,7 +91,7 @@
   let inputComponent;
 </script>
 
-<div class="{$$props.class} w-full relative">
+<div class="{$$props.class} container">
   <input
     bind:this={inputComponent}
     {disabled}
@@ -100,19 +99,14 @@
     on:focus={handleFocus}
     on:blur={handleBlur}
     on:suggestion-select={handleSuggestionSelected}
-    type="text"
     {placeholder}
-    class="{customClasses} w-full border
-        focus:neumorph focus:rounded-lg
-        {isError
-      ? 'border-error focus:outline-error'
-      : 'focus:border-select border-secondary'} bg-secondary text-white py-0.5 pl-2 rounded-none"
-    class:text-opacity-50={disabled}
+    class:error={isError}
+    class:disabled
   />
 
-  <div class=" py-1">
+  <div class="info-value">
     {#if !focus && infoValue !== undefined}
-      <div class="{infoValue ? 'text-gray-500' : 'text-gray-600'} text-sm">
+      <div class="info-text">
         {infoValue}
       </div>
     {/if}
@@ -120,10 +114,56 @@
 </div>
 
 <style>
-  .neumorph {
+  div.container {
+    width: 100%;
+    position: relative;
+  }
+
+  input {
+    width: 100%;
+    border-width: 1px;
+    border-color: rgba(42, 52, 57, 1);
+    background-color: rgba(42, 52, 57, 1);
+    color: white;
+    padding: 0.125rem 0rem 0.125rem 0.5rem;
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+    padding-left: 0.5rem;
+    border-radius: 0px;
+
+    font-family: inherit; /* 1 */
+    font-feature-settings: inherit; /* 1 */
+    font-variation-settings: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    font-weight: inherit; /* 1 */
+    line-height: inherit; /* 1 */
+    letter-spacing: inherit; /* 1 */
+    margin: 0; /* 2 */
+  }
+  input:focus {
     box-shadow:
       -2px -2px 10px #242c30,
       2px 2px 10px #303c42;
+    border-radius: 0.5rem;
+    border-color: rgba(71, 87, 95, 1);
+  }
+  input.error {
+    border-color: rgba(220, 38, 38, 1);
+  }
+  input.error:focus {
+    outline-color: #dc2626;
+  }
+  input.disabled {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  div.info-value {
+    padding: 0.25rem 0;
+  }
+  div.info-text {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: rgba(82, 82, 82, 1);
   }
 
   ::-webkit-scrollbar {
