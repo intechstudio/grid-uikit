@@ -42,6 +42,7 @@
   export let title = "";
   export let searchable = false;
   export let valueInfoEnabled = true;
+  export let availableCharacters: number = Infinity;
 
   const dispatch = createEventDispatcher();
 
@@ -117,6 +118,11 @@
     }
 
     if (input === value) {
+      return;
+    }
+
+    if (availableCharacters < input.length) {
+      inputValue = value;
       return;
     }
 
