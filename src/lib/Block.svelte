@@ -3,8 +3,19 @@
 </script>
 
 <div
-  class="py-4 border {border !== 'transparent' ? 'px-4' : ''} {'border-' +
-    border}"
+  class:transparent-block={border === "transparent"}
+  style:border-color={border}
 >
   <slot />
 </div>
+
+<style>
+  div {
+    padding: 1rem;
+    border-width: 1px;
+  }
+  .transparent-block {
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
+</style>

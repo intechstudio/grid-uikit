@@ -35,20 +35,14 @@
     {...$item({ id: child.id, hasChildren: true })}
     use:item
     on:click={() => toggleExpand(child.id, level, $isExpanded(child.id))}
-    class="flex items-center w-full"
   >
     <slot name="folder" {level} {child} isExpanded={$isExpanded(child.id)} />
   </button>
 
   {#if $isExpanded(child.id)}
-    <div
-      class="flex flex-col"
-      class:max-h-full={level === 0}
-      class:overflow-y-scroll={level === 0}
-      class:pr-1={level === 0}
-    >
+    <div class="subtree" class:root-subtree={level === 0}>
       {#if child.children && child.children.length > 0}
-        <div {...$group({ id: child.id })} use:group class="pl-4">
+        <div {...$group({ id: child.id })} use:group class="subtree-child">
           <svelte:self treeItems={child.children} level={level + 1}>
             <svelte:fragment slot="folder" let:level let:child let:isExpanded>
               <slot name="folder" {level} {child} {isExpanded} />
@@ -67,3 +61,35 @@
     </div>
   {/if}
 {/each}
+
+<style>
+  button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-family: inherit; /* 1 */
+    font-feature-settings: inherit; /* 1 */
+    font-variation-settings: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    font-weight: inherit; /* 1 */
+    line-height: inherit; /* 1 */
+    letter-spacing: inherit; /* 1 */
+    color: inherit; /* 1 */
+    margin: 0; /* 2 */
+    padding: 0; /* 3 */
+    background-color: transparent; /* 2 */
+    cursor: pointer;
+  }
+  div.subtree {
+    display: flex;
+    flex-direction: column;
+  }
+  div.root-subtree {
+    max-height: 100%;
+    overflow-y: scroll;
+    padding-right: 0.25rem;
+  }
+  div.subtree-child {
+    padding-left: 1rem;
+  }
+</style>

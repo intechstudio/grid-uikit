@@ -25,21 +25,19 @@
 </script>
 
 <suggestions
-  class="flex w-full p-2"
+  class="container"
   class:hidden={suggestions.length === 0}
   bind:this={component}
   on:display={handleDisplay}
 >
-  <div class="w-full p-1 neumorph rounded-lg border border-select bg-secondary">
-    <ul
-      class="scrollbar max-h-40 overflow-y-scroll pr-1 text-white cursor-pointer"
-    >
+  <div class="suggestion-list-container">
+    <ul class="scrollbar suggestion-list">
       {#each suggestions as suggestion}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
         <li
           on:mousedown={() => handleSuggestionSelected(suggestion.value)}
-          class="hover:bg-black p-1 pl-2"
+          class="suggestion"
         >
           {suggestion.info}
         </li>
@@ -49,9 +47,36 @@
 </suggestions>
 
 <style>
-  .neumorph {
+  suggestions.container {
+    display: flex;
+    width: 100%;
+    padding: 0.5rem;
+  }
+  suggestions.hidden {
+    display: none;
+  }
+  div.suggestion-list-container {
+    width: 100%;
+    padding: 0.25rem;
     box-shadow:
       -2px -2px 10px #242c30,
       2px 2px 10px #303c42;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(71, 87, 95, 1);
+    background-color: rgba(42, 52, 57, 1);
+  }
+  ul.suggestion-list {
+    max-height: 10rem;
+    overflow-y: scroll;
+    padding-right: 0.25rem;
+    color: white;
+    cursor: pointer;
+  }
+  li.suggestion {
+    padding: 0.25rem;
+    padding-left: 0.5rem;
+  }
+  li.suggestion:hover {
+    background-color: black;
   }
 </style>

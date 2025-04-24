@@ -158,10 +158,10 @@
   }
 </script>
 
-<div class="flex flex-col relative" class:flex-grow={size === "full"}>
-  <div class="flex flex-col gap-1">
+<div class="container" class:flex-grow={size === "full"}>
+  <div class="content">
     {#if title?.length > 0}
-      <label class="text-white text-sm truncate items-center">
+      <label>
         {title}
         <input
           bind:this={inputElement}
@@ -178,11 +178,8 @@
           on:click|stopPropagation={() => {
             open.set(true);
           }}
-          class="trigger w-full flex flex-row border {isError && !disabled
-            ? 'border-error'
-            : 'border-black'} p-2 {disabled
-            ? 'bg-black/50 text-white/40'
-            : 'bg-black/25 text-white'} mt-1"
+          class:error={isError && !disabled}
+          class:disabled
           {placeholder}
           {disabled}
         />
@@ -203,11 +200,8 @@
         on:click|stopPropagation={() => {
           open.set(true);
         }}
-        class="trigger w-full flex flex-row border {isError && !disabled
-          ? 'border-error'
-          : 'border-black'} p-2 {disabled
-          ? 'bg-black/50 text-white/40'
-          : 'bg-black/25 text-white'}"
+        class:error={isError && !disabled}
+        class:disabled
         {placeholder}
         {disabled}
       />
@@ -228,7 +222,7 @@
           <option
             {...$close}
             use:close
-            class="cursor-pointer truncate hover:bg-white/40 flex w-full px-2 py-1 hover:text-white"
+            class="suggestion"
             on:click={() => selected.set(suggestion)}>{suggestion.info}</option
           >
         {/each}
@@ -236,18 +230,99 @@
     </div>
   {/if}
 
-  <div class="text-white/60 text-sm truncate" class:hidden={!valueInfoEnabled}>
+  <div class="info-value" style:display={valueInfoEnabled ? "visible" : "none"}>
     {infoValue}
   </div>
 </div>
 
-<style lang="postcss">
-  .menu {
-    @apply bg-gray-900 text-white/80 border border-white/50 rounded z-40 max-h-32 flex flex-col overflow-y-auto;
-    @apply min-w-[8%] w-fit max-w-[13%] !important;
+<style>
+  div.container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
   }
-
-  .trigger {
-    @apply cursor-auto outline-none !important;
+  div.flex-grow {
+    flex-grow: 1;
+  }
+  div.content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  label {
+    color: white;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    align-items: center;
+  }
+  input {
+    cursor: auto;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-width: 1px;
+    padding: 0.5rem;
+    border-color: rgba(0, 0, 0, 1);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.25);
+    margin: 0.25rem 0rem 0rem;
+    font-family: inherit; /* 1 */
+    font-feature-settings: inherit; /* 1 */
+    font-variation-settings: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    font-weight: inherit; /* 1 */
+    line-height: inherit; /* 1 */
+    letter-spacing: inherit; /* 1 */
+  }
+  input.error {
+    border-color: rgba(220, 38, 38, 1);
+  }
+  input.disabled {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .menu {
+    background-color: rgba(23, 23, 23, 1);
+    color: rgba(255, 255, 255, 0.8);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0.25rem;
+    z-index: 40;
+    max-height: 8rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    min-width: 8%;
+    width: fit-content;
+    max-width: 13%;
+  }
+  option.suggestion {
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    width: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+  option.suggestion:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    color: white;
+  }
+  div.info-value {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 </style>

@@ -59,18 +59,11 @@
   spaceAway={-offset.x}
   spaceAlong={-offset.y}
 >
-  <div
-    bind:this={menu}
-    class="flex flex-col items-start bg-gray-900 text-white/80 border border-white/50 rounded absolute"
-  >
+  <div bind:this={menu}>
     {#each items as item}
       {@const disabled = item.isDisabled ? item.isDisabled() : false}
       <button
-        class="text-white text-xs flex flex-row gap-2 {disabled
-          ? ''
-          : 'hover:bg-white/40 hover:text-white'} items-center whitespace-nowrap w-full px-2 py-2 text-left cursor-default"
-        class:opacity-75={!disabled}
-        class:opacity-25={disabled}
+        style:opacity={disabled ? 0.25 : 0.75}
         {disabled}
         on:click={() => handleItemClicked(item)}
       >
@@ -82,12 +75,11 @@
             iconPath={item.iconPath}
           />
         {/if}
-        <span class="flex-1">{item.text[0]}</span>
+        <span>{item.text[0]}</span>
         <!-- Spacer for alignment -->
         <span
-          class="invisible"
-          style="width: {maxLength - item.text[0].length}ch;"
-          >{item.text[0]}</span
+          style:width={`${maxLength - item.text[0].length}ch`}
+          style:visibility="hidden">{item.text[0]}</span
         >
         <span>{item.text[1]}</span>
       </button>
@@ -96,7 +88,40 @@
 </Popover>
 
 <style>
-  .flex-1 {
-    flex: 1;
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 0.25rem;
+    position: absolute;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(23, 23, 23);
+  }
+
+  button {
+    color: white;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    white-space: nowrap;
+    width: 100%;
+    padding: 0.5rem;
+    text-align: left;
+    cursor: default;
+    font-family: inherit; /* 1 */
+    font-feature-settings: inherit; /* 1 */
+    font-variation-settings: inherit; /* 1 */
+    font-weight: inherit; /* 1 */
+    letter-spacing: inherit; /* 1 */
+    margin: 0; /* 2 */
+    background-color: transparent; /* 2 */
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
   }
 </style>

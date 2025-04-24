@@ -52,30 +52,19 @@
   }
 </script>
 
-<div class="flex flex-col gap-1" class:flex-grow={size === "full"}>
-  <button
-    {...$trigger}
-    use:trigger
-    class="w-full flex flex-row border border-black p-2"
-  >
-    <div class="flex flex-grow truncate">{$selectedLabel || " "}</div>
-    <div class="flex">&#9660;</div>
+<div class="container" class:container-grow={size === "full"}>
+  <button {...$trigger} use:trigger class="select">
+    <span>{$selectedLabel || " "}</span>
+    <span>&#9660;</span>
   </button>
   {#if $open}
-    <div
-      {...$menu}
-      use:menu
-      class="bg-gray-900 text-white/80 border border-white/50 rounded z-40"
-    >
+    <div {...$menu} use:menu class="menu">
       {#each options as item}
         <div
           {...$option({ value: item.value, label: item.title })}
           use:option
-          class="cursor-pointer hover:bg-white/40 p-2 hover:text-white {$isSelected(
-            item.value,
-          )
-            ? 'bg-white/10'
-            : ' '}"
+          class="option"
+          class:option-selected={$isSelected(item.value)}
         >
           {item.title}
         </div>
@@ -83,3 +72,52 @@
     </div>
   {/if}
 </div>
+
+<style>
+  div.container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  div.container-grow {
+    flex-grow: 1;
+  }
+  button.select {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid black;
+    padding: 0.5rem;
+
+    font-family: inherit; /* 1 */
+    font-feature-settings: inherit; /* 1 */
+    font-variation-settings: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    font-weight: inherit; /* 1 */
+    line-height: inherit; /* 1 */
+    letter-spacing: inherit; /* 1 */
+    color: inherit; /* 1 */
+    margin: 0; /* 2 */
+    background-color: transparent; /* 2 */
+    cursor: pointer;
+  }
+  .menu {
+    background-color: rgba(23, 23, 23, 1);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 0.25rem;
+    z-index: 40;
+  }
+  div.option {
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  div.option:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 1);
+  }
+  div.option-selected {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+</style>

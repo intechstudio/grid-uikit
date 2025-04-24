@@ -8,11 +8,3 @@ When developing this package, the library should be linked using the `npm link` 
 To do this, first use the `npm link` command in the folder of the UI kit package.
 Next, use the `npm link @intechstudio/grid-uikit` in a project that uses the library.
 When finished, use `npm unlink @intechstudio/grid-uikit` to remove the symbolic link and return to using the npmjs package.
-
-## Usage
-
-To apply correct CSS class usage use the following line in your applications main CSS file (app.css typically)
-
-```
-@import "@intechstudio/grid-uikit/dist/app.css";
-```

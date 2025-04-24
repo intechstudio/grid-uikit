@@ -11,7 +11,7 @@
   let showPopup: boolean = false;
 </script>
 
-<container class="relative" class:w-full={snap === "full"}>
+<container class:width-full={snap === "full"}>
   <button
     class:selected
     on:click={() => {
@@ -29,9 +29,7 @@
       click();
     }}
     {disabled}
-    class="{disabled
-      ? `${style}-disabled`
-      : `${style}-enabled`} rounded focus:outline-none truncate py-1"
+    class={disabled ? `${style}-disabled` : `${style}-enabled`}
     class:px-4={ratio === "normal"}
     class:px-1={ratio === "box"}
     class:w-full={snap === "full"}
@@ -47,24 +45,85 @@
 </container>
 
 <style>
+  container {
+    position: relative;
+  }
+  container.width-full {
+    width: 100%;
+  }
+
+  button {
+    border-radius: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0.25rem;
+
+    font-family: inherit; /* 1 */
+    font-feature-settings: inherit; /* 1 */
+    font-variation-settings: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    font-weight: inherit; /* 1 */
+    line-height: inherit; /* 1 */
+    letter-spacing: inherit; /* 1 */
+    color: inherit; /* 1 */
+    margin: 0; /* 2 */
+    text-transform: none;
+    background-color: transparent; /* 2 */
+    cursor: pointer;
+  }
+  button.w-full {
+    width: 100%;
+  }
+  button.w-fit {
+    width: fit-content;
+  }
+  button.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  button:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
   .normal-enabled {
-    @apply text-gray-50 bg-black bg-opacity-10 border border-black border-opacity-40 hover:bg-opacity-40;
+    color: rgba(250, 250, 250, 0.5);
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+  }
+  .normal-enabled:hover {
+    background-color: rgba(0, 0, 0, 0.4);
   }
   .normal-disabled {
-    @apply text-gray-50/25 bg-black/25 bg-opacity-10 border border-black/25 border-opacity-40;
+    color: rgba(250, 250, 250, 0.25);
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(0, 0, 0, 0.25);
   }
 
   .outlined-enabled {
-    @apply border hover:bg-commit-saturate-20 text-white border-commit-saturate-10 hover:border-commit-desaturate-10;
+    border: 1px solid rgba(0, 164, 130, 1);
+    color: white;
+  }
+  .outlined-enabled:hover {
+    background-color: rgba(0, 111, 83, 1);
+    border-color: rgba(27, 164, 135);
   }
   .outlined-disabled {
-    @apply border text-white border-commit-saturate-10 bg-opacity-50 text-opacity-50;
+    border: 1px solid rgba(0, 163, 130, 1);
+    color: rgba(255, 255, 255, 0.5);
   }
 
   .accept-enabled {
-    @apply text-white bg-commit hover:bg-commit-saturate-20;
+    color: white;
+    background-color: rgba(11, 164, 132, 1);
+  }
+  .accept-enabled:hover {
+    background-color: rgba(0, 111, 83, 1);
   }
   .accept-disabled {
-    @apply text-white bg-commit bg-opacity-50 text-opacity-50;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(11, 164, 132, 0.5);
   }
 </style>
