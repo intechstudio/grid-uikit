@@ -93,7 +93,9 @@
       ?.info || "";
 
   function handleValueChange(value: any) {
-    if (inputValue === value || !value) {
+    const left = postProcessor(preProcessor(value));
+    const right = postProcessor(preProcessor(inputValue));
+    if (left === right || !value) {
       return;
     }
 
