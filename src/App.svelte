@@ -13,7 +13,6 @@
   import MeltSelect from "./lib/MeltSelect.svelte";
   import MeltRadio from "./lib/MeltRadio.svelte";
   import Tree from "./lib/Tree.svelte";
-  import { setContext } from "svelte";
   import { createTreeView } from "@melt-ui/svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
 
@@ -50,10 +49,9 @@
   let meltRadioValue3 = 0;
   let meltRadioValue4 = 0;
 
-  const ctx = createTreeView({
-    defaultExpanded: [],
-  });
-  setContext("tree", ctx);
+  function handleTreeView(e) {
+    console.log({ treeView: e.detail });
+  }
 </script>
 
 <main on:contextmenu|preventDefault>
@@ -231,6 +229,7 @@
     <div class="component-container">
       <span>Tree:</span>
       <Tree
+        on:tree-view={handleTreeView}
         treeItems={[
           {
             id: "0",

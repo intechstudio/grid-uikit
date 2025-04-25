@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { type TreeView } from "@melt-ui/svelte";
-  import { getContext } from "svelte";
+  import { createTreeView } from "@melt-ui/svelte";
+  import { createEventDispatcher, onMount } from "svelte";
 
   interface TreeNodeData<T> {
     id: string;
@@ -12,11 +12,19 @@
   export let level = 0;
   export let toggleMainLevels = true;
 
+  const treeView = createTreeView();
+
   const {
     elements: { item, group },
     helpers: { isExpanded },
     states: { expanded },
-  } = getContext<TreeView>("tree");
+  } = treeView;
+
+  const dispatch = createEventDispatcher();
+
+  onMount(() => {
+    dispatch("tree-view", treeView);
+  });
 
   function toggleExpand(id: string, level: number, value: boolean) {
     if (!toggleMainLevels) {
