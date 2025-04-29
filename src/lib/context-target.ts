@@ -35,7 +35,6 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
   options: ContextMenuOptions,
 ): any => {
   const handleContextMenu = (e: MouseEvent) => {
-    console.log("yay ;)");
     e.preventDefault();
     createContextMenu(e.clientX, e.clientY);
   };

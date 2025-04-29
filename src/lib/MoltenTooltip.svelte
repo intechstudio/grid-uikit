@@ -90,7 +90,6 @@
   }
 
   function handleReferenceElementFocus(e: any) {
-    console.log("YAY");
     if (triggerEvents.includes("focus")) {
       clearTimeout(closeTimeout);
       showTooltip = true;
