@@ -363,6 +363,7 @@
     gap: 0.5rem;
     width: 18rem;
     border: 1px solid black;
+    padding: 0.5rem;
   }
   div.svg-row {
     display: flex;
