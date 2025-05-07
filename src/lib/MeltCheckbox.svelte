@@ -2,9 +2,9 @@
   import { createCheckbox, melt } from "@melt-ui/svelte";
   import { createEventDispatcher } from "svelte";
 
-  export let target;
-  export let title;
-  export let style = "box";
+  export let target: boolean;
+  export let title: string;
+  export let style: "box" | "transparent" = "box";
 
   const dispatch = createEventDispatcher();
 
@@ -49,16 +49,10 @@
 
 <style>
   label {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
     display: flex;
-    color: white;
     align-items: center;
     cursor: pointer;
     padding: 0.5rem;
-  }
-  label:hover {
-    --title-text-opacity: 1;
   }
 
   .checkbox-box {
@@ -71,7 +65,7 @@
     height: 1.5rem;
     border-radius: 0.25rem;
     margin: auto;
-    border: 1px solid white;
+    border: 1px solid var(--foreground);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -80,25 +74,14 @@
   .checkbox-inner {
     width: 0.75rem;
     height: 0.75rem;
-    background-color: white;
+    background-color: var(--foreground);
     border-radius: 0.125rem;
   }
   .checkbox-title {
     padding-left: 0.5rem;
-    color: rgba(255, 255, 255, var(--title-text-opacity, 0.8));
-  }
-  .checkbox-title-selected {
-    --title-text-opacity: 1;
+    color: var(--foreground-muted);
   }
   button {
-    font-family: inherit; /* 1 */
-    font-feature-settings: inherit; /* 1 */
-    font-variation-settings: inherit; /* 1 */
-    font-size: 100%; /* 1 */
-    font-weight: inherit; /* 1 */
-    line-height: inherit; /* 1 */
-    letter-spacing: inherit; /* 1 */
-    color: inherit; /* 1 */
     margin: 0; /* 2 */
     padding: 0; /* 3 */
     background-color: transparent; /* 2 */
