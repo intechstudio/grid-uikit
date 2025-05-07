@@ -13,8 +13,12 @@ export { default as MoltenTooltip } from "./MoltenTooltip.svelte";
 export { default as MoltenPushButton } from "./MoltenPushButton.svelte";
 export { contextMenu, contextTarget } from "./context-target";
 export { default as SvgIcon } from "./SvgIcon.svelte";
-export { default as Tree } from "./Tree.svelte";
+export { default as Tree, type TreeNodeData } from "./Tree.svelte";
 export {
   default as MeltCombo,
   type MeltComboSuggestion,
 } from "./MeltCombo.svelte";
+export {
+  default as MarkdownContainer,
+  type MarkdownContainerTypes,
+} from "./MarkdownContainer.svelte";
