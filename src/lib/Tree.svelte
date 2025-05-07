@@ -1,12 +1,15 @@
-<script lang="ts">
-  import { createTreeView } from "@melt-ui/svelte";
-  import { createEventDispatcher, onMount } from "svelte";
-
-  interface TreeNodeData<T> {
+<script lang="ts" context="module">
+  export interface TreeNodeData<T> {
     id: string;
     children: TreeNodeData<T>[];
     items: T[];
+    expanded: boolean;
   }
+</script>
+
+<script lang="ts">
+  import { createTreeView } from "@melt-ui/svelte";
+  import { createEventDispatcher, onMount } from "svelte";
 
   export let treeItems: TreeNodeData<any>[] = [];
   export let level = 0;
@@ -16,7 +19,6 @@
 
   const {
     elements: { item, group },
-    helpers: { isExpanded },
     states: { expanded },
   } = treeView;
 
@@ -31,8 +33,12 @@
       return;
     }
 
-    if (level === 0 && value) {
-      expanded.set([id]);
+    if (level === 0) {
+      expanded.set(value ? [id] : []);
+    } else {
+      expanded.update((s) => {
+        return value ? [...s, id] : s.filter((e) => e !== id);
+      });
     }
   }
 </script>
@@ -42,12 +48,12 @@
     type="button"
     {...$item({ id: child.id, hasChildren: true })}
     use:item
-    on:click={() => toggleExpand(child.id, level, $isExpanded(child.id))}
+    on:click={() => toggleExpand(child.id, level, child.expanded)}
   >
-    <slot name="folder" {level} {child} isExpanded={$isExpanded(child.id)} />
+    <slot name="folder" {level} {child} isExpanded={child.expanded} />
   </button>
 
-  {#if $isExpanded(child.id)}
+  {#if child.expanded}
     <div class="subtree" class:root-subtree={level === 0}>
       {#if child.children && child.children.length > 0}
         <div {...$group({ id: child.id })} use:group class="subtree-child">
