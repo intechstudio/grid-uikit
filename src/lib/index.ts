@@ -20,3 +20,4 @@ export {
   default as MeltCombo,
   type MeltComboSuggestion,
 } from "./MeltCombo.svelte";
+export { default as MarkdownContainer } from "./MarkdownContainer.svelte";
