@@ -53,7 +53,7 @@
 </script>
 
 <div class="container" class:container-grow={size === "full"}>
-  <button {...$trigger} use:trigger class="select">
+  <button {...$trigger} use:trigger class="select" class:disabled>
     <span>{$selectedLabel || " "}</span>
     <span>&#9660;</span>
   </button>
@@ -78,16 +78,18 @@
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    background-color: var(--background-muted);
   }
   div.container-grow {
     flex-grow: 1;
   }
   button.select {
+    color: var(--foreground);
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    border: 1px solid black;
+    border: 1px solid var(--background-soft);
     padding: 0.5rem;
 
     font-family: inherit; /* 1 */
@@ -97,15 +99,20 @@
     font-weight: inherit; /* 1 */
     line-height: inherit; /* 1 */
     letter-spacing: inherit; /* 1 */
-    color: inherit; /* 1 */
     margin: 0; /* 2 */
     background-color: transparent; /* 2 */
     cursor: pointer;
   }
+  button.disabled {
+    color: var(--foreground-disabled);
+
+    cursor: not-allowed;
+    border: 1px solid var(--foreground-disabled);
+  }
   .menu {
-    background-color: rgba(23, 23, 23, 1);
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: var(--popover-background);
+    color: var(--foreground-muted);
+    border: 1px solid var(--foreground-muted);
     border-radius: 0.25rem;
     z-index: 40;
   }
@@ -114,10 +121,10 @@
     padding: 0.5rem;
   }
   div.option:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-    color: rgba(255, 255, 255, 1);
+    background-color: var(--popover-selection);
+    color: var(--foreground);
   }
   div.option-selected {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--popover-reference);
   }
 </style>

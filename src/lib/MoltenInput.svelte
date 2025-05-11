@@ -60,14 +60,17 @@
     width: 100%;
     display: flex;
     padding: 0.5rem;
-    color: rgba(255, 255, 255, 0.8);
-    flex-grow: 1;
-    background-color: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: var(--background-muted);
+    color: var(--foreground);
+    border: 1px solid var(--background-soft);
   }
   input:focus {
-    border-color: rgba(34, 197, 94, 1);
     outline: 2px solid transparent;
     outline-offset: 2px;
+  }
+  input:disabled {
+    cursor: not-allowed;
+    color: var(--foreground-disabled);
+    border: 1px solid var(--foreground-disabled);
   }
 </style>
