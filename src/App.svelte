@@ -13,6 +13,7 @@
   import Tree from "./lib/Tree.svelte";
   import { createTreeView } from "@melt-ui/svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
+  import MoltenInput from "./lib/MoltenInput.svelte";
 
   let t = false;
   let suggestionElement: any;
@@ -46,6 +47,8 @@
   let meltRadioValue2 = 0;
   let meltRadioValue3 = 0;
   let meltRadioValue4 = 0;
+
+  let moltenInputText = "hello";
 
   function handleTreeView(e) {
     console.log({ treeView: e.detail });
@@ -89,6 +92,27 @@
           style="background-color: var(--foreground-disabled);"
         ></div>
         --foreground-disabled</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--popover-background);"
+        ></div>
+        --popover-background</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--popover-selection);"
+        ></div>
+        --popover-selection</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--popover-reference);"
+        ></div>
+        --popover-reference</span
       >
     </div>
 
@@ -204,6 +228,9 @@
         ]}
         disabled={true}
       />
+
+      <MoltenInput bind:target={moltenInputText} />
+      <MoltenInput bind:target={moltenInputText} disabled={true} />
     </div>
     <div class="component-container">
       <span>MeltRadio:</span>

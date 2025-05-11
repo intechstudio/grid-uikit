@@ -106,6 +106,7 @@
   button.disabled {
     color: var(--foreground-disabled);
 
+    cursor: not-allowed;
     border: 1px solid var(--foreground-disabled);
   }
   .menu {
