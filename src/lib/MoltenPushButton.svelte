@@ -9,10 +9,16 @@
   export let click: (...args: any) => void;
 
   let showPopup: boolean = false;
+  let element: HTMLButtonElement;
+
+  export function focus() {
+    element?.focus();
+  }
 </script>
 
 <container class:width-full={snap === "full"}>
   <button
+    bind:this={element}
     class:selected
     on:click={() => {
       if (!showPopup) {
