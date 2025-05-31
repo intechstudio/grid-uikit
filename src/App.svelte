@@ -1,8 +1,6 @@
 <script lang="ts">
   import Block from "./lib/Block.svelte";
   import MeltCheckbox from "./lib/MeltCheckbox.svelte";
-  import AtomicInput from "./lib/AtomicInput.svelte";
-  import AtomicSuggestions from "./lib/AtomicSuggestions.svelte";
   import MoltenButton from "./lib/MoltenButton.svelte";
   import MeltCombo from "./lib/MeltCombo.svelte";
   import BlockBody from "./lib/BlockBody.svelte";
@@ -15,6 +13,7 @@
   import Tree from "./lib/Tree.svelte";
   import { createTreeView } from "@melt-ui/svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
+  import MoltenInput from "./lib/MoltenInput.svelte";
 
   let t = false;
   let suggestionElement: any;
@@ -49,6 +48,8 @@
   let meltRadioValue3 = 0;
   let meltRadioValue4 = 0;
 
+  let moltenInputText = "hello";
+
   function handleTreeView(e) {
     console.log({ treeView: e.detail });
   }
@@ -56,6 +57,65 @@
 
 <main on:contextmenu|preventDefault>
   <div class="main-container">
+    <div class="component-container">
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--background);"
+        ></div>
+        --background</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--foreground);"
+        ></div>
+        --foreground</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--foreground-muted);"
+        ></div>
+        --foreground-muted</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--foreground-soft);"
+        ></div>
+        --foreground-soft</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--foreground-disabled);"
+        ></div>
+        --foreground-disabled</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--popover-background);"
+        ></div>
+        --popover-background</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--popover-selection);"
+        ></div>
+        --popover-selection</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--popover-reference);"
+        ></div>
+        --popover-reference</span
+      >
+    </div>
+
     <div class="component-container">
       <span>Block:</span>
       <Block>
@@ -66,20 +126,10 @@
     <div class="component-container">
       <span>MeltCheckbox:</span>
       <MeltCheckbox target={t} title={"whatever"} />
-    </div>
-
-    <div class="component-container">
-      <span>AtomicInput: </span>
-      <AtomicInput
-        inputValue={input2Value}
-        suggestionTarget={suggestionElement}
-        suggestions={suggestion2}
-        on:change={(e) => {
-          input2Value = e.detail;
-        }}
-      />
-      <span>AtomicSuggestions: </span>
-      <AtomicSuggestions bind:component={suggestionElement} />
+      <MeltCheckbox target={t} title={"whatever"} />
+      <span>MeltCheckbox:</span>
+      <MeltCheckbox target={t} style={"transparent"} title={"whatever"} />
+      <MeltCheckbox target={t} style={"transparent"} title={"whatever"} />
     </div>
 
     <div class="component-container">
@@ -178,6 +228,9 @@
         ]}
         disabled={true}
       />
+
+      <MoltenInput bind:target={moltenInputText} />
+      <MoltenInput bind:target={moltenInputText} disabled={true} />
     </div>
     <div class="component-container">
       <span>MeltRadio:</span>
@@ -292,7 +345,7 @@
         </svelte:fragment>
 
         <svelte:fragment slot="file" let:item>
-          <div>
+          <div class="file-title">
             {item.value}
           </div>
         </svelte:fragment>
@@ -302,17 +355,30 @@
 </main>
 
 <style>
+  .color-preview-box {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    margin: 0 5px 0 0;
+    position: relative;
+    top: 2px;
+  }
+  .color-preview-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    margin-left: 5px;
+  }
+
   main {
     padding: 5rem;
-    background-color: rgba(42, 52, 57, 1);
+    background-color: var(--background);
     height: 100vh;
     overflow-y: auto;
   }
   span {
-    color: white;
   }
   div.main-container {
-    color: white;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -324,6 +390,7 @@
     gap: 0.5rem;
     width: 18rem;
     border: 1px solid black;
+    padding: 0.5rem;
   }
   div.svg-row {
     display: flex;
@@ -336,12 +403,20 @@
     margin-bottom: 0.25rem;
     border-bottom-width: 1px;
     height: 1.25rem;
-    border-color: rgb(255 255 255 / 0.4);
+    border-color: var(--foreground-soft);
   }
   div.folder-title {
     flex-grow: 1;
     text-align: left;
-    color: rgb(255 255 255 / 0.8);
+    color: var(--foreground-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  div.file-title {
+    flex-grow: 1;
+    text-align: left;
+    color: var(--foreground-muted);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

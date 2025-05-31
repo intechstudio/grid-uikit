@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="color-scheme: dark; transition: color-scheme 0.3s">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="vite.svg" />
@@ -7,7 +7,18 @@
     <title>Vite + Svelte + TS</title>
   </head>
   <body>
+    <input type="checkbox" id="darkModeToggle" checked />
+    <label for="darkModeToggle">Toggle Dark Mode</label>
     <div id="app"></div>
+    <script>
+      const toggle = document.getElementById("darkModeToggle");
+      toggle.addEventListener("change", (e) => {
+        document.documentElement.setAttribute(
+          "color-scheme",
+          toggle.checked ? "dark" : "light",
+        );
+      });
+    </script>
     <script type="module" src="src/main.ts"></script>
   </body>
 </html>
