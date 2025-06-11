@@ -22,7 +22,7 @@ export {
   type AbstractFolderData,
   type AbstractItemData,
   type AbstractTreeNodeData,
-  type AbstractTreeNode,
+  AbstractTreeNode,
 } from "./TreeNode.svelte";
 export { default as TreeCard, type AbstractCardData } from "./TreeCard.svelte";
 export { default as TreeChild } from "./TreeChild.svelte";
