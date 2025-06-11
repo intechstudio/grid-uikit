@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { contextTarget } from "@intechstudio/grid-uikit";
+  import { contextTarget } from "./context-target";
   import {
     type AbstractFolderData,
     type AbstractTreeNode,
