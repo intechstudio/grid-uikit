@@ -15,7 +15,18 @@ export { default as AtomicInput } from "./AtomicInput.svelte";
 export { default as AtomicSuggestions } from "./AtomicSuggestions.svelte";
 export { contextMenu, contextTarget } from "./context-target";
 export { default as SvgIcon } from "./SvgIcon.svelte";
-export { default as Tree, type TreeNodeData } from "./Tree.svelte";
+export { default as Tree } from "./Tree.svelte";
+export {
+  default as TreeNode,
+  TreeItemType,
+  type AbstractFolderData,
+  type AbstractItemData,
+  type AbstractTreeNodeData,
+  type AbstractTreeNode,
+} from "./TreeNode.svelte";
+export { default as TreeCard, type AbstractCardData } from "./TreeCard.svelte";
+export { default as TreeChild } from "./TreeChild.svelte";
+export { default as TreeFolder } from "./TreeFolder.svelte";
 export {
   default as MeltCombo,
   type MeltComboSuggestion,
