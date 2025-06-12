@@ -73,7 +73,7 @@
         <svg
           width="14"
           height="11"
-          class:-rotate-90={!expanded}
+          class:collapsed={!expanded}
           viewBox="0 0 14 11"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -181,5 +181,9 @@
 
   .trigger-container {
     margin-right: 0.5rem;
+  }
+
+  .collapsed {
+    transform: rotate(-90deg);
   }
 </style>
