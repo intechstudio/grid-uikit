@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { contextTarget } from "./context-target";
+  import { contextTarget, type ContextMenuOptions } from "./context-target";
   import {
     type AbstractFolderData,
     type AbstractTreeNode,
@@ -7,11 +7,9 @@
   } from "./TreeNode.svelte";
   import { get } from "svelte/store";
 
-  type ContextMenuOptions = any;
-
   export let item: AbstractTreeNode<any>;
-  export let isExpanded: boolean;
-  export let ctxOptions: ContextMenuOptions;
+  export let expanded: boolean;
+  export let ctxOptions: ContextMenuOptions = { items: [] };
 
   let data: AbstractFolderData;
   $: data = $item.data as AbstractFolderData;
@@ -26,7 +24,7 @@
   <svg
     width="14"
     height="11"
-    class:collapsed={!isExpanded}
+    class:collapsed={!expanded}
     viewBox="0 0 14 11"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  export interface AbstractCardData {
+  export interface ProfileCloudCardData {
     type: string;
     name: string;
     syncStatus: "synced" | "local" | "cloud";
@@ -15,15 +15,15 @@
 
   const dispatch = createEventDispatcher();
 
-  export let isSelected: boolean;
-  export let isCompatible: boolean;
-  export let isExpanded: boolean;
-  export let item: AbstractTreeNode<WithRequiredConfig>;
+  export let selected: boolean;
+  export let compatible: boolean;
+  export let expanded: boolean;
+  export let item: AbstractTreeNode<WithProfileCloudData>;
 
-  type WithRequiredConfig<T = unknown> = T & AbstractCardData;
+  type WithProfileCloudData<T = unknown> = T & ProfileCloudCardData;
 
-  let data: AbstractCardData;
-  $: data = ($item.data as AbstractItemData<WithRequiredConfig>).item;
+  let data: ProfileCloudCardData;
+  $: data = ($item.data as AbstractItemData<WithProfileCloudData>).item;
 
   function handleDragStart(e: DragEvent) {
     dispatch("drag-start");
@@ -40,7 +40,7 @@
 
 <button
   id={$item.id}
-  class="{isSelected ? 'border-selected' : 'border-unselected'} button"
+  class="{selected ? 'border-selected' : 'border-unselected'} button"
   draggable="true"
   on:click={handleClick}
   on:dragstart={handleDragStart}
@@ -51,20 +51,20 @@
       class={data.syncStatus === "cloud" || data.syncStatus === "synced"
         ? "status-cloud"
         : "status-inactive"}
-    ></div>
+    />
     <div
       class={data.syncStatus === "local" || data.syncStatus === "synced"
         ? "status-local"
         : "status-inactive"}
-    ></div>
+    />
   </div>
   <div class="button-content">
-    <span class="button-label" class:label-incompatible={isCompatible}>
+    <span class="button-label" class:label-incompatible={compatible}>
       {data.name}
     </span>
     <div
       class="type-label
-        {isCompatible ? 'type-compatible' : 'type-incompatible'}"
+        {compatible ? 'type-compatible' : 'type-incompatible'}"
     >
       {data.type}
     </div>
@@ -73,7 +73,7 @@
         <svg
           width="14"
           height="11"
-          class:-rotate-90={!isExpanded}
+          class:-rotate-90={!expanded}
           viewBox="0 0 14 11"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -97,6 +97,8 @@
     border-width: 1px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     background-color: #2a3439;
+    height: 33px;
+    padding: 0;
   }
 
   .border-selected {
@@ -148,6 +150,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
+    color: white;
   }
 
   .label-incompatible {

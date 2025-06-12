@@ -2,9 +2,8 @@ import type { Action } from "svelte/action";
 import ContextMenu, { type ContextMenuItem } from "./ContextMenu.svelte";
 import { get, writable, type Writable } from "svelte/store";
 
-interface ContextMenuOptions {
+export interface ContextMenuOptions {
   items: ContextMenuItem[];
-  data: any;
 }
 
 interface ContextMenuWritable extends Writable<ContextMenu | undefined> {
@@ -36,7 +35,9 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
 ): any => {
   const handleContextMenu = (e: MouseEvent) => {
     e.preventDefault();
-    createContextMenu(e.clientX, e.clientY);
+    if (options.items.length > 0) {
+      createContextMenu(e.clientX, e.clientY);
+    }
   };
 
   const createContextMenu = async (x: number, y: number) => {

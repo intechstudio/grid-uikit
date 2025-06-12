@@ -2,12 +2,12 @@
   export interface FolderSlotProps {
     level: number;
     item: AbstractTreeNode<any>;
-    isExpanded: boolean;
+    expanded: boolean;
   }
   export interface ItemSlotProps {
     level: number;
     item: AbstractTreeNode<any>;
-    isExpanded: boolean;
+    expanded: boolean;
   }
 </script>
 
@@ -28,7 +28,7 @@
 
 <button
   type="button"
-  {...$item({ id: $child.id, hasChildren: $child.children.length > 0 })}
+  {...$item({ id: $child.id, hasChildren: true })}
   use:item
   class:folder={$child.type === TreeItemType.FOLDER}
   class:item={$child.type === TreeItemType.ITEM}
@@ -38,15 +38,10 @@
       name="folder"
       {level}
       item={child}
-      isExpanded={$isExpanded($child.id)}
+      expanded={$isExpanded($child.id)}
     />
   {:else if $child.type === TreeItemType.ITEM}
-    <slot
-      name="item"
-      {level}
-      item={child}
-      isExpanded={$isExpanded($child.id)}
-    />
+    <slot name="item" {level} item={child} expanded={$isExpanded($child.id)} />
   {/if}
 </button>
 

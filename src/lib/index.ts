@@ -13,7 +13,11 @@ export { default as MoltenTooltip } from "./MoltenTooltip.svelte";
 export { default as MoltenPushButton } from "./MoltenPushButton.svelte";
 export { default as AtomicInput } from "./AtomicInput.svelte";
 export { default as AtomicSuggestions } from "./AtomicSuggestions.svelte";
-export { contextMenu, contextTarget } from "./context-target";
+export {
+  contextMenu,
+  contextTarget,
+  type ContextMenuOptions,
+} from "./context-target";
 export { default as SvgIcon } from "./SvgIcon.svelte";
 export { default as Tree } from "./Tree.svelte";
 export {
@@ -24,7 +28,10 @@ export {
   type AbstractTreeNodeData,
   AbstractTreeNode,
 } from "./TreeNode.svelte";
-export { default as TreeCard, type AbstractCardData } from "./TreeCard.svelte";
+export {
+  default as ProfileCloudTreeItem,
+  type ProfileCloudCardData as AbstractCardData,
+} from "./ProfileCloudTreeItem.svelte";
 export { default as TreeChild } from "./TreeChild.svelte";
 export { default as TreeFolder } from "./TreeFolder.svelte";
 export {

@@ -167,12 +167,12 @@
 {#each $node.children as child, i}
   <li id={get(child).id} bind:this={listItems[i]}>
     <TreeChild {child} {level}>
-      <svelte:fragment slot="folder" let:level let:item let:isExpanded>
-        <slot name="folder" {level} {item} {isExpanded} />
+      <svelte:fragment slot="folder" let:level let:item let:expanded>
+        <slot name="folder" {level} {item} {expanded} />
       </svelte:fragment>
 
-      <svelte:fragment slot="item" let:item let:level let:isExpanded>
-        <slot name="item" {level} {item} {isExpanded} />
+      <svelte:fragment slot="item" let:item let:level let:expanded>
+        <slot name="item" {level} {item} {expanded} />
       </svelte:fragment>
     </TreeChild>
 
@@ -190,12 +190,12 @@
           {rootElement}
           {rootHeight}
         >
-          <svelte:fragment slot="folder" let:level let:item let:isExpanded>
-            <slot name="folder" {level} {item} {isExpanded} />
+          <svelte:fragment slot="folder" let:level let:item let:expanded>
+            <slot name="folder" {level} {item} {expanded} />
           </svelte:fragment>
 
-          <svelte:fragment slot="item" let:level let:item let:isExpanded>
-            <slot name="item" {level} {item} {isExpanded} />
+          <svelte:fragment slot="item" let:level let:item let:expanded>
+            <slot name="item" {level} {item} {expanded} />
           </svelte:fragment>
         </svelte:self>
       </ul>
@@ -204,7 +204,14 @@
 {/each}
 
 <style>
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
   li {
+    all: unset;
     display: flex;
     flex-direction: column;
   }

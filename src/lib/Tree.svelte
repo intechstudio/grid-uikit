@@ -1,3 +1,12 @@
+<script lang="ts" context="module">
+  export interface TreeProperties {
+    root: AbstractTreeNode<any>;
+    expanded?: string[];
+    selected?: string | undefined;
+    scrollToSelected?: boolean;
+  }
+</script>
+
 <script lang="ts">
   import { createTreeView, type TreeView } from "@melt-ui/svelte";
   import { setContext } from "svelte";
@@ -11,8 +20,8 @@
   }
 
   export let root: AbstractTreeNode<any>;
-  export let expanded: string[];
-  export let selected: string | undefined;
+  export let expanded: string[] = [];
+  export let selected: string | undefined = undefined;
   export let scrollToSelected: boolean = true;
 
   let rootElement: HTMLUListElement;
@@ -49,7 +58,7 @@
   }
 
   let scrollTimeout: any;
-  async function scrollToNodeWhenReady(node: HTMLElement, id: string) {
+  async function scrollToNode(node: HTMLElement, id: string) {
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
       const target = node.querySelector(`#${CSS.escape(id)}`) as HTMLElement;
@@ -65,7 +74,7 @@
   }
 
   $: if (selected && scrollToSelected) {
-    scrollToNodeWhenReady(rootElement, selected);
+    scrollToNode(rootElement, selected);
   }
 </script>
 
@@ -77,18 +86,24 @@
     class="tree"
   >
     <TreeNode node={root} level={0} {rootElement} {rootHeight}>
-      <svelte:fragment slot="folder" let:level let:item let:isExpanded>
-        <slot name="folder" {level} {item} {isExpanded} />
+      <svelte:fragment slot="folder" let:level let:item let:expanded>
+        <slot name="folder" {level} {item} {expanded} />
       </svelte:fragment>
 
-      <svelte:fragment slot="item" let:item let:level let:isExpanded>
-        <slot name="item" {level} {item} {isExpanded} />
+      <svelte:fragment slot="item" let:item let:level let:expanded>
+        <slot name="item" {level} {item} {expanded} />
       </svelte:fragment>
     </TreeNode>
   </ul>
 {/key}
 
 <style>
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
   .tree {
     height: 100%;
     width: 100%;
