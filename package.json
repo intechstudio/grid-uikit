@@ -16,10 +16,12 @@
     ".": {
       "types": "./dist/index.d.ts",
       "svelte": "./dist/index.js"
-    }
+    },
+    "./theme.css": "./src/lib/theme.css"
   },
   "files": [
     "dist",
+    "src/lib/theme.css",
     "!dist/**/*.test.*",
     "!dist/**/*.spec.*"
   ],

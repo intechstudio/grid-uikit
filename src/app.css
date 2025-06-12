@@ -41,56 +41,6 @@ html,
 body {
   margin: 0; /* 1 */
   line-height: inherit; /* 2 */
-}
-
-:root {
-  --foreground: #fff;
-  --background: rgba(42, 52, 57, 1);
-  --shadow: #000;
-
-  --foreground-muted: color-mix(
-    in srgb,
-    var(--foreground) 70%,
-    var(--background) 30%
-  );
-  --foreground-soft: color-mix(
-    in srgb,
-    var(--foreground) 50%,
-    var(--background) 50%
-  );
-  --foreground-disabled: color-mix(
-    in srgb,
-    var(--foreground) 30%,
-    var(--background) 70%
-  );
-
-  --background-muted: color-mix(in srgb, var(--background), var(--shadow) 20%);
-  --background-soft: color-mix(in srgb, var(--background), var(--shadow) 50%);
-
-  --popover-background: color-mix(
-    in srgb,
-    var(--background),
-    rgba(0, 0, 0, 1) 70%
-  );
-
-  --popover-selection: var(--background-muted);
-
-  --popover-reference: var(--background-soft);
-}
-html[color-scheme="light"] {
-  --foreground: #000;
-  --background: #e0e0e0;
-  --popover-background: color-mix(
-    in srgb,
-    var(--background),
-    rgba(255, 255, 255, 1) 70%
-  );
-  --shadow: #787878;
-
-  --popover-selection: var(--background-soft);
-  --popover-reference: var(--background-muted);
-}
-body {
   color: var(--foreground);
   background-color: var(--background);
 }
