@@ -10,8 +10,7 @@
   import MeltSlider from "./lib/MeltSlider.svelte";
   import MeltSelect from "./lib/MeltSelect.svelte";
   import MeltRadio from "./lib/MeltRadio.svelte";
-  import Tree from "./lib/Tree.svelte";
-  import { createTreeView } from "@melt-ui/svelte";
+  import Tree from "./mockup/Tree.svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
 
@@ -49,10 +48,6 @@
   let meltRadioValue4 = 0;
 
   let moltenInputText = "hello";
-
-  function handleTreeView(e) {
-    console.log({ treeView: e.detail });
-  }
 </script>
 
 <main on:contextmenu|preventDefault>
@@ -281,75 +276,7 @@
     </div>
     <div class="component-container">
       <span>Tree:</span>
-      <Tree
-        on:tree-view={handleTreeView}
-        treeItems={[
-          {
-            id: "0",
-            title: "Main 1",
-            children: [
-              {
-                id: "1",
-                title: "Sub 1",
-                children: [],
-                items: [{ value: 1 }],
-              },
-              {
-                id: "2",
-                title: "Sub 2",
-                children: [],
-                items: [
-                  { id: "3", value: 2 },
-                  { id: "4", value: 3 },
-                ],
-              },
-            ],
-            items: [],
-          },
-          {
-            id: "5",
-            title: "Main 2",
-            children: [
-              {
-                id: "6",
-                title: "Sub 3",
-                children: [],
-                items: [{ value: 4 }],
-              },
-            ],
-            items: [],
-          },
-        ]}
-      >
-        <svelte:fragment slot="folder" let:child let:isExpanded let:level>
-          <div class="folder-container">
-            <div class="folder-title">
-              {child.title}
-            </div>
-            <div>
-              <svg
-                width="14"
-                height="11"
-                style:transform={`rotate(${isExpanded ? "0" : "-90deg"})`}
-                viewBox="0 0 14 11"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.99968 11L0.9375 0.5L13.0619 0.500001L6.99968 11Z"
-                  fill="#D9D9D9"
-                />
-              </svg>
-            </div>
-          </div>
-        </svelte:fragment>
-
-        <svelte:fragment slot="file" let:item>
-          <div class="file-title">
-            {item.value}
-          </div>
-        </svelte:fragment>
-      </Tree>
+      <Tree />
     </div>
   </div>
 </main>

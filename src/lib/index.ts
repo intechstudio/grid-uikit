@@ -11,9 +11,27 @@ export { default as MoltenButton } from "./MoltenButton.svelte";
 export { default as MoltenInput } from "./MoltenInput.svelte";
 export { default as MoltenTooltip } from "./MoltenTooltip.svelte";
 export { default as MoltenPushButton } from "./MoltenPushButton.svelte";
-export { contextMenu, contextTarget } from "./context-target";
+export {
+  contextMenu,
+  contextTarget,
+  type ContextMenuOptions,
+} from "./context-target";
 export { default as SvgIcon } from "./SvgIcon.svelte";
-export { default as Tree, type TreeNodeData } from "./Tree.svelte";
+export { default as Tree, type TreeProperties } from "./Tree.svelte";
+export {
+  default as TreeNode,
+  TreeItemType,
+  type AbstractFolderData,
+  type AbstractItemData,
+  type AbstractTreeNodeData,
+  AbstractTreeNode,
+} from "./TreeNode.svelte";
+export {
+  default as ProfileCloudTreeItem,
+  type ProfileCloudCardData as AbstractCardData,
+} from "./ProfileCloudTreeItem.svelte";
+export { default as TreeChild } from "./TreeChild.svelte";
+export { default as TreeFolder } from "./TreeFolder.svelte";
 export {
   default as MeltCombo,
   type MeltComboSuggestion,

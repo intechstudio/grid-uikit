@@ -1,101 +1,113 @@
 <script lang="ts" context="module">
-  export interface TreeNodeData<T> {
-    id: string;
-    children: TreeNodeData<T>[];
-    items: T[];
-    expanded: boolean;
+  export interface TreeProperties {
+    root: AbstractTreeNode<any>;
+    expanded?: string[];
+    selected?: string | undefined;
+    scrollToSelected?: boolean;
   }
 </script>
 
 <script lang="ts">
-  import { createTreeView } from "@melt-ui/svelte";
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createTreeView, type TreeView } from "@melt-ui/svelte";
+  import { setContext } from "svelte";
+  import TreeNode, { type AbstractTreeNode } from "./TreeNode.svelte";
+  import { type FolderSlotProps, type ItemSlotProps } from "./TreeChild.svelte";
+  import { get } from "svelte/store";
 
-  export let treeItems: TreeNodeData<any>[] = [];
-  export let level = 0;
-  export let toggleMainLevels = true;
+  interface $$Slots {
+    folder: FolderSlotProps;
+    item: ItemSlotProps;
+  }
 
-  const treeView = createTreeView();
+  export let root: AbstractTreeNode<any>;
+  export let expanded: string[] = [];
+  export let selected: string | undefined = undefined;
+  export let scrollToSelected: boolean = true;
 
-  const {
-    elements: { item, group },
-    states: { expanded },
-  } = treeView;
+  let rootElement: HTMLUListElement;
+  let rootHeight: number;
 
-  const dispatch = createEventDispatcher();
+  let ctx: TreeView;
+  $: if ($root?.id) {
+    ctx = createTreeView({ onExpandedChange: handleExpandedChange });
+    setContext("tree", ctx);
+  }
 
-  onMount(() => {
-    dispatch("tree-view", treeView);
-  });
+  $: tree = ctx?.elements.tree;
+  $: ctx?.states.expanded.set(expanded ?? []);
 
-  function toggleExpand(id: string, level: number, value: boolean) {
-    if (!toggleMainLevels) {
-      return;
-    }
-
-    if (level === 0) {
-      expanded.set(value ? [id] : []);
+  function handleExpandedChange({
+    curr,
+    next,
+  }: {
+    curr: string[];
+    next: string[];
+  }) {
+    if (next.length > curr.length) {
+      const diff = next.find((e) => !curr.includes(e))!;
+      const rootNodes = get(root).children.map((e) => get(e).id);
+      if (rootNodes.includes(diff)) {
+        const others = next.filter((e) => !rootNodes.includes(e));
+        return [...others, diff];
+      } else {
+        return next;
+      }
     } else {
-      expanded.update((s) => {
-        return value ? [...s, id] : s.filter((e) => e !== id);
-      });
+      return next;
     }
+  }
+
+  let scrollTimeout: any;
+  async function scrollToNode(node: HTMLElement, id: string) {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const target = node.querySelector(`#${CSS.escape(id)}`) as HTMLElement;
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+        return;
+      }
+    }, 100);
+  }
+
+  $: if (selected && scrollToSelected) {
+    scrollToNode(rootElement, selected);
   }
 </script>
 
-{#each treeItems as child}
-  <button
-    type="button"
-    {...$item({ id: child.id, hasChildren: true })}
-    use:item
-    on:click={() => toggleExpand(child.id, level, child.expanded)}
+{#key tree}
+  <ul
+    bind:this={rootElement}
+    bind:clientHeight={rootHeight}
+    {...$tree}
+    class="tree"
   >
-    <slot name="folder" {level} {child} isExpanded={child.expanded} />
-  </button>
+    <TreeNode node={root} level={0} {rootElement} {rootHeight}>
+      <svelte:fragment slot="folder" let:level let:item let:expanded>
+        <slot name="folder" {level} {item} {expanded} />
+      </svelte:fragment>
 
-  {#if child.expanded}
-    <div class="subtree" class:root-subtree={level === 0}>
-      {#if child.children && child.children.length > 0}
-        <div {...$group({ id: child.id })} use:group class="subtree-child">
-          <svelte:self treeItems={child.children} level={level + 1}>
-            <svelte:fragment slot="folder" let:level let:child let:isExpanded>
-              <slot name="folder" {level} {child} {isExpanded} />
-            </svelte:fragment>
-
-            <svelte:fragment slot="file" let:item>
-              <slot name="file" {item} />
-            </svelte:fragment>
-          </svelte:self>
-        </div>
-      {/if}
-
-      {#each child.items as item (item.id)}
-        <slot name="file" {item} />
-      {/each}
-    </div>
-  {/if}
-{/each}
+      <svelte:fragment slot="item" let:item let:level let:expanded>
+        <slot name="item" {level} {item} {expanded} />
+      </svelte:fragment>
+    </TreeNode>
+  </ul>
+{/key}
 
 <style>
-  button {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin: 0;
+  ul {
     padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .tree {
+    height: 100%;
+    width: 100%;
     background-color: transparent;
     cursor: pointer;
-  }
-  div.subtree {
-    display: flex;
-    flex-direction: column;
-  }
-  div.root-subtree {
-    max-height: 100%;
-    overflow-y: scroll;
-    padding-right: 0.25rem;
-  }
-  div.subtree-child {
-    padding-left: 1rem;
   }
 </style>
