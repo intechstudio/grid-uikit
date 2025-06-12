@@ -11,8 +11,6 @@ export { default as MoltenButton } from "./MoltenButton.svelte";
 export { default as MoltenInput } from "./MoltenInput.svelte";
 export { default as MoltenTooltip } from "./MoltenTooltip.svelte";
 export { default as MoltenPushButton } from "./MoltenPushButton.svelte";
-export { default as AtomicInput } from "./AtomicInput.svelte";
-export { default as AtomicSuggestions } from "./AtomicSuggestions.svelte";
 export {
   contextMenu,
   contextTarget,

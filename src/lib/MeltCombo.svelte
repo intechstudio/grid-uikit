@@ -252,7 +252,7 @@
     gap: 0.25rem;
   }
   label {
-    color: white;
+    color: var(--foreground);
     font-size: 0.875rem;
     line-height: 1.25rem;
     overflow: hidden;
@@ -267,19 +267,11 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    border-width: 1px;
+    border: 1px solid rgba(0, 0, 0, 1);
     padding: 0.5rem;
-    border-color: rgba(0, 0, 0, 1);
     color: white;
     background-color: rgba(0, 0, 0, 0.25);
     margin: 0.25rem 0rem 0rem;
-    font-family: inherit; /* 1 */
-    font-feature-settings: inherit; /* 1 */
-    font-variation-settings: inherit; /* 1 */
-    font-size: 100%; /* 1 */
-    font-weight: inherit; /* 1 */
-    line-height: inherit; /* 1 */
-    letter-spacing: inherit; /* 1 */
   }
   input.error {
     border-color: rgba(220, 38, 38, 1);
@@ -320,7 +312,7 @@
     color: white;
   }
   div.info-value {
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--foreground-soft);
     font-size: 0.875rem;
     line-height: 1.25rem;
     overflow: hidden;
