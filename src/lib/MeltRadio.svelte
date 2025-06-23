@@ -55,19 +55,14 @@
   class:container-full={size == "full" && orientation == "horizontal"}
   class:container-vertical={orientation === "vertical"}
   class:container-button={style === "button"}
-  class:radio-border={style !== "button" && orientation !== "vertical"}
+  class:radio-border={style !== "button"}
   class="container"
 >
   {#each options as option}
     <!-- Convert value to string in case it was originally boolean -->
     {@const value = option.value.toString()}
     {@const title = option.title}
-    <label
-      class:radio-border={orientation === "vertical"}
-      class:vertical-padding={orientation === "vertical"}
-      class:horizontal-padding={style !== "button"}
-      class="row"
-    >
+    <label class:horizontal-padding={style !== "button"} class="row">
       {#if style === "radio"}
         <button {...$item(value)} use:item id={title}>
           <div class="style-radio">
@@ -101,7 +96,7 @@
 
 <style>
   div.container {
-    color: white;
+    color: var(--foreground-muted);
     overflow: visible;
     display: grid;
     grid-auto-flow: column;
@@ -119,8 +114,8 @@
     gap: 1rem;
   }
   .radio-border {
-    border: 1px solid rgba(0, 0, 0, 0.2);
     background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
   label.row {
     cursor: pointer;
@@ -142,6 +137,7 @@
     justify-content: center;
     border-radius: 9999px;
     border-width: 1px;
+    border-color: var(--foreground);
     width: 1.5rem;
     height: 1.5rem;
     margin-right: 0.75rem;
@@ -149,7 +145,7 @@
   div.style-radio-inside {
     position: absolute;
     border-radius: 9999px;
-    background-color: white;
+    background-color: var(--foreground);
     width: 0.75rem;
     height: 0.75rem;
   }
@@ -172,13 +168,12 @@
     padding: 0.25rem 0.5rem;
     width: 100%;
     border-radius: 0.25rem;
-    background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.4);
   }
   button.style-button:hover {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: var(--background-muted);
   }
   button.style-button.selected {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--background-soft);
   }
 </style>
