@@ -2,6 +2,9 @@
 
 The UI elements and configurations for projects used by the Grid Ecosystem.
 
+## Preview URL
+Live demo showcasing the project is available at https://grid-uikit-web.web.app/
+
 ## Developing
 
 When developing this package, the library should be linked using the `npm link` command, which will overwrite the existing folder from node_modules with the locally available package.
