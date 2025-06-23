@@ -106,9 +106,11 @@
     e.stopPropagation();
   }
 
-  let mouseEnterReference: HTMLElement | undefined = undefined;
-
   onMount(() => {
+    referenceElement.addEventListener(
+      "mouseenter",
+      handleReferenceElementMouseEnter,
+    );
     referenceElement.addEventListener(
       "mouseleave",
       handleReferenceElementMouseLeave,
@@ -116,28 +118,13 @@
     referenceElement.addEventListener("click", handleReferenceElementClick);
     referenceElement.addEventListener("focus", handleReferenceElementFocus);
     referenceElement.addEventListener("blur", handleReferenceElementBlur);
-
-    // Create new div that handles hover enter.
-    // This avoids strange behaviour when mouse is placed on the border and tooltip keeps appearing and disappearing
-    mouseEnterReference = document.createElement("div");
-    mouseEnterReference.style.position = "absolute";
-    mouseEnterReference.style.backgroundColor = "transparent";
-    mouseEnterReference.style.zIndex = "9999";
-
-    mouseEnterReference.style.top = "1px";
-    mouseEnterReference.style.left = "1px";
-    mouseEnterReference.style.right = "1px";
-    mouseEnterReference.style.bottom = "1px";
-
-    mouseEnterReference.addEventListener(
-      "mouseenter",
-      handleReferenceElementMouseEnter,
-    );
-
-    referenceElement.appendChild(mouseEnterReference);
   });
 
   onDestroy(() => {
+    referenceElement.removeEventListener(
+      "mouseenter",
+      handleReferenceElementMouseEnter,
+    );
     referenceElement.removeEventListener(
       "mouseleave",
       handleReferenceElementMouseLeave,
@@ -145,13 +132,6 @@
     referenceElement.removeEventListener("click", handleReferenceElementClick);
     referenceElement.removeEventListener("focus", handleReferenceElementFocus);
     referenceElement.removeEventListener("blur", handleReferenceElementBlur);
-
-    mouseEnterReference?.removeEventListener(
-      "mouseenter",
-      handleReferenceElementMouseEnter,
-    );
-    mouseEnterReference?.remove();
-    mouseEnterReference = undefined;
   });
 
   function interceptEvent(e: any) {
