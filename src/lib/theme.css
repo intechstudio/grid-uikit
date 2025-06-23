@@ -1,6 +1,6 @@
 :root {
   --foreground: #fff;
-  --background: rgba(42, 52, 57, 1);
+  --background: #1e2628;
   --shadow: #000;
 
   --foreground-muted: color-mix(
