@@ -1,17 +1,29 @@
 <script lang="ts">
+  export let border: string = "transparent";
 </script>
 
-<div>
+<div
+  class:transparent-block={border === "transparent"}
+  style:border-color={border}
+>
   <slot />
 </div>
 
 <style>
   div {
+    border-width: 1px;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    row-gap: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    row-gap: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin: 0.5rem;
+  }
+
+  .transparent-block {
+    border-width: 0px;
+    margin: 0rem;
   }
 </style>

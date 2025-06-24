@@ -107,7 +107,7 @@
   }
   div.container-vertical {
     grid-auto-flow: row;
-    margin: 0.5rem 0;
+    margin: 0;
     gap: 1rem;
   }
   div.container-button {
