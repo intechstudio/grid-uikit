@@ -7,7 +7,7 @@
 
 <style>
   div {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
   *:first-child {
     margin-top: 0rem;
