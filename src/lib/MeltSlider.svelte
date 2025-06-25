@@ -40,7 +40,7 @@
   }
 
   function handleValueCommited() {
-    dispatch("commit");
+    dispatch("commit", { value: target });
   }
 
   $: syncExternalToInternal(target);
