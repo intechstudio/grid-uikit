@@ -17,6 +17,7 @@
     min: min,
     max: max,
     step: step,
+    onValueCommitted: handleValueCommited,
   });
 
   let oldTarget: number;
@@ -38,6 +39,10 @@
     dispatch("blur");
   }
 
+  function handleValueCommited() {
+    dispatch("commit");
+  }
+
   $: syncExternalToInternal(target);
   $: syncInternalToExternal($value[0]);
 </script>
@@ -46,6 +51,7 @@
   <span class="range-full">
     <span {...$range} use:range class="range-selected" />
   </span>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <span {...$thumbs[0]} use:thumbs class="thumb" on:blur={handleThumbBlur} />
 </span>
 
