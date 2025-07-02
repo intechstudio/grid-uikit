@@ -23,35 +23,39 @@
 
   function handleClick(e: any) {
     //handleReferenceElementClick(e);
-    e.stopPropagation();
+    //e.stopPropagation();
   }
 
   function handleMouseEnter(e: any) {
     handleReferenceElementMouseEnter(e);
-    e.stopPropagation();
+    //e.stopPropagation();
   }
 
   function handleMouseLeave(e: any) {
     handleReferenceElementMouseLeave(e);
-    e.stopPropagation();
+    //e.stopPropagation();
   }
 
   function handleReferenceElementClick(e: any) {
     if (triggerEvents.includes("click")) {
       showTooltip = true;
-      showbuttons = true;
+      if (buttons.length > 0) {
+        showbuttons = true;
+      }
     }
     if (triggerEvents.includes("show-buttons")) {
       if (!showbuttons) {
         clearTimeout(openTimeout);
         showTooltip = true;
-        showbuttons = true;
+        if (buttons.length > 0) {
+          showbuttons = true;
+        }
       }
     }
     if (triggerEvents.includes("hover") && !showbuttons) {
       showTooltip = false;
     }
-    e.stopPropagation();
+    //e.stopPropagation();
   }
 
   function handleReferenceElementMouseEnter(e: any) {
@@ -68,7 +72,7 @@
     if (triggerEvents.includes("click")) {
       clearTimeout(closeTimeout);
     }
-    e.stopPropagation();
+    //e.stopPropagation();
   }
 
   function handleReferenceElementMouseLeave(e: any) {
@@ -86,7 +90,7 @@
         showTooltip = false;
       }, 100);
     }
-    e.stopPropagation();
+    //e.stopPropagation();
   }
 
   function handleReferenceElementFocus(e: any) {
@@ -94,7 +98,7 @@
       clearTimeout(closeTimeout);
       showTooltip = true;
     }
-    e.stopPropagation();
+    //e.stopPropagation();
   }
 
   function handleReferenceElementBlur(e: any) {
@@ -103,7 +107,7 @@
         showTooltip = false;
       }, 100);
     }
-    e.stopPropagation();
+    //e.stopPropagation();
   }
 
   onMount(() => {
@@ -144,7 +148,7 @@
       default:
         forwardEvent(e);
     }
-    e.stopPropagation();
+    //e.stopPropagation();
   }
 
   function forwardEvent(e: any) {
