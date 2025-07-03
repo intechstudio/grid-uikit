@@ -14,7 +14,7 @@
     size?: "auto" | "full";
     searchable?: boolean;
     placeholder?: string;
-    disabled: boolean;
+    disabled?: boolean;
     valueInfoEnabled?: boolean;
   };
 </script>
