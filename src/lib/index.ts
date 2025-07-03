@@ -35,6 +35,7 @@ export { default as TreeFolder } from "./TreeFolder.svelte";
 export {
   default as MeltCombo,
   type MeltComboSuggestion,
+  type MeltComboData,
 } from "./MeltCombo.svelte";
 export {
   default as MarkdownContainer,
