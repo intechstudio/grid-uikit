@@ -60,13 +60,15 @@
   </div>
   <div class="button-content">
     <span class="button-label" class:label-incompatible={compatible}>
-      {data.name}
+      <slot name="button-label">
+        {data.name}
+      </slot>
     </span>
     <div
       class="type-label
         {compatible ? 'type-compatible' : 'type-incompatible'}"
     >
-      {data.type}
+      <slot name="type-label">{data.type}</slot>
     </div>
     {#if $item.children.length > 0}
       <div class="trigger-container">
