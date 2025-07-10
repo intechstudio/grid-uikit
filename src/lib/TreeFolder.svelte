@@ -17,9 +17,11 @@
 
 <div class="header" use:contextTarget={ctxOptions}>
   <div class="title">
-    {`${data.title} (${
-      $item.children.filter((e) => get(e).type !== TreeItemType.FOLDER).length
-    })`}
+    <slot name="title-label">
+      {`${data.title} (${
+        $item.children.filter((e) => get(e).type !== TreeItemType.FOLDER).length
+      })`}</slot
+    >
   </div>
   <svg
     width="14"

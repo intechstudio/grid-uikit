@@ -1,9 +1,14 @@
 <script lang="ts" context="module">
+  export interface TreeScrollBehaviour {
+    scrollToIndex?: boolean;
+    easing?: "smooth" | "instant";
+  }
+
   export interface TreeProperties {
     root: AbstractTreeNode<any>;
     expanded?: string[];
     selected?: string | undefined;
-    scrollToSelected?: boolean;
+    scrollBehaviour?: TreeScrollBehaviour;
   }
 </script>
 
@@ -22,7 +27,7 @@
   export let root: AbstractTreeNode<any>;
   export let expanded: string[] = [];
   export let selected: string | undefined = undefined;
-  export let scrollToSelected: boolean = true;
+  export let scrollBehaviour: TreeScrollBehaviour = {};
 
   let rootElement: HTMLUListElement;
   let rootHeight: number;
@@ -64,7 +69,7 @@
       const target = node.querySelector(`#${CSS.escape(id)}`) as HTMLElement;
       if (target) {
         target.scrollIntoView({
-          behavior: "smooth",
+          behavior: scrollBehaviour.easing ?? "smooth",
           block: "center",
           inline: "nearest",
         });
@@ -73,7 +78,7 @@
     }, 100);
   }
 
-  $: if (selected && scrollToSelected) {
+  $: if (selected && (scrollBehaviour.scrollToIndex ?? false)) {
     scrollToNode(rootElement, selected);
   }
 </script>

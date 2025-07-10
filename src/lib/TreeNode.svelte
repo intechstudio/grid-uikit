@@ -114,6 +114,18 @@
       }
       return undefined;
     }
+
+    public itemCount() {
+      const { type, children } = get(this.internal);
+
+      let count = type === TreeItemType.ITEM ? 1 : 0;
+
+      for (const child of children) {
+        count += child.itemCount();
+      }
+
+      return count;
+    }
   }
 </script>
 

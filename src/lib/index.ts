@@ -17,7 +17,11 @@ export {
   type ContextMenuOptions,
 } from "./context-target";
 export { default as SvgIcon } from "./SvgIcon.svelte";
-export { default as Tree, type TreeProperties } from "./Tree.svelte";
+export {
+  default as Tree,
+  type TreeProperties,
+  type TreeScrollBehaviour,
+} from "./Tree.svelte";
 export {
   default as TreeNode,
   TreeItemType,
