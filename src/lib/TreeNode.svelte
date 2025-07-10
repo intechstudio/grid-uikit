@@ -120,8 +120,10 @@
 
       let count = type === TreeItemType.ITEM ? 1 : 0;
 
-      for (const child of children) {
-        count += child.itemCount();
+      if (type === TreeItemType.FOLDER) {
+        for (const child of children) {
+          count += child.itemCount();
+        }
       }
 
       return count;
