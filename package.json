@@ -28,7 +28,8 @@
   "dependencies": {
     "@melt-ui/svelte": "^0.86.6",
     "svelte": "^4.2.12",
-    "svelte-easy-popover": "^1.0.0"
+    "svelte-easy-popover": "^1.0.0",
+    "color-convert": "^2.0.1"
   },
   "devDependencies": {
     "@sveltejs/package": "^2.0.0",
