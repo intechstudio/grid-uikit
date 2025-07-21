@@ -46,6 +46,7 @@ export {
   type MarkdownContainerTypes,
 } from "./MarkdownContainer.svelte";
 export { default as Toggle } from "./Toggle.svelte";
+export { default as InfoBox } from "./InfoBox.svelte";
 export { default as ColorSlider } from "./ColorSlider.svelte";
 export { default as CircleColorPicker } from "./CircleColorPicker.svelte";
 export { default as SliderColorPicker } from "./SliderColorPicker.svelte";
