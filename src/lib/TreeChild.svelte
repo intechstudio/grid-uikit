@@ -28,21 +28,22 @@
   export let level: number;
 </script>
 
-<button
-  type="button"
-  class:folder={$child.type === TreeItemType.FOLDER}
-  class:item={$child.type === TreeItemType.ITEM}
->
-  {#if $child.type === TreeItemType.FOLDER}
-    <div {...$item({ id: $child.id, hasChildren: true })} use:item>
-      <slot
-        name="folder"
-        {level}
-        item={child}
-        expanded={$isExpanded($child.id)}
-      />
-    </div>
-  {:else if $child.type === TreeItemType.ITEM}
+{#if $child.type === TreeItemType.FOLDER}
+  <button
+    type="button"
+    class="folder"
+    {...$item({ id: $child.id, hasChildren: true })}
+    use:item
+  >
+    <slot
+      name="folder"
+      {level}
+      item={child}
+      expanded={$isExpanded($child.id)}
+    />
+  </button>
+{:else if $child.type === TreeItemType.ITEM}
+  <button type="button" class="item">
     <slot
       name="item"
       {level}
@@ -51,8 +52,8 @@
       itemProps={$item({ id: $child.id, hasChildren: true })}
       itemFunction={item}
     />
-  {/if}
-</button>
+  </button>
+{/if}
 
 <style>
   button {
