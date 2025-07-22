@@ -95,8 +95,22 @@
         <slot name="folder" {level} {item} {expanded} />
       </svelte:fragment>
 
-      <svelte:fragment slot="item" let:item let:level let:expanded>
-        <slot name="item" {level} {item} {expanded} />
+      <svelte:fragment
+        slot="item"
+        let:item
+        let:level
+        let:expanded
+        let:itemFunction
+        let:itemProps
+      >
+        <slot
+          name="item"
+          {level}
+          {item}
+          {expanded}
+          {itemFunction}
+          {itemProps}
+        />
       </svelte:fragment>
     </TreeNode>
   </ul>
