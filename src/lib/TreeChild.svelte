@@ -8,6 +8,8 @@
     level: number;
     item: AbstractTreeNode<any>;
     expanded: boolean;
+    itemProps: any;
+    itemFunction: any;
   }
 </script>
 
