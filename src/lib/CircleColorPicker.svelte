@@ -103,22 +103,38 @@
     calculateColor(e);
   }}
   on:mousemove={calculateColor}
-  class="relative flex border border-black rounded-full h-full aspect-square bg-hue"
+  class="hue-picker"
 >
-  <div
-    bind:this={cursorElement}
-    class="absolute w-2 h-2 rounded-full border border-black bg-white pointer-events-none"
-    class:hidden={!color}
-  />
+  <div bind:this={cursorElement} class="hue-cursor" class:hidden={!color} />
 </div>
 
 <style>
-  .bg-hue {
+  .hue-picker {
+    position: relative;
+    display: flex;
+    border: 1px solid black;
+    border-radius: 9999px;
+    height: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     background:
       conic-gradient(from 90deg, red, magenta, blue, cyan, lime, yellow, red),
       radial-gradient(circle at center, white 0, transparent 75%);
     background-size: 100% 100%;
     background-blend-mode: overlay;
+  }
+
+  .hue-cursor {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid black;
+    background-color: white;
+    pointer-events: none;
+  }
+
+  .hidden {
+    display: none;
   }
 </style>

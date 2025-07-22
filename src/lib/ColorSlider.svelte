@@ -97,12 +97,10 @@
   }}
 />
 
-<div
-  class="relative flex {direction === 'vertical' ? 'h-full w-5' : 'w-full h-5'}"
->
+<div class="container {direction === 'vertical' ? 'vertical' : 'horizontal'}">
   <canvas
     bind:this={scaleElement}
-    class="w-full h-full relative"
+    class="scale-canvas"
     on:mousedown={(e) => {
       if (!(e.buttons & 1)) return;
       isDrag = true;
@@ -110,17 +108,67 @@
       handleCursorDrag(e);
     }}
   />
-  <div
-    class="absolute w-full h-full border border-black pointer-events-none bg-white"
-  >
+  <div class="overlay">
     <slot />
   </div>
   <div
     bind:this={cursorElement}
-    class="absolute border border-black pointer-events-none bg-white bg-opacity-25 {direction ===
-    'vertical'
-      ? 'h-2 w-full'
-      : 'w-2 h-full'}"
+    class="cursor {direction === 'vertical'
+      ? 'cursor-vertical'
+      : 'cursor-horizontal'}"
     class:invisible={typeof value === "undefined" || isNaN(+value)}
   />
 </div>
+
+<style>
+  .container {
+    position: relative;
+    display: flex;
+  }
+
+  .container.vertical {
+    height: 100%;
+    width: 1.25rem;
+  }
+
+  .container.horizontal {
+    width: 100%;
+    height: 1.25rem;
+  }
+
+  .scale-canvas {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    pointer-events: none;
+    background-color: white;
+  }
+
+  .cursor {
+    position: absolute;
+    border: 1px solid black;
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .cursor-vertical {
+    height: 0.5rem;
+    width: 100%;
+  }
+
+  .cursor-horizontal {
+    width: 0.5rem;
+    height: 100%;
+  }
+
+  .invisible {
+    visibility: hidden;
+  }
+</style>

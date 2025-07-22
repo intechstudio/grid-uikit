@@ -11,9 +11,9 @@
   }
 </script>
 
-<div class="flex items-center">
+<div class="toggle-container">
   {#if title}
-    <span class="mr-2">
+    <span class="toggle-label">
       {title}
     </span>
   {/if}
@@ -21,11 +21,20 @@
     type="checkbox"
     bind:checked={value}
     on:change={handleChange}
-    class="{$$props.class} toggle pointer-events-auto"
+    class="{$$props.class} toggle"
   />
 </div>
 
 <style>
+  .toggle-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .toggle-label {
+    margin-right: 0.5rem;
+  }
+
   input[type="checkbox"] {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -48,6 +57,7 @@
     border: 2px solid var(--foreground);
     background-color: var(--foreground);
     transition: all 0.2s ease;
+    pointer-events: auto;
   }
 
   .toggle::after {
@@ -62,16 +72,11 @@
     transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
   }
 
-  /**
-  pick: rgb(107, 122, 255)
-  commit: rgb(11, 164, 132)
-  */
-
   .toggle:checked {
     border-color: rgb(11, 164, 132);
   }
 
   .toggle:checked::after {
-    transform: translatex(14px);
+    transform: translateX(14px);
   }
 </style>

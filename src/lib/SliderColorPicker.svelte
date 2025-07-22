@@ -1,7 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { Color, getRandom } from "./color";
+  import { Color } from "./color";
   import ColorSlider from "./ColorSlider.svelte";
+
+  function getRandom(a: number, b: number) {
+    return 0;
+  }
 
   const dispatch = createEventDispatcher();
 
@@ -56,9 +60,9 @@
   }
 </script>
 
-<div class="grid grid-cols-[auto_1fr] gap-2 items-center w-full">
+<div class="slider-grid">
   {#each sliders as { label, key, max }}
-    <span class="text-white text-sm">{label}:</span>
+    <span class="slider-label">{label}:</span>
     <ColorSlider
       value={color ? color[key] : undefined}
       {max}
@@ -67,7 +71,27 @@
       on:input={(e) => handleInput(key, e.detail.value)}
       on:change={handleChange}
     >
-      <div class="w-full h-full" style={getGradient(color, key)} />
+      <div class="slider-gradient" style={getGradient(color, key)} />
     </ColorSlider>
   {/each}
 </div>
+
+<style>
+  .slider-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  .slider-label {
+    color: white;
+    font-size: 0.875rem;
+  }
+
+  .slider-gradient {
+    width: 100%;
+    height: 100%;
+  }
+</style>

@@ -87,7 +87,7 @@
 <div
   bind:this={canvasElement}
   data-testid="rgb-color-picker-canvas"
-  class="w-full h-full relative border border-black bg-hue"
+  class="rgb-picker"
   on:mousedown={(e) => {
     isDrag = true;
     calculateColor(e);
@@ -95,17 +95,35 @@
 >
   <div
     bind:this={cursorElement}
-    class="absolute w-2 h-2 rounded-full border border-black bg-white pointer-events-none"
+    class="rgb-cursor"
     class:hidden={typeof color === "undefined"}
   />
 </div>
 
 <style>
-  .bg-hue {
+  .rgb-picker {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border: 1px solid black;
     background:
       linear-gradient(to left, red, magenta, blue, cyan, lime, yellow, red),
       linear-gradient(to top, white, transparent);
     background-size: 100% 100%;
     background-blend-mode: overlay;
+  }
+
+  .rgb-cursor {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid black;
+    background-color: white;
+    pointer-events: none;
+  }
+
+  .hidden {
+    display: none;
   }
 </style>
