@@ -52,3 +52,5 @@ export { default as CircleColorPicker } from "./CircleColorPicker.svelte";
 export { default as SliderColorPicker } from "./SliderColorPicker.svelte";
 export { default as SquareColorPicker } from "./SquareColorPicker.svelte";
 export { Color } from "./color";
+export { default as ColorLayerSelector } from "./ColorLayerSelector.svelte";
+export { default as ControlGroup } from "./ControlGroup.svelte";
