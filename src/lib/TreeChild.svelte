@@ -28,20 +28,27 @@
 
 <button
   type="button"
-  {...$item({ id: $child.id, hasChildren: true })}
-  use:item
   class:folder={$child.type === TreeItemType.FOLDER}
   class:item={$child.type === TreeItemType.ITEM}
 >
   {#if $child.type === TreeItemType.FOLDER}
+    <div {...$item({ id: $child.id, hasChildren: true })} use:item>
+      <slot
+        name="folder"
+        {level}
+        item={child}
+        expanded={$isExpanded($child.id)}
+      />
+    </div>
+  {:else if $child.type === TreeItemType.ITEM}
     <slot
-      name="folder"
+      name="item"
       {level}
       item={child}
       expanded={$isExpanded($child.id)}
+      itemProps={$item({ id: $child.id, hasChildren: false })}
+      itemFunction={item}
     />
-  {:else if $child.type === TreeItemType.ITEM}
-    <slot name="item" {level} item={child} expanded={$isExpanded($child.id)} />
   {/if}
 </button>
 

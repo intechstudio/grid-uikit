@@ -19,6 +19,8 @@
   export let compatible: boolean;
   export let expanded: boolean;
   export let item: AbstractTreeNode<WithProfileCloudData>;
+  export let itemProps: any;
+  export let itemFunction: any;
 
   type WithProfileCloudData<T = unknown> = T & ProfileCloudCardData;
 
@@ -71,7 +73,7 @@
       <slot name="type-label">{data.type}</slot>
     </div>
     {#if $item.children.length > 0}
-      <div class="trigger-container">
+      <div class="trigger-container" use:itemFunction {...itemProps}>
         <svg
           width="14"
           height="11"
