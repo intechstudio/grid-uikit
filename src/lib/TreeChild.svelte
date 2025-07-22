@@ -48,7 +48,7 @@
       {level}
       item={child}
       expanded={$isExpanded($child.id)}
-      itemProps={$item({ id: $child.id, hasChildren: false })}
+      itemProps={$item({ id: $child.id, hasChildren: true })}
       itemFunction={item}
     />
   {/if}
