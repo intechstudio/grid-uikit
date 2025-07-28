@@ -45,7 +45,7 @@ import send_to_device from "./assets/icons/send_to_device.svg?raw";
 import sort_by from "./assets/icons/sort_by.svg?raw";
 import tick from "./assets/icons/tick.svg?raw";
 import user_account_02 from "./assets/icons/user_account_02.svg?raw";
-import rotate from "./assets/icons/close.svg?raw";
+import rotate from "./assets/icons/rotate.svg?raw";
 
 type IconMap = {
   [key: string]: string;
