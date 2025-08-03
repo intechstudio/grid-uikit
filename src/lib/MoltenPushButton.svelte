@@ -95,7 +95,7 @@
   }
 
   .normal-enabled {
-    color: rgba(250, 250, 250, 0.5);
+    color: var(--foreground-muted);
     background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.4);
   }
@@ -103,33 +103,33 @@
     background-color: rgba(0, 0, 0, 0.4);
   }
   .normal-disabled {
-    color: rgba(250, 250, 250, 0.25);
+    color: var(--foreground-disabled);
     background-color: rgba(0, 0, 0, 0.25);
     border: 1px solid rgba(0, 0, 0, 0.25);
   }
 
   .outlined-enabled {
     border: 1px solid rgba(0, 164, 130, 1);
-    color: white;
+    color: var(--foreground-muted);
   }
   .outlined-enabled:hover {
     background-color: rgba(0, 111, 83, 1);
     border-color: rgba(27, 164, 135);
   }
   .outlined-disabled {
+    color: var(--foreground-disabled);
     border: 1px solid rgba(0, 163, 130, 1);
-    color: rgba(255, 255, 255, 0.5);
   }
 
   .accept-enabled {
-    color: white;
+    color: var(--foreground);
     background-color: rgba(11, 164, 132, 1);
   }
   .accept-enabled:hover {
     background-color: rgba(0, 111, 83, 1);
   }
   .accept-disabled {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--foreground-disabled);
     background-color: rgba(11, 164, 132, 0.5);
   }
 </style>
