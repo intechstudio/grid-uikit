@@ -10,6 +10,8 @@
   } from "svelte/store";
   import { type TreeView } from "@melt-ui/svelte";
 
+  import TreeNode from "./TreeNode.svelte";
+
   export enum TreeItemType {
     FOLDER = "folder",
     ITEM = "item",
@@ -211,7 +213,7 @@
         class="subtree"
         class:root-subtree={level === 0}
       >
-        <svelte:self
+        <TreeNode
           node={child}
           level={level + 1}
           {parent}
@@ -239,7 +241,7 @@
               {itemProps}
             />
           </svelte:fragment>
-        </svelte:self>
+        </TreeNode>
       </ul>
     {/if}
   </li>
