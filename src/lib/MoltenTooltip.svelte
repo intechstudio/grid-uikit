@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fade, slide } from "svelte/transition";
   import Popover from "svelte-easy-popover";
-  import { SvelteComponent, onDestroy, onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import MoltenPushButton from "./MoltenPushButton.svelte";
 
   export let text = "";
@@ -13,7 +13,7 @@
   export let buttons: any[] = [];
   export let triggerEvents = ["hover"];
   export let referenceElement: HTMLElement;
-  export let component: SvelteComponent | undefined = undefined;
+  export let component: any | undefined = undefined;
 
   let showbuttons = false;
   let showTooltip: boolean;
