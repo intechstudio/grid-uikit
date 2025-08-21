@@ -6,132 +6,116 @@
 
   export let color: Color.HSL | undefined;
 
-  let cursorElement: HTMLElement;
-  let canvasElement: HTMLElement;
-  let isDrag = false;
+  let cursorEl: HTMLElement;
+  let canvasEl: HTMLElement;
+  let isDragging = false;
+
+  const degToRad = (deg: number) => (deg * Math.PI) / 180;
+  const radToDeg = (rad: number) => (rad * 180) / Math.PI;
 
   onMount(() => {
     setCursorPosition(color);
   });
 
-  type Point = { x: number; y: number };
-
-  function pointToDistance(point: Point) {
-    return Math.sqrt(point.x ** 2 + point.y ** 2);
-  }
-
-  function pointToAngle(p: Point) {
-    const theta = (Math.atan2(p.y, p.x) * 180) / Math.PI;
-    return theta < 0 ? Math.abs(theta) : 360 - theta;
-  }
-
-  function distanceToPoint(distance: number, angle: number): Point {
-    const radian = ((360 - angle) * Math.PI) / 180;
-    return {
-      x: distance * Math.cos(radian),
-      y: distance * Math.sin(radian),
-    };
-  }
-
   $: setCursorPosition(color);
 
   function setCursorPosition(color: Color.HSL | undefined) {
-    if (typeof color === "undefined") {
-      return;
-    }
+    if (!color || !cursorEl || !canvasEl) return;
 
-    const canvasRect = canvasElement?.getBoundingClientRect();
-    const cursorRect = cursorElement?.getBoundingClientRect();
-    if (!canvasRect || !cursorRect) {
-      return;
-    }
+    const rect = canvasEl.getBoundingClientRect();
+    const r = rect.width / 2;
 
-    const center = { x: canvasRect.width / 2, y: canvasRect.height / 2 };
+    const angleRad = degToRad(color.h);
+    const distance = Math.min(r - ((color.l - 50) / 50) * r, r);
 
-    const normDist = 1 - (color.l - 50) / 50;
-    const distance = normDist * center.x;
-    const p = distanceToPoint(distance, color.h);
+    const x = distance * Math.cos(angleRad) + r;
+    const y = distance * Math.sin(angleRad) + r;
 
-    cursorElement.style.display =
-      normDist < 0 || normDist > 1 || color.s < 100 ? "none" : "flex";
-    cursorElement.style.left = `${
-      ((p.x + center.x - cursorRect.width / 2) / canvasRect.width) * 100
-    }%`;
-    cursorElement.style.top = `${
-      ((p.y + center.y - cursorRect.height / 2) / canvasRect.height) * 100
-    }%`;
+    const xPercent = (x / rect.width) * 100;
+    const yPercent = (y / rect.height) * 100;
+
+    cursorEl.style.display = color.s < 100 ? "none" : "flex";
+    cursorEl.style.left = `${xPercent}%`;
+    cursorEl.style.top = `${yPercent}%`;
   }
 
   function calculateColor(e: MouseEvent) {
-    if (!(e.buttons & 1) || !isDrag) return;
+    if (!(e.buttons & 1) || !isDragging || !canvasEl) return;
 
-    // Get cursor coordinates relative to the center
-    const cursor: Point = {
-      x: e.offsetX - canvasElement.getBoundingClientRect().width / 2,
-      y: e.offsetY - canvasElement.getBoundingClientRect().height / 2,
-    };
+    const rect = canvasEl.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const r = rect.width / 2;
 
-    // Normalize distance between 0 and 1
-    const distance =
-      1 -
-      pointToDistance(cursor) /
-        (canvasElement.getBoundingClientRect().width / 2);
-    const angle = pointToAngle(cursor);
-    const hue = Math.floor(angle);
-    const brightness = Math.floor(distance * 50 + 50);
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
 
-    // Update color
+    const distance = Math.sqrt(dx ** 2 + dy ** 2);
+    const angleRad = Math.atan2(dy, dx);
+
+    const angleDeg = (radToDeg(angleRad) + 360) % 360;
+    const normDist = Math.min(distance, r) / r;
+
+    const hue = Math.floor(angleDeg);
+    const brightness = Math.floor(100 - normDist * 50);
+
     color = new Color.HSL(hue, 100, brightness);
     dispatch("input", { color });
   }
-</script>
 
-<svelte:window
-  on:mouseup={(e) => {
-    if (isDrag) {
-      isDrag = false;
+  function handleMouseDown(e: MouseEvent) {
+    isDragging = true;
+    calculateColor(e);
+  }
+
+  function handleMouseUp() {
+    if (isDragging) {
+      isDragging = false;
       dispatch("change", { color });
     }
-  }}
-/>
+  }
+</script>
+
+<svelte:window on:mouseup={handleMouseUp} on:mousemove={calculateColor} />
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div
-  bind:this={canvasElement}
-  on:mousedown={(e) => {
-    isDrag = true;
-    calculateColor(e);
-  }}
-  on:mousemove={calculateColor}
-  class="hue-picker"
->
-  <div bind:this={cursorElement} class="hue-cursor" class:hidden={!color} />
+<div bind:this={canvasEl} class="hue-picker" on:mousedown={handleMouseDown}>
+  <div bind:this={cursorEl} class="cursor" class:hidden={!color}>
+    <div class="cursor-face" />
+  </div>
 </div>
 
 <style>
   .hue-picker {
     position: relative;
     display: flex;
-    border: 1px solid black;
-    border-radius: 9999px;
     height: 100%;
     aspect-ratio: 1 / 1;
+    border: 1px solid black;
     border-radius: 50%;
     background:
-      conic-gradient(from 90deg, red, magenta, blue, cyan, lime, yellow, red),
+      conic-gradient(from 90deg, red, yellow, lime, cyan, blue, magenta, red),
       radial-gradient(circle at center, white 0, transparent 75%);
     background-size: 100% 100%;
     background-blend-mode: overlay;
   }
 
-  .hue-cursor {
+  .cursor {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background-color: red;
+  }
+
+  .cursor-face {
     position: absolute;
     width: 0.5rem;
     height: 0.5rem;
-    border-radius: 9999px;
+    border-radius: 50%;
     border: 1px solid black;
     background-color: white;
     pointer-events: none;
+    transform: translate(-50%, -50%);
   }
 
   .hidden {
