@@ -77,11 +77,13 @@
         {/if}
         <span>{item.text[0]}</span>
         <!-- Spacer for alignment -->
-        <span
-          style:width={`${maxLength - item.text[0].length}ch`}
-          style:visibility="hidden">{item.text[0]}</span
-        >
-        <span>{item.text[1]}</span>
+        {#if item.text[1]}
+          <span
+            style:width={`${maxLength - item.text[0].length}ch`}
+            style:visibility="hidden">{item.text[0]}</span
+          >
+          <span>{item.text[1]}</span>
+        {/if}
       </button>
     {/each}
   </div>
@@ -92,15 +94,14 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--background-soft);
     border-radius: 0.25rem;
     position: absolute;
-    color: rgba(255, 255, 255, 0.8);
-    background-color: rgb(23, 23, 23);
+    color: var(--foreground);
+    background-color: var(--background);
   }
 
   button {
-    color: white;
     font-size: 0.75rem;
     line-height: 1rem;
     display: flex;
@@ -111,6 +112,7 @@
     width: 100%;
     padding: 0.5rem;
     text-align: left;
+    font-size: small;
     cursor: default;
     font-family: inherit; /* 1 */
     font-feature-settings: inherit; /* 1 */
@@ -122,6 +124,6 @@
     cursor: pointer;
   }
   button:hover {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: var(--background-muted);
   }
 </style>
