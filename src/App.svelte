@@ -12,6 +12,7 @@
   import MeltSelect from "./lib/MeltSelect.svelte";
   import MeltRadio from "./lib/MeltRadio.svelte";
   import Tree from "./mockup/Tree.svelte";
+  import Toggle from "./lib/Toggle.svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
 
@@ -133,6 +134,10 @@
         <BlockTitle>Important border added</BlockTitle>
         <BlockBody>This is dangerous setting:</BlockBody>
         <MeltCheckbox target={t} title={"Destory enabled"} />
+      </Block>
+      <Block>
+        <BlockTitle>Toggle</BlockTitle>
+        <Toggle title={"Test toggle"} />
       </Block>
     </div>
 

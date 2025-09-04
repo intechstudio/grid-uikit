@@ -54,8 +54,8 @@
     display: inline-block;
     position: relative;
     margin: 0;
-    border: 2px solid var(--foreground);
-    background-color: var(--foreground);
+    border: 1px solid var(--background-soft);
+    background-color: var(--background-muted);
     transition: all 0.2s ease;
     pointer-events: auto;
   }
@@ -63,12 +63,12 @@
   .toggle::after {
     content: "";
     position: absolute;
-    top: 2px;
-    left: 2px;
+    top: 3px;
+    left: 3px;
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background-color: var(--background);
+    background-color: var(--foreground-muted);
     transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
   }
 
