@@ -10,6 +10,7 @@
     input.focus();
   }
   export let password: boolean = false;
+  export let placeholder: string = "";
 
   let input: HTMLElement;
   let oldValue: string | undefined = undefined;
@@ -45,6 +46,10 @@
   function handleKeydown(e: KeyboardEvent) {
     dispatch("keydown", e);
   }
+
+  function handleKeyup(e: KeyboardEvent) {
+    dispatch("keyup", e);
+  }
 </script>
 
 {#if password}
@@ -53,9 +58,11 @@
     {disabled}
     bind:value={target}
     type="password"
+    {placeholder}
     on:change={handleChange}
     on:click|stopPropagation
     on:keydown={handleKeydown}
+    on:keyup={handleKeyup}
   />
 {:else}
   <input
@@ -63,9 +70,11 @@
     {disabled}
     bind:value={target}
     type="text"
+    {placeholder}
     on:change={handleChange}
     on:click|stopPropagation
     on:keydown={handleKeydown}
+    on:keyup={handleKeyup}
   />
 {/if}
 
