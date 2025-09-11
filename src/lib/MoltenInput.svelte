@@ -9,6 +9,7 @@
   export function focus() {
     input.focus();
   }
+  export let password: boolean = false;
 
   let input: HTMLElement;
   let oldValue: string | undefined = undefined;
@@ -46,14 +47,27 @@
   }
 </script>
 
-<input
-  bind:this={input}
-  {disabled}
-  bind:value={target}
-  on:change={handleChange}
-  on:click|stopPropagation
-  on:keydown={handleKeydown}
-/>
+{#if password}
+  <input
+    bind:this={input}
+    {disabled}
+    bind:value={target}
+    type="password"
+    on:change={handleChange}
+    on:click|stopPropagation
+    on:keydown={handleKeydown}
+  />
+{:else}
+  <input
+    bind:this={input}
+    {disabled}
+    bind:value={target}
+    type="text"
+    on:change={handleChange}
+    on:click|stopPropagation
+    on:keydown={handleKeydown}
+  />
+{/if}
 
 <style>
   input {
