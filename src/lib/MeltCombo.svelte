@@ -199,7 +199,7 @@
         on:m-keydown={(e) => {
           e.preventDefault();
         }}
-        on:click|stopPropagation={() => {
+        on:click={() => {
           open.set(true);
         }}
         class:error={isError && !disabled}
@@ -281,10 +281,10 @@
     color: rgba(255, 255, 255, 0.4);
   }
   .menu {
-    background-color: rgba(23, 23, 23, 1);
-    color: rgba(255, 255, 255, 0.8);
+    background-color: var(--popover-background);
+    color: var(--foreground-muted);
     border-width: 1px;
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--foreground-muted);
     border-radius: 0.25rem;
     z-index: 40;
     max-height: 8rem;
