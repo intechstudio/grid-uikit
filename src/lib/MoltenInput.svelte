@@ -50,6 +50,14 @@
   function handleKeyup(e: KeyboardEvent) {
     dispatch("keyup", e);
   }
+
+  function handleBlur(e: FocusEvent) {
+    dispatch("blur", e);
+  }
+
+  function handleFocus(e: FocusEvent) {
+    dispatch("focus", e);
+  }
 </script>
 
 {#if password}
@@ -63,6 +71,8 @@
     on:click|stopPropagation
     on:keydown={handleKeydown}
     on:keyup={handleKeyup}
+    on:blur={handleBlur}
+    on:focus={handleFocus}
   />
 {:else}
   <input
@@ -75,6 +85,8 @@
     on:click|stopPropagation
     on:keydown={handleKeydown}
     on:keyup={handleKeyup}
+    on:blur={handleBlur}
+    on:focus={handleFocus}
   />
 {/if}
 
