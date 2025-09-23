@@ -3,7 +3,7 @@
   export let options: SelectOption[];
   export let target: any;
   export let size: "auto" | "full" = "auto";
-  export let disabled: any;
+  export let disabled = false;
 
   type SelectOption = { title: string; value: any };
 

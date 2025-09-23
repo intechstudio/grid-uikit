@@ -15,6 +15,8 @@
   import Toggle from "./lib/Toggle.svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
+  import { fly } from "svelte/transition";
+  import LogMessage, { LogMessageType } from "./lib/LogMessage.svelte";
 
   let t = false;
   let suggestionElement: any;
@@ -50,6 +52,18 @@
   let meltRadioValue4 = 0;
 
   let moltenInputText = "hello";
+
+  let logMessageCount = 0;
+  let logMessageType = LogMessageType.NORMAL;
+  let logMessageTimeout: number;
+
+  function handleShowLogMessage() {
+    ++logMessageCount;
+    clearTimeout(logMessageTimeout);
+    logMessageTimeout = setTimeout(() => {
+      logMessageCount = 0;
+    }, 3000);
+  }
 </script>
 
 <main on:contextmenu|preventDefault>
@@ -353,6 +367,44 @@
       <span>Tree:</span>
       <Tree />
     </div>
+    <div class="mock-panel">
+      <MoltenPushButton
+        text="Show me a LogMessage"
+        click={handleShowLogMessage}
+      />
+      <MeltSelect
+        bind:target={logMessageType}
+        options={[
+          { title: "Normal", value: LogMessageType.NORMAL },
+          { title: "Success", value: LogMessageType.SUCCESS },
+          { title: "Alert", value: LogMessageType.ALERT },
+          { title: "Fail", value: LogMessageType.FAIL },
+          { title: "Progress", value: LogMessageType.PROGRESS },
+        ]}
+      />
+
+      <LogMessage
+        count={0}
+        type={logMessageType}
+        text={"I am a static one. Push the button to show another. Push it again to make it count up! Click the dynamic one to make it dismiss!"}
+      />
+      {#if logMessageCount > 0}
+        <div
+          in:fly|global={{ x: -10, duration: 500 }}
+          out:fly|global={{ x: 10, duration: 500 }}
+        >
+          <LogMessage
+            count={logMessageCount}
+            type={logMessageType}
+            text={"Hey, I am a little log message here! What else should this say? Well, maybe it would be probable good to tell a story as long, as this would wrap around to show that what is my width."}
+            on:click={() => {
+              console.log("yay");
+              logMessageCount = 0;
+            }}
+          />
+        </div>
+      {/if}
+    </div>
   </div>
 </main>
 
@@ -377,7 +429,9 @@
     background-color: var(--background);
     height: 100vh;
     overflow-y: auto;
+    position: relative;
   }
+
   span {
   }
   div.main-container {
