@@ -57,4 +57,5 @@ export {
   type LayerClickDetail,
 } from "./ColorLayerSelector.svelte";
 export { default as ControlGroup } from "./ControlGroup.svelte";
-export { default as LogMessage, LogMessageType } from "./LogMessage.svelte";
+export { default as LogMessage } from "./LogMessage.svelte";
+export { LogMessageType } from "./LogMessageType";

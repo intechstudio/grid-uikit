@@ -1,14 +1,5 @@
-<script lang="ts" context="module">
-  export enum LogMessageType {
-    NORMAL = "normal",
-    SUCCESS = "success",
-    ALERT = "alert",
-    PROGRESS = "progress",
-    FAIL = "fail",
-  }
-</script>
-
 <script lang="ts">
+  import { LogMessageType } from "./LogMessageType";
   import { createEventDispatcher, onMount } from "svelte";
   import { onDestroy } from "svelte";
 

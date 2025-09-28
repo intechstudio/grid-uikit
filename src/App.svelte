@@ -16,7 +16,8 @@
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
   import { fly } from "svelte/transition";
-  import LogMessage, { LogMessageType } from "./lib/LogMessage.svelte";
+  import LogMessage from "./lib/LogMessage.svelte";
+  import { LogMessageType } from "./lib/LogMessageType.ts";
 
   let t = false;
   let suggestionElement: any;
