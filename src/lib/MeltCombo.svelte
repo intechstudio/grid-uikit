@@ -177,7 +177,7 @@
           on:m-keydown={(e) => {
             e.preventDefault();
           }}
-          on:click|stopPropagation={() => {
+          on:click={() => {
             open.set(true);
           }}
           class:error={isError && !disabled}
