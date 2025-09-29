@@ -18,25 +18,6 @@ export {
 } from "./context-target";
 export { default as SvgIcon } from "./SvgIcon.svelte";
 export {
-  default as Tree,
-  type TreeProperties,
-  type TreeScrollBehaviour,
-} from "./Tree.svelte";
-export {
-  default as TreeNode,
-  TreeItemType,
-  type AbstractFolderData,
-  type AbstractItemData,
-  type AbstractTreeNodeData,
-  AbstractTreeNode,
-} from "./TreeNode.svelte";
-export {
-  default as ProfileCloudTreeItem,
-  type ProfileCloudCardData as AbstractCardData,
-} from "./ProfileCloudTreeItem.svelte";
-export { default as TreeChild } from "./TreeChild.svelte";
-export { default as TreeFolder } from "./TreeFolder.svelte";
-export {
   default as MeltCombo,
   type MeltComboSuggestion,
   type MeltComboData,

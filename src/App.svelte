@@ -11,7 +11,6 @@
   import MeltSlider from "./lib/MeltSlider.svelte";
   import MeltSelect from "./lib/MeltSelect.svelte";
   import MeltRadio from "./lib/MeltRadio.svelte";
-  import Tree from "./mockup/Tree.svelte";
   import Toggle from "./lib/Toggle.svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
@@ -363,10 +362,6 @@
           ]}
         /></Block
       >
-    </div>
-    <div class="mock-panel">
-      <span>Tree:</span>
-      <Tree />
     </div>
     <div class="mock-panel">
       <MoltenPushButton
