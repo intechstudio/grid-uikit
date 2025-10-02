@@ -18,6 +18,8 @@
   import LogMessage from "./lib/LogMessage.svelte";
   import { LogMessageType } from "./lib/LogMessageType.ts";
 
+  import { tooltip } from "./lib/tooltip.ts";
+
   let t = false;
   let suggestionElement: any;
   let input2Value = "";
@@ -129,6 +131,18 @@
 
     <div class="mock-panel">
       <Block>
+        <div
+          use:tooltip={{
+            nowrap: true,
+            placement: "bottom",
+            duration: 75,
+            instant: true,
+            class: "px-2 py-1",
+            text: "Delete",
+          }}
+        >
+          Tooltip test
+        </div>
         <BlockTitle>MeltCheckbox</BlockTitle>
         <BlockBody>Comes in two wariants:</BlockBody>
         <MeltCheckbox target={t} title={"Block style (Default)"} />
