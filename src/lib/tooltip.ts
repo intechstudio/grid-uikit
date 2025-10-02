@@ -16,7 +16,7 @@ export const tooltip: Action<HTMLElement, any> = (
   options.referenceElement = node;
 
   setTimeout(() => {
-    mount(MoltenTooltip({ target: sibling, props: options }));
+    mount(MoltenTooltip, { target: sibling, props: options });
   });
 
   return {
