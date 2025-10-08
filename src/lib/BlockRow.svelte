@@ -16,6 +16,7 @@
     flex-direction: row;
     column-gap: 0.5rem;
     padding: 0.5rem;
+    align-items: center;
   }
 
   .transparent-block {

@@ -21,6 +21,7 @@ import folder_control_element from "./assets/icons/folder_control_element.svg?ra
 import folder_profile from "./assets/icons/folder_profile.svg?raw";
 import importIcon from "./assets/icons/import.svg?raw";
 import info from "./assets/icons/info.svg?raw";
+import link from "./assets/icons/link.svg?raw";
 import merge_as_code from "./assets/icons/merge_as_code.svg?raw";
 import midi from "./assets/icons/midi.svg?raw";
 import move_to_cloud_01 from "./assets/icons/move_to_cloud_01.svg?raw";
@@ -43,6 +44,7 @@ import save_as_02 from "./assets/icons/save_as_02.svg?raw";
 import search from "./assets/icons/search.svg?raw";
 import send_to_device from "./assets/icons/send_to_device.svg?raw";
 import sort_by from "./assets/icons/sort_by.svg?raw";
+import split_config from "./assets/icons/split_config.svg?raw";
 import tick from "./assets/icons/tick.svg?raw";
 import user_account_02 from "./assets/icons/user_account_02.svg?raw";
 import rotate from "./assets/icons/rotate.svg?raw";
@@ -75,6 +77,7 @@ const iconMap: IconMap = {
   folder_profile,
   importIcon,
   info,
+  link,
   merge_as_code,
   midi,
   move_to_cloud_01,
@@ -97,6 +100,7 @@ const iconMap: IconMap = {
   search,
   send_to_device,
   sort_by,
+  split_config,
   tick,
   user_account_02,
   rotate,
