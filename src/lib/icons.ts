@@ -22,6 +22,7 @@ import folder_profile from "./assets/icons/folder_profile.svg?raw";
 import importIcon from "./assets/icons/import.svg?raw";
 import info from "./assets/icons/info.svg?raw";
 import link from "./assets/icons/link.svg?raw";
+import log_out from "./assets/icons/log_out.svg?raw";
 import merge_as_code from "./assets/icons/merge_as_code.svg?raw";
 import midi from "./assets/icons/midi.svg?raw";
 import move_to_cloud_01 from "./assets/icons/move_to_cloud_01.svg?raw";
@@ -78,6 +79,7 @@ const iconMap: IconMap = {
   importIcon,
   info,
   link,
+  log_out,
   merge_as_code,
   midi,
   move_to_cloud_01,
