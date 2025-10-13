@@ -18,6 +18,8 @@ import edit from "./assets/icons/edit.svg?raw";
 import enabled from "./assets/icons/enabled.svg?raw";
 import exportIcon from "./assets/icons/export.svg?raw";
 import folder_control_element from "./assets/icons/folder_control_element.svg?raw";
+import folder_open from "./assets/icons/folder_open.svg?raw";
+import folder_closed from "./assets/icons/folder_closed.svg?raw";
 import folder_profile from "./assets/icons/folder_profile.svg?raw";
 import importIcon from "./assets/icons/import.svg?raw";
 import info from "./assets/icons/info.svg?raw";
