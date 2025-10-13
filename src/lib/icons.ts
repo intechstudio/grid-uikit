@@ -78,6 +78,8 @@ const iconMap: IconMap = {
   exportIcon,
   folder_control_element,
   folder_profile,
+  folder_open,
+  folder_closed,
   importIcon,
   info,
   link,
