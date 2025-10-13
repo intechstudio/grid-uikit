@@ -1,20 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-	version="1.1"
-	id="Réteg_2"
-	xmlns="http://www.w3.org/2000/svg"
-	xmlns:xlink="http://www.w3.org/1999/xlink"
-	x="0px"
-	y="0px"
-	viewBox="0 0 24 24"
-	style="enable-background:new 0 0 24 21;"
-	xml:space="preserve"
->
+   version="1.1"
+   id="Réteg_2"
+   x="0px"
+   y="0px"
+   viewBox="0 0 24 24"
+   style="enable-background:new 0 0 24 24;"
+   xml:space="preserve"
+   sodipodi:docname="folder_closed.svg"
+   inkscape:version="1.4.2 (ebf0e94, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+ />
   <path
-    d="M4.5 7h5l2 2h11c.55 0 1 .45 1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V7z"
-    fill="none"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-</svg>
-
+   style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-linecap:round;stroke-linejoin:round;enable-background:accumulate;stop-color:#000000;stop-opacity:1;opacity:1"
+   d="M 3,6 A 1.0001,1.0001 0 0 0 2,7 v 10 c 0,1.095455 0.9045455,2 2,2 h 18.5 c 1.095455,0 2,-0.904545 2,-2 v -7 c 0,-1.0954545 -0.904545,-2 -2,-2 H 11.914063 L 10.207031,6.2929687 A 1.0001,1.0001 0 0 0 9.5,6 h -5 z M 4,8 H 4.5 9.0859375 L 10.792969,9.7070313 A 1.0001,1.0001 0 0 0 11.5,10 h 11 v 7 H 4 Z"
+/>
+   </svg>

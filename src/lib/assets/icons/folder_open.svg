@@ -1,30 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-	version="1.1"
-	id="Réteg_2"
-	xmlns="http://www.w3.org/2000/svg"
-	xmlns:xlink="http://www.w3.org/1999/xlink"
-	x="0px"
-	y="0px"
-	viewBox="0 0 24 24"
-	style="enable-background:new 0 0 24 21;"
-	xml:space="preserve"
->
+   version="1.1"
+   id="Réteg_2"
+   x="0px"
+   y="0px"
+   viewBox="0 0 24 24"
+   style="enable-background:new 0 0 24 24;"
+   xml:space="preserve"
+   sodipodi:docname="folder_open.svg"
+   inkscape:version="1.4.2 (ebf0e94, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
   <!-- Back of folder -->
   <path
-    d="M4.5 11v0 -4h5l2 2h11c.55 0 1 .45 1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1"
-    fill="none"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+   d="m 4.5,6 c -0.5522619,5.52e-5 -0.9999448,0.4477381 -1,1 v 4 c 0,0.552285 0.4477153,1 1,1 0.5522847,0 1,-0.447715 1,-1 V 8 H 9.0859375 L 10.792969,9.7070313 C 10.980481,9.8945675 11.234801,9.9999489 11.5,10 h 11 v 7 c -0.552285,0 -1,0.447715 -1,1 0,0.552285 0.447715,1 1,1 1.095455,0 2,-0.904545 2,-2 v -7 c 0,-1.0954545 -0.904545,-2 -2,-2 H 11.914063 L 10.207031,6.2929687 C 10.019519,6.1054325 9.7651989,6.0000511 9.5,6 Z"
   />
 
   <!-- Wider front flap -->
   <path
-    d="M1 12l2 6h20l-2-6z"
-    fill="none"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
+   d="m 1,11 c -0.682839,-3.11e-4 -1.165183,0.668619 -0.949219,1.316406 l 2,6 C 2.187046,18.724845 2.56943,19.000225 3,19 h 20 c 0.682839,3.12e-4 1.165183,-0.668619 0.949219,-1.316406 l -2,-6 C 21.812955,11.275155 21.43057,10.999775 21,11 Z m 1.388672,2 h 17.890625 l 1.332031,4 H 3.720703 Z"
+ />
 </svg>
-

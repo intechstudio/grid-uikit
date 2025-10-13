@@ -283,6 +283,13 @@
     <div class="mock-panel">
       <span>SvgIcon:</span>
       <div class="svg-row">
+        <SvgIcon
+          iconPath="folder_closed"
+          fill="#FFF"
+          width={150}
+          height={150}
+        />
+        <SvgIcon iconPath="folder_open" fill="#FFF" width={150} height={150} />
         <SvgIcon iconPath="edit" fill="#FFF" width={15} height={15} />
         <SvgIcon iconPath="edit" fill="#F00" width={30} height={30} />
         <SvgIcon iconPath="edit" fill="#00F" width={45} height={45} />
