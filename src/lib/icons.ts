@@ -32,6 +32,7 @@ import move_to_cloud_02 from "./assets/icons/move_to_cloud_02.svg?raw";
 import move_to_cloud_03 from "./assets/icons/move_to_cloud_03.svg?raw";
 import overlay_01 from "./assets/icons/overlay_01.svg?raw";
 import overlay_02 from "./assets/icons/overlay_02.svg?raw";
+import overlay_03 from "./assets/icons/overlay_03.svg?raw";
 import overwrite_control_element from "./assets/icons/overwrite_control_element.svg?raw";
 import overwrite_profile from "./assets/icons/overwrite_profile.svg?raw";
 import paste from "./assets/icons/paste.svg?raw";
@@ -91,6 +92,7 @@ const iconMap: IconMap = {
   move_to_cloud_03,
   overlay_01,
   overlay_02,
+  overlay_03,
   overwrite_control_element,
   overwrite_profile,
   paste,
