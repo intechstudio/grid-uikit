@@ -241,14 +241,14 @@
 
 <style global>
   div.tooltip-container {
-    --tooltip-bg-color: rgba(14, 20, 24, 0.8);
-    background-color: var(--tooltip-bg-color);
+    background-color: var(--popover-background);
     cursor: default;
     display: flex;
     flex-direction: column;
     position: relative;
     border-radius: 0.375rem;
     z-index: 99;
+    padding: 0.25rem;
   }
 
   div.tooltip-container-content {
@@ -263,7 +263,7 @@
   }
 
   div.tooltip-container-text {
-    color: white;
+    color: var(--foreground-muted);
     text-align: left;
     font-weight: 400;
   }
