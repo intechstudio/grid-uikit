@@ -60,8 +60,11 @@
   let logMessageType = LogMessageType.NORMAL;
   let logMessageTimeout: number;
 
-  let clearButtonTarget = ("default");
-  let clearButtonOptions = [{title: "Default", value: "default"}, {title: "PS Config", value: "value2"}];
+  let clearButtonTarget = "default";
+  let clearButtonOptions = [
+    { title: "Default", value: "default" },
+    { title: "PS Config", value: "value2" },
+  ];
 
   function handleShowLogMessage() {
     ++logMessageCount;
@@ -176,34 +179,65 @@
     </div>
 
     <div class="mock-panel">
-
       <Block>
-      <MeltCheckbox bind:target={buttonsDisabled} title={"Disable Buttons"} />{buttonsDisabled}
+        <MeltCheckbox
+          bind:target={buttonsDisabled}
+          title={"Disable Buttons"}
+        />{buttonsDisabled}
         <BlockTitle>MoltenButton</BlockTitle>
         <BlockBody>This has no variants:</BlockBody>
         <MoltenButton title={"Press Me"} click={switchSuggestions} />
         <BlockTitle>MoltenPushButton</BlockTitle>
-   
-        <BlockBody>This has dropdown</BlockBody>
-        <MoltenPushButton disabled={buttonsDisabled} click={() => {}} text={"Clear"} style={"normal"} options={clearButtonOptions} bind:target={clearButtonTarget} decorations={["(",")"]}/>
-      
-        <BlockBody>This has three variants:</BlockBody>
-        <MoltenPushButton disabled={buttonsDisabled} click={() => {}} text={"Normal w/ popup"} style={"normal"} >
-        <span slot="popup">Popup</span>
 
-        </MoltenPushButton>
-        <MoltenPushButton disabled={buttonsDisabled} click={() => {}} text={"Accept"} style={"accept"} />
+        <BlockBody>This has dropdown</BlockBody>
         <MoltenPushButton
-         disabled={buttonsDisabled}  click={() => {}}
+          disabled={buttonsDisabled}
+          click={() => {}}
+          text={"Clear"}
+          style={"normal"}
+          options={clearButtonOptions}
+          bind:target={clearButtonTarget}
+          decorations={["(", ")"]}
+        />
+
+        <BlockBody>This has three variants:</BlockBody>
+        <MoltenPushButton
+          disabled={buttonsDisabled}
+          click={() => {}}
+          text={"Normal w/ popup"}
+          style={"normal"}
+        >
+          <span slot="popup">Popup</span>
+        </MoltenPushButton>
+        <MoltenPushButton
+          disabled={buttonsDisabled}
+          click={() => {}}
+          text={"Accept"}
+          style={"accept"}
+        />
+        <MoltenPushButton
+          disabled={buttonsDisabled}
+          click={() => {}}
           text={"Outlined"}
           style={"outlined"}
         />
         <BlockBody>Now in a row layout:</BlockBody>
         <BlockRow>
-          <MoltenPushButton disabled={buttonsDisabled} click={() => {}} text={"Normal"} style={"normal"} />
-          <MoltenPushButton disabled={buttonsDisabled} click={() => {}} text={"Accept"} style={"accept"} />
           <MoltenPushButton
-          disabled={buttonsDisabled}   click={() => {}}
+            disabled={buttonsDisabled}
+            click={() => {}}
+            text={"Normal"}
+            style={"normal"}
+          />
+          <MoltenPushButton
+            disabled={buttonsDisabled}
+            click={() => {}}
+            text={"Accept"}
+            style={"accept"}
+          />
+          <MoltenPushButton
+            disabled={buttonsDisabled}
+            click={() => {}}
             text={"Outlined"}
             style={"outlined"}
           /></BlockRow

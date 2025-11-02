@@ -128,7 +128,7 @@
         <slot name="content" />
         {#if typeof options !== "undefined"}
           {#if decorations?.length === 2}
-            {decorations[0]+$selectedLabel+decorations[1]}
+            {decorations[0] + $selectedLabel + decorations[1]}
           {:else}
             {$selectedLabel}
           {/if}
