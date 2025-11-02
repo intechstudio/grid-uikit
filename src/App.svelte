@@ -17,6 +17,7 @@
   import { fly } from "svelte/transition";
   import LogMessage from "./lib/LogMessage.svelte";
   import { LogMessageType } from "./lib/LogMessageType.ts";
+  import MeltContextMenu from "./lib/MeltContextMenu.svelte";
 
   import { tooltip } from "./lib/tooltip.ts";
 
@@ -246,6 +247,7 @@
 
     <div class="mock-panel">
       <span>ContextMenu and context-target:</span>
+      <MeltContextMenu />
       <span
         use:contextTarget={{
           items: [
