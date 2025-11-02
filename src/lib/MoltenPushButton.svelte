@@ -6,9 +6,9 @@
   export let ratio = "normal";
   export let snap = "auto";
   export let click: (...args: any) => void;
-  export let options: SelectOption[] | undefined = undefined;
 
   ///////// START OF MELT SELECT ///////////
+  export let options: SelectOption[] | undefined = undefined;
   export let size: "auto" | "full" = "auto";
   import { writable } from "svelte/store";
   import { createSelect, melt } from "@melt-ui/svelte";
@@ -17,7 +17,7 @@
 
   export let target: any;
   export let decorations: string[];
-  type SelectOption = { title: string; value: any };
+  type SelectOption = { title: string; value: any; onclick: any };
 
   import MeltSelect from "./MeltSelect.svelte";
 
@@ -70,7 +70,6 @@
     target = $selected.value;
   }
 
-  let meltSelectValue1;
   let meltContainerElement;
 
   /////// END OF MELT SELECT /////////////
@@ -88,6 +87,7 @@
     <div
       class="clickblocker"
       on:click={(e) => {
+        // event propagation must skip opener in order for clickoutside to work properly around the porder radii
         e.stopPropagation();
         const newEvent = new event.constructor(e.type, e);
         meltContainerElement.dispatchEvent(newEvent);
@@ -105,16 +105,25 @@
             }, popup?.duration ?? 3000);
           }
 
+          e.stopPropagation();
+
           if ($customOpen === true) {
             $customOpen = false;
             return;
           }
 
-          if (typeof click === "undefined") {
+          if (typeof click !== "undefined") {
+            click();
+          }
+
+          if (typeof options === "undefined") {
             return;
           }
-          click();
-          e.stopPropagation();
+          const obj = options.find((e: SelectOption) => e.value === target);
+
+          if (obj?.onclick !== "undefined") {
+            obj.onclick(obj.value);
+          }
         }}
         {disabled}
         class="main style-{style}"

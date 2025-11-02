@@ -62,8 +62,20 @@
 
   let clearButtonTarget = "default";
   let clearButtonOptions = [
-    { title: "Default", value: "default" },
-    { title: "PS Config", value: "value2" },
+    {
+      title: "Default",
+      value: "default",
+      onclick: (e) => {
+        alert(e);
+      },
+    },
+    {
+      title: "PS Config",
+      value: "other",
+      onclick: (e) => {
+        alert(e);
+      },
+    },
   ];
 
   function handleShowLogMessage() {
