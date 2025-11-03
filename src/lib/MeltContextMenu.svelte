@@ -1,6 +1,8 @@
 <script lang="ts">
   import { createContextMenu, melt } from "@melt-ui/svelte";
-  import { writable } from "svelte/store";
+  import { get, writable } from "svelte/store";
+
+  ///////// USER CODE: Business logic of the actual context menu instance /////////////
 
   const settingsSync = writable(true);
   const hideMeltUI = writable(false);
@@ -39,65 +41,148 @@
     "Adrian Gonz",
     "Franck Poingt",
   ];
+
+  let menuRender = [
+    {
+      fn: menuItem,
+      descr: item,
+      label: "About Melt UI",
+      diabled: false,
+      hotkey: "⇧⌘N",
+    },
+    {
+      fn: menuItem,
+      descr: item,
+      label: "Check for Updates...",
+      diabled: false,
+      hotkey: "⇧U",
+    },
+    {
+      fn: menuSeparator,
+      descr: separator,
+    },
+    {
+      fn: menuCheckbox,
+      descr: checkboxItem,
+      label: "Settings Sync is On",
+      diabled: false,
+      hotkey: "",
+      ischecked: settingsSync
+    },
+  ];
+
+
+
 </script>
+
+{$settingsSync}
+
+{$hideMeltUI}
+
+
+
 
 <span class="trigger" {...$trigger} use:trigger aria-label="Update dimensions">
   Right click me.
 </span>
 
 <div class="menu" {...$menu} use:menu>
-  <div class="item" {...$item} use:item>About Melt UI</div>
-  <div class="item" {...$item} use:item>Check for Updates...</div>
-  <div class="separator" {...$separator} use:separator />
-  <div class="item" {...$checkboxItem} use:checkboxItem>
-    <div class="check">
-      {#if $settingsSync}
-        [x]
-      {/if}
-    </div>
-    Settings Sync is On
-  </div>
-  <div class="item" {...$subTriggerA} use:subTriggerA>
-    Profiles
-    <div class="rightSlot">-></div>
-  </div>
+  {#each menuRender as element}
+    {@render element.fn(
+      element.descr,
+      element.label,
+      element.disabled,
+      element.hotkey,
+      element.ischecked,
+    )}
+  {/each}
+  {@render menuCheckbox(
+    checkboxItem,
+    "Settings Sync is On",
+    false,
+    "",
+    settingsSync,
+  )}
+
+  {@render menuItem(subTriggerA, "Profiles disabled", true, "arrow")}
+  {@render menuItem(subTriggerA, "Profiles enabled", false, "arrow")}
+
   <div class="menu subMenu" {...$subMenuA} use:subMenuA>
     <div {...$radioGroup} use:radioGroup>
       {#each personsArr as person}
-        <div class="item" {...$radioItem({ value: person })} use:radioItem>
-          <div class="check">
-            {#if $isChecked(person)}
-              [Tick]
-            {/if}
-          </div>
-          {person}
-        </div>
+        {@render menuRadio(radioItem, person, false, "", isChecked)}
       {/each}
     </div>
   </div>
   <div {...$separator} use:separator class="separator" />
 
-  <div class="item" {...$checkboxItemA} use:checkboxItemA>
+  {@render menuCheckbox(
+    checkboxItemA,
+    "Hide Melt UI",
+    false,
+    "⇧⌘N",
+    hideMeltUI,
+  )}
+  {@render menuItem(item, "Show All Components", true, "⇧⌘N")}
+  {@render menuItem(item, "Show All Components", false, "⇧⌘N")}
+  {@render menuSeparator(separator)}
+  {@render menuItem(item, "Quit Melt UI", false, "⌘Q")}
+</div>
+
+{#snippet menuSeparator(descriptor)}
+  <div {...get(descriptor)} use:descriptor class="separator" />
+{/snippet}
+
+{#snippet menuRadio(descriptor, label, isdisabled, hotkey, helper)}
+  <div
+    class="item"
+    {...get(descriptor)({ value: label })}
+    use:descriptor
+    data-disabled={isdisabled ? "" : undefined}
+  >
     <div class="check">
-      {#if $hideMeltUI}
+      {#if get(helper)(label) === true}
+        [x]
+      {:else if get(helper)(label) === false}
+        [ ]
+      {/if}
+    </div>
+    {label}
+    <div class="rightSlot">{hotkey}</div>
+  </div>
+{/snippet}
+
+{#snippet menuCheckbox(descriptor, label, isdisabled, hotkey, ischecked )}
+
+  <div
+    class="item"
+    {...get(descriptor)}
+    use:descriptor
+    data-disabled={isdisabled ? "" : undefined}
+  >
+    <div class="check">
+      {#if isChecked == true}
         [x]
       {:else}
         [ ]
       {/if}
     </div>
-    Hide Melt UI
-    <div class="rightSlot">⌘H</div>
+    {label}
+    <div class="rightSlot">{hotkey}</div>
   </div>
-  <div class="item" {...$item} use:item data-disabled>
-    Show All Components
-    <div class="rightSlot">⇧⌘N</div>
+{/snippet}
+
+{#snippet menuItem(descriptor, label, isdisabled, hotkey)}
+  <div
+    class="item"
+    {...get(descriptor)}
+    use:descriptor
+    data-disabled={isdisabled ? "" : undefined}
+  >
+    {label}
+    <div class="rightSlot">{hotkey}</div>
   </div>
-  <div {...$separator} use:separator class="separator" />
-  <div class="item" {...$item} use:item>
-    Quit Melt UI
-    <div class="rightSlot">⌘Q</div>
-  </div>
-</div>
+{/snippet}
 
 <style>
   .menu {
@@ -105,7 +190,6 @@
     display: flex;
     flex-direction: column;
 
-    max-height: 300px;
     min-width: 220px;
 
     z-index: 10;
@@ -135,25 +219,21 @@
     z-index: 20;
   }
 
-  .item:hover {
+  .item:hover:not([data-disabled]) {
     background-color: var(--popover-selection);
     color: var(--foreground);
   }
 
   .item[data-disabled] {
+    cursor: default;
     color: var(--foreground-disabled);
   }
 
   .trigger {
     display: block;
-    width: 300px;
-    padding: 3rem 0;
-
-    border-color: rgb(var(--color-neutral-50) / 1);
-    border-width: 2px;
-    border-style: dashed;
-    border-radius: 0.375rem;
-
+    width: 100%;
+    height: 25%;
+    border: 2px dashed white;
     text-align: center;
   }
 
