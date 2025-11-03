@@ -167,8 +167,32 @@
     {#if title?.length > 0}
       <label>
         {title}
+        <div bind:this={inputElement}>
+          <input
+            bind:clientWidth={menuWidth}
+            type="text"
+            {...$trigger}
+            use:trigger
+            bind:value={inputValue}
+            on:change={handleChange}
+            on:focus={handleFocus}
+            on:blur={handleBlur}
+            on:m-keydown={(e) => {
+              e.preventDefault();
+            }}
+            on:click={() => {
+              open.set(true);
+            }}
+            class:error={isError && !disabled}
+            class:disabled
+            {placeholder}
+            {disabled}
+          />
+        </div>
+      </label>
+    {:else}
+      <div bind:this={inputElement}>
         <input
-          bind:clientWidth={menuWidth}
           bind:this={inputElement}
           type="text"
           {...$trigger}
@@ -188,28 +212,7 @@
           {placeholder}
           {disabled}
         />
-      </label>
-    {:else}
-      <input
-        bind:this={inputElement}
-        type="text"
-        {...$trigger}
-        use:trigger
-        bind:value={inputValue}
-        on:change={handleChange}
-        on:focus={handleFocus}
-        on:blur={handleBlur}
-        on:m-keydown={(e) => {
-          e.preventDefault();
-        }}
-        on:click={() => {
-          open.set(true);
-        }}
-        class:error={isError && !disabled}
-        class:disabled
-        {placeholder}
-        {disabled}
-      />
+      </div>
     {/if}
   </div>
 
