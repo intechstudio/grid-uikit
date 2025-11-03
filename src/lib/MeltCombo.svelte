@@ -167,9 +167,9 @@
     {#if title?.length > 0}
       <label>
         {title}
-        <div bind:this={inputElement}>
+        <div bind:clientWidth={menuWidth}>
           <input
-            bind:clientWidth={menuWidth}
+            bind:this={inputElement}
             type="text"
             {...$trigger}
             use:trigger
@@ -191,7 +191,7 @@
         </div>
       </label>
     {:else}
-      <div bind:this={inputElement}>
+      <div bind:clientWidth={menuWidth}>
         <input
           bind:this={inputElement}
           type="text"
