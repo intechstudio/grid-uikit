@@ -57,7 +57,7 @@
       return;
     }
 
-    const obj = options.find((e: SelectOption) => e.value === target);
+    const obj = options.find((e: pushButtonOption) => e.value === target);
     selected.set({ label: obj?.title, value: obj?.value });
   }
 
