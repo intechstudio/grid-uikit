@@ -19,8 +19,6 @@
   export let decorations: string[];
   type SelectOption = { title: string; value: any; onclick: any };
 
-  import MeltSelect from "./MeltSelect.svelte";
-
   function getDefaultSelected() {
     if (typeof options === "undefined") {
       return;
