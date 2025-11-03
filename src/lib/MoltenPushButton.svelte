@@ -8,7 +8,7 @@
   export let click: (...args: any) => void;
 
   ///////// START OF MELT SELECT ///////////
-  export let options: SelectOption[] | undefined = undefined;
+  export let options: pushButtonOption[] | undefined = undefined;
   export let size: "auto" | "full" = "auto";
   import { writable } from "svelte/store";
   import { createSelect, melt } from "@melt-ui/svelte";
@@ -17,14 +17,14 @@
 
   export let target: any;
   export let decorations: string[];
-  type SelectOption = { title: string; value: any; onclick: any };
+  type pushButtonOption = { title: string; value: any; onclick: any };
 
   function getDefaultSelected() {
     if (typeof options === "undefined") {
       return;
     }
 
-    const obj = options.find((e: SelectOption) => e.value === target);
+    const obj = options.find((e: pushButtonOption) => e.value === target);
     return { label: obj?.title, value: obj?.value };
   }
 
