@@ -117,7 +117,7 @@
           if (typeof options === "undefined") {
             return;
           }
-          const obj = options.find((e: SelectOption) => e.value === target);
+          const obj = options.find((e: PushButtonOption) => e.value === target);
 
           if (obj?.onclick !== "undefined") {
             obj.onclick(obj.value);
