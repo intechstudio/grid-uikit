@@ -7,7 +7,7 @@
   export let snap = "auto";
   export let click: (...args: any) => void;
 
-  ///////// START OF MELT SELECT ///////////
+  ///////// START OF MELT SELECT //////////
   export let options: PushButtonOption[] | undefined = undefined;
   export let size: "auto" | "full" = "auto";
   import { writable } from "svelte/store";
