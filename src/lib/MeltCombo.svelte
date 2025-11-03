@@ -158,6 +158,8 @@
   function handleBlur() {
     open.set(false);
   }
+
+  let menuWidth;
 </script>
 
 <div class="container" class:flex-grow={size === "full"}>
@@ -166,6 +168,7 @@
       <label>
         {title}
         <input
+          bind:clientWidth={menuWidth}
           bind:this={inputElement}
           type="text"
           {...$trigger}
@@ -218,6 +221,7 @@
       on:mousedown|preventDefault
       transition:fade={{ duration: 100 }}
       class="menu"
+      style="min-width: {menuWidth}px;"
     >
       <div>
         {#each filteredSuggestions as suggestion}
@@ -232,8 +236,8 @@
     </div>
   {/if}
 
-  <div class="info-value" style:display={valueInfoEnabled ? "visible" : "none"}>
-    {infoValue}
+  <div class="info-value">
+    {infoValue}&nbsp;
   </div>
 </div>
 
@@ -291,9 +295,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    min-width: 8%;
     width: fit-content;
-    max-width: 13%;
   }
   option.suggestion {
     cursor: pointer;
