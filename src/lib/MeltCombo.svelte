@@ -313,8 +313,8 @@
     padding-bottom: 0.25rem;
   }
   option.suggestion:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-    color: white;
+    background-color: var(--popover-selection);
+    color: var(--foreground);
   }
   div.info-value {
     color: var(--foreground-soft);
