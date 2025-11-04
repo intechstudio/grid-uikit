@@ -102,8 +102,6 @@
             }, popup?.duration ?? 3000);
           }
 
-          e.stopPropagation();
-
           if ($customOpen === true) {
             $customOpen = false;
             return;
