@@ -198,7 +198,25 @@
         />{buttonsDisabled}
         <BlockTitle>MoltenButton</BlockTitle>
         <BlockBody>This has no variants:</BlockBody>
-        <MoltenButton title={"Press Me"} click={switchSuggestions} />
+
+                <div
+      use:tooltip={{
+        text: "Confirm text",
+        placement: "top",
+        buttons: [
+          {
+            label: "Cancel",
+            handler: undefined,
+          },
+                    { label: "Confirm", handler: ()=>{alert(1)} },
+        ],
+        triggerEvents: ["show-buttons", "hover"],
+      }}
+    >
+
+    <MoltenButton title={"Press Me"} click={switchSuggestions} />
+
+    </div>
         <BlockTitle>MoltenPushButton</BlockTitle>
 
         <BlockBody>This has dropdown</BlockBody>
