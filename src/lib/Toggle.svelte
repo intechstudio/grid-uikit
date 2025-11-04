@@ -5,6 +5,7 @@
 
   export let value = false;
   export let title: string = "";
+  export let testid;
 
   function handleChange() {
     dispatch("change", {});
@@ -18,6 +19,7 @@
     </span>
   {/if}
   <input
+    data-testid={testid}
     type="checkbox"
     bind:checked={value}
     on:change={handleChange}
