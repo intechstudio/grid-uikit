@@ -7,6 +7,12 @@
   const settingsSync = writable(true);
   const hideMeltUI = writable(false);
 
+  let settingsSyncState = $state($settingsSync);
+  settingsSync.subscribe((s) => {
+    console.log(s);
+    settingsSyncState = s;
+  });
+
   const {
     elements: { trigger, menu, item, separator },
     builders: { createSubmenu, createMenuRadioGroup, createCheckboxItem },
@@ -45,6 +51,7 @@
   let menuRender = [
     {
       fn: menuItem,
+      subtree: undefined,
       descr: item,
       label: "About Melt UI",
       diabled: false,
@@ -52,6 +59,7 @@
     },
     {
       fn: menuItem,
+      subtree: undefined,
       descr: item,
       label: "Check for Updates...",
       diabled: false,
@@ -59,35 +67,31 @@
     },
     {
       fn: menuSeparator,
+      subtree: undefined,
       descr: separator,
     },
     {
       fn: menuCheckbox,
+      subtree: undefined,
       descr: checkboxItem,
       label: "Settings Sync is On",
-      diabled: false,
-      hotkey: "",
-      ischecked: settingsSync
+      disabled: false,
+      hotkey: "ABC",
+      ischecked: () => settingsSyncState,
     },
   ];
-
-
-
 </script>
 
 {$settingsSync}
 
 {$hideMeltUI}
 
-
-
-
 <span class="trigger" {...$trigger} use:trigger aria-label="Update dimensions">
   Right click me.
 </span>
-
+s
 <div class="menu" {...$menu} use:menu>
-  {#each menuRender as element}
+  {#each menuRender as element, i}
     {@render element.fn(
       element.descr,
       element.label,
@@ -96,13 +100,6 @@
       element.ischecked,
     )}
   {/each}
-  {@render menuCheckbox(
-    checkboxItem,
-    "Settings Sync is On",
-    false,
-    "",
-    settingsSync,
-  )}
 
   {@render menuItem(subTriggerA, "Profiles disabled", true, "arrow")}
   {@render menuItem(subTriggerA, "Profiles enabled", false, "arrow")}
@@ -116,13 +113,13 @@
   </div>
   <div {...$separator} use:separator class="separator" />
 
-  {@render menuCheckbox(
+  <!--  {@render menuCheckbox(
     checkboxItemA,
     "Hide Melt UI",
     false,
     "⇧⌘N",
-    hideMeltUI,
-  )}
+    settingsSyncState,
+    )}-->
   {@render menuItem(item, "Show All Components", true, "⇧⌘N")}
   {@render menuItem(item, "Show All Components", false, "⇧⌘N")}
   {@render menuSeparator(separator)}
@@ -152,8 +149,7 @@
   </div>
 {/snippet}
 
-{#snippet menuCheckbox(descriptor, label, isdisabled, hotkey, ischecked )}
-
+{#snippet menuCheckbox(descriptor, label, isdisabled, hotkey, ischecked)}
   <div
     class="item"
     {...get(descriptor)}
@@ -161,7 +157,7 @@
     data-disabled={isdisabled ? "" : undefined}
   >
     <div class="check">
-      {#if isChecked == true}
+      {#if ischecked() == true}
         [x]
       {:else}
         [ ]
