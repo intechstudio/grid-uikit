@@ -13,6 +13,7 @@
   import MeltRadio from "./lib/MeltRadio.svelte";
   import Toggle from "./lib/Toggle.svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
+  import MoltenPushButtonDropdown from "./lib/MoltenPushButtonDropdown.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
   import { fly } from "svelte/transition";
   import LogMessage from "./lib/LogMessage.svelte";
@@ -229,15 +230,25 @@
         <BlockTitle>MoltenPushButton</BlockTitle>
 
         <BlockBody>This has dropdown</BlockBody>
-        <MoltenPushButton
-          disabled={buttonsDisabled}
-          click={() => {}}
-          text={"Clear"}
-          style={"normal"}
-          options={clearButtonOptions}
-          bind:target={clearButtonTarget}
-          decorations={["(", ")"]}
-        />
+        <div style="display: flex; gap: 0;">
+          <MoltenPushButton
+            disabled={buttonsDisabled}
+            click={() => {}}
+            text={"Clear"}
+            style={"normal"}
+            options={clearButtonOptions}
+            bind:target={clearButtonTarget}
+            decorations={["(", ")"]}
+            grouped={true}
+          />
+          <MoltenPushButtonDropdown
+            disabled={buttonsDisabled}
+            style={"normal"}
+            options={clearButtonOptions}
+            bind:target={clearButtonTarget}
+            grouped={true}
+          />
+        </div>
 
         <BlockBody>This has three variants:</BlockBody>
         <MoltenPushButton
