@@ -16,6 +16,7 @@
   import MoltenPushButtonDropdown from "./lib/MoltenPushButtonDropdown.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
   import { fly } from "svelte/transition";
+  import { tick } from "svelte";
   import LogMessage from "./lib/LogMessage.svelte";
   import { LogMessageType } from "./lib/LogMessageType.ts";
   import { writable } from "svelte/store";
@@ -62,6 +63,8 @@
   let logMessageTimeout: number;
 
   let clearButtonTarget = "default";
+  let clearButtonWidth = 0;
+
   let clearButtonOptions = [
     {
       title: "Default",
@@ -230,6 +233,7 @@
         <BlockTitle>MoltenPushButton</BlockTitle>
 
         <BlockBody>This has dropdown</BlockBody>
+        <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
         <div style="display: flex; gap: 0;">
           <MoltenPushButton
             disabled={buttonsDisabled}
@@ -238,6 +242,7 @@
             style={"normal"}
             options={clearButtonOptions}
             bind:target={clearButtonTarget}
+            bind:width={clearButtonWidth}
             decorations={["(", ")"]}
             grouped={true}
           />
@@ -247,6 +252,7 @@
             options={clearButtonOptions}
             bind:target={clearButtonTarget}
             grouped={true}
+            menuWidth={clearButtonWidth}
           />
         </div>
 

@@ -1,12 +1,27 @@
 <script lang="ts">
+  import { tick } from "svelte";
+
   export let options;
   export let style: "normal" | "outlined" | "accept" = "normal";
   export let disabled: boolean = false;
   export let target: any;
   export let grouped: boolean = false;
+  export let menuWidth: number = 0;
+  export let width = 0;
 
   import { writable } from "svelte/store";
   import { createSelect, melt } from "@melt-ui/svelte";
+
+  async function updateWidth() {
+    if (element) {
+      await tick();
+      requestAnimationFrame(() => {
+        width = element.offsetWidth;
+      });
+    }
+  }
+
+  $: element, updateWidth();
 
   const customOpen = writable(false);
 
@@ -81,7 +96,7 @@
     </button>
 
     {#if $open}
-      <div {...$menu} use:menu class="menu">
+      <div {...$menu} use:menu class="menu" style="min-width: {menuWidth + width}px;">
         {#each options as item}
           <div
             {...$option({ value: item.value, label: item.title })}

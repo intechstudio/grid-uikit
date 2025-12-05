@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { tick } from "svelte";
+
   export let text: string = "";
   export let style: "normal" | "outlined" | "accept" = "normal";
   export let disabled: boolean = false;
@@ -14,6 +16,19 @@
   let showPopup: boolean = false;
   let element: HTMLButtonElement;
   let selectedLabel = "";
+
+  export let width = 0;
+
+  async function updateWidth() {
+    if (element) {
+      await tick();
+      requestAnimationFrame(() => {
+        width = element.offsetWidth;
+      });
+    }
+  }
+
+  $: element, target, updateWidth();
 
   $: {
     if (typeof options === "undefined" || typeof target === "undefined") {
