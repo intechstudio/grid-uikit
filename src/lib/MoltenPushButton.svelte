@@ -19,6 +19,8 @@
 
   export let width = 0;
 
+  let windowWidth = 0;
+
   async function updateWidth() {
     if (element) {
       await tick();
@@ -28,7 +30,7 @@
     }
   }
 
-  $: element, target, updateWidth();
+  $: element, target, windowWidth, updateWidth();
 
   $: {
     if (typeof options === "undefined" || typeof target === "undefined") {
@@ -43,6 +45,8 @@
     element?.focus();
   }
 </script>
+
+<svelte:window bind:innerWidth={windowWidth} />
 
 <div class="button-container" class:width-full={snap === "full"}>
   <button

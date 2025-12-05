@@ -80,6 +80,13 @@
         alert(e);
       },
     },
+    {
+      title: "Clear Everything Including All User Data",
+      value: "long",
+      onclick: (e) => {
+        alert(e);
+      },
+    },
   ];
 
   function handleShowLogMessage() {
@@ -253,6 +260,7 @@
             bind:target={clearButtonTarget}
             grouped={true}
             menuWidth={clearButtonWidth}
+            placement="end"
           />
         </div>
 

@@ -8,9 +8,12 @@
   export let grouped: boolean = false;
   export let menuWidth: number = 0;
   export let width = 0;
+  export let placement: "end" | "start" = "end";
 
   import { writable } from "svelte/store";
   import { createSelect, melt } from "@melt-ui/svelte";
+
+  let windowWidth = 0;
 
   async function updateWidth() {
     if (element) {
@@ -21,7 +24,7 @@
     }
   }
 
-  $: element, updateWidth();
+  $: element, windowWidth, updateWidth();
 
   const customOpen = writable(false);
 
@@ -43,7 +46,7 @@
     disabled: disabled,
     forceVisible: true,
     positioning: {
-      placement: "bottom-end",
+      placement: placement === "start" ? "bottom-start" : "bottom-end",
       fitViewport: true,
     },
     defaultSelected: getDefaultSelected(),
@@ -80,6 +83,8 @@
   }
 </script>
 
+<svelte:window bind:innerWidth={windowWidth} />
+
 <div class="dropdown-container">
   <div {...$trigger} use:trigger style="display: inline-flex;">
     <button
@@ -96,7 +101,7 @@
     </button>
 
     {#if $open}
-      <div {...$menu} use:menu class="menu" style="min-width: {menuWidth + width}px;">
+      <div {...$menu} use:menu class="menu" style="min-width: {menuWidth + width}px;{placement === 'start' ? ` transform: translateX(-${menuWidth}px);` : ''}">
         {#each options as item}
           <div
             {...$option({ value: item.value, label: item.title })}
