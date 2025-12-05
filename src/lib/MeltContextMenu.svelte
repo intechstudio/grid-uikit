@@ -51,132 +51,176 @@
   let menuRender = [
     {
       fn: menuItem,
-      subtree: undefined,
       descr: item,
-      label: "About Melt UI",
-      diabled: false,
-      hotkey: "⇧⌘N",
+      fields: {
+        label: "About Melt UI",
+        diabled: false,
+        hotkey: "⇧⌘N",
+      },
     },
     {
       fn: menuItem,
-      subtree: undefined,
       descr: item,
-      label: "Check for Updates...",
-      diabled: false,
-      hotkey: "⇧U",
+      fields: {
+        label: "Check for Updates...",
+        diabled: true,
+        hotkey: "⇧U",
+      },
     },
     {
       fn: menuSeparator,
-      subtree: undefined,
       descr: separator,
     },
     {
       fn: menuCheckbox,
-      subtree: undefined,
       descr: checkboxItem,
-      label: "Settings Sync is On",
-      disabled: false,
-      hotkey: "ABC",
-      ischecked: () => settingsSyncState,
+      fields: {
+        label: "Settings Sync is On",
+        disabled: false,
+        hotkey: "ABC",
+        ischecked: () => settingsSyncState,
+      },
+    },
+    {
+      fn: menuItem,
+      descr: subTriggerA,
+      fields: {
+        label: "Select profile",
+        diabled: false,
+        hotkey: "⇧P",
+      },
+    },
+    {
+      fn: menuSeparator,
+      descr: separator,
+    },
+    {
+      fn: menuSubmenu,
+      fields: {
+        subtree: [
+          {
+            fn: menuCheckbox,
+            descr: checkboxItem,
+            fields: {
+              label: "Settings Sync is On",
+              disabled: false,
+              hotkey: "ABC",
+              ischecked: () => settingsSyncState,
+            },
+          },
+        ],
+      },
+      descr: subMenuA,
     },
   ];
+
+  let menuMain = {
+    fn: menuSubmenu,
+    descr: menu,
+    subtree: menuRender,
+  };
+
+  let menuRef1 = () => {
+    return $menu;
+  };
+  let menuRef2 = () => menu;
 </script>
 
-{$settingsSync}
 
-{$hideMeltUI}
+
+
 
 <span class="trigger" {...$trigger} use:trigger aria-label="Update dimensions">
   Right click me.
 </span>
-s
-<div class="menu" {...$menu} use:menu>
-  {#each menuRender as element, i}
-    {@render element.fn(
-      element.descr,
-      element.label,
-      element.disabled,
-      element.hotkey,
-      element.ischecked,
-    )}
-  {/each}
 
-  {@render menuItem(subTriggerA, "Profiles disabled", true, "arrow")}
-  {@render menuItem(subTriggerA, "Profiles enabled", false, "arrow")}
+{@render menuMenu(()=> {return $menu}, () => menu, {subtree: menuRender})}
 
+
+
+<!--
   <div class="menu subMenu" {...$subMenuA} use:subMenuA>
     <div {...$radioGroup} use:radioGroup>
       {#each personsArr as person}
-        {@render menuRadio(radioItem, person, false, "", isChecked)}
+         {@render menuRadio(radioItem, person, false, "", isChecked)} 
       {/each}
     </div>
   </div>
   <div {...$separator} use:separator class="separator" />
+  -->
 
-  <!--  {@render menuCheckbox(
-    checkboxItemA,
-    "Hide Melt UI",
-    false,
-    "⇧⌘N",
-    settingsSyncState,
-    )}-->
-  {@render menuItem(item, "Show All Components", true, "⇧⌘N")}
-  {@render menuItem(item, "Show All Components", false, "⇧⌘N")}
-  {@render menuSeparator(separator)}
-  {@render menuItem(item, "Quit Melt UI", false, "⌘Q")}
-</div>
+
+{#snippet content(arr)}
+  {#each arr as element, i}
+    {@render element.fn(element.descr, element.fields)}
+  {/each}
+{/snippet}
+
+{#snippet menuSubmenu(descriptor, fields)}
+  <div class="menu" {...$subMenuA} use:descriptor>
+    hello1
+    {@render content(fields.subtree)}
+  </div>
+{/snippet}
+
+{#snippet menuMenu(descriptor1, descriptor2, fields)}
+  <div class="menu" {...menuRef1()} use:descriptor2()>
+    hello
+    {@render content(fields.subtree)}
+  </div>
+{/snippet}
 
 {#snippet menuSeparator(descriptor)}
   <div {...get(descriptor)} use:descriptor class="separator" />
 {/snippet}
 
-{#snippet menuRadio(descriptor, label, isdisabled, hotkey, helper)}
+{#snippet menuRadio(descriptor, fields)}
   <div
     class="item"
-    {...get(descriptor)({ value: label })}
+    {...get(descriptor)({ value: fields.label })}
     use:descriptor
-    data-disabled={isdisabled ? "" : undefined}
+    data-disabled={fields.isdisabled ? "" : undefined}
   >
     <div class="check">
-      {#if get(helper)(label) === true}
+      {#if get(fields.helper)(fields.label) === true}
         [x]
-      {:else if get(helper)(label) === false}
+      {:else if get(fields.helper)(fields.label) === false}
         [ ]
       {/if}
     </div>
     {label}
-    <div class="rightSlot">{hotkey}</div>
+    <div class="rightSlot">{fields.hotkey}</div>
   </div>
 {/snippet}
 
-{#snippet menuCheckbox(descriptor, label, isdisabled, hotkey, ischecked)}
+{#snippet menuCheckbox(descriptor, fields)}
   <div
     class="item"
     {...get(descriptor)}
     use:descriptor
-    data-disabled={isdisabled ? "" : undefined}
+    data-disabled={fields.isdisabled ? "" : undefined}
   >
     <div class="check">
-      {#if ischecked() == true}
+      {#if fields.ischecked() == true}
         [x]
       {:else}
         [ ]
       {/if}
     </div>
-    {label}
-    <div class="rightSlot">{hotkey}</div>
+    {fields.label}
+    <div class="rightSlot">{fields.hotkey}</div>
   </div>
 {/snippet}
 
-{#snippet menuItem(descriptor, label, isdisabled, hotkey)}
+{#snippet menuItem(descriptor, fields)}
   <div
     class="item"
     {...get(descriptor)}
     use:descriptor
-    data-disabled={isdisabled ? "" : undefined}
+    data-disabled={fields.isdisabled ? "" : undefined}
   >
-    {label}
-    <div class="rightSlot">{hotkey}</div>
+    {fields.label}
+    <div class="rightSlot">{fields.hotkey}</div>
   </div>
 {/snippet}
 
