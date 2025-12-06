@@ -81,7 +81,7 @@
       },
     },
     {
-      title: "Clear Everything Including All User Data",
+      title: "Clear Everything",
       value: "long",
       onclick: (e) => {
         alert(e);
@@ -271,7 +271,6 @@
               style={"normal"}
               options={clearButtonOptions}
               bind:target={clearButtonTarget}
-              grouped={true}
               menuWidth={clearButtonWidth}
             />
           </div>

@@ -5,7 +5,6 @@
   export let style: "normal" | "outlined" | "accept" = "normal";
   export let disabled: boolean = false;
   export let target: any;
-  export let grouped: boolean = false;
   export let menuWidth: number = 0;
   export let width = 0;
 
@@ -84,7 +83,7 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<div class="dropdown-container" style={grouped && menuWidth > 0 ? `margin-left: -${menuWidth}px;` : ""}>
+<div class="dropdown-container" style={menuWidth > 0 ? `margin-left: -${menuWidth}px;` : ""}>
   <div {...$trigger} use:trigger style="display: inline-flex;">
     <button
       bind:this={element}
@@ -94,8 +93,8 @@
       }}
       {disabled}
       class="dropdown-button style-{style}"
-      class:grouped
-      style={grouped && menuWidth > 0 ? `padding-left: ${menuWidth}px;` : ""}
+      class:grouped={menuWidth > 0}
+      style={menuWidth > 0 ? `padding-left: ${menuWidth}px;` : ""}
     >
       &#9660;
     </button>
@@ -105,7 +104,7 @@
         {...$menu}
         use:menu
         class="menu"
-        style="min-width: {menuWidth + width}px;"
+        style={`min-width: ${menuWidth > 0 ? menuWidth : width}px;`}
       >
         {#each options as item}
           <div
