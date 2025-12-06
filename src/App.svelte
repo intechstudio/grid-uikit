@@ -242,26 +242,40 @@
         <BlockBody>This has dropdown</BlockBody>
         <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
         <div style="display: flex; gap: 0;">
-          <MoltenPushButton
-            disabled={buttonsDisabled}
-            click={() => {}}
-            text={"Clear"}
-            style={"normal"}
-            options={clearButtonOptions}
-            bind:target={clearButtonTarget}
-            bind:width={clearButtonWidth}
-            decorations={["(", ")"]}
-            grouped={true}
-          />
-          <MoltenPushButtonDropdown
-            disabled={buttonsDisabled}
-            style={"normal"}
-            options={clearButtonOptions}
-            bind:target={clearButtonTarget}
-            grouped={true}
-            menuWidth={clearButtonWidth}
-            placement="end"
-          />
+          <div
+            use:tooltip={{
+              text: "Clear the current selection",
+              placement: "top",
+            }}
+          >
+            <MoltenPushButton
+              disabled={buttonsDisabled}
+              click={() => {}}
+              text={"Clear"}
+              style={"normal"}
+              options={clearButtonOptions}
+              bind:target={clearButtonTarget}
+              bind:width={clearButtonWidth}
+              decorations={["(", ")"]}
+              grouped={true}
+            />
+          </div>
+          <div
+            use:tooltip={{
+              text: "More options",
+              placement: "top",
+            }}
+          >
+            <MoltenPushButtonDropdown
+              disabled={buttonsDisabled}
+              style={"normal"}
+              options={clearButtonOptions}
+              bind:target={clearButtonTarget}
+              grouped={true}
+              menuWidth={clearButtonWidth}
+              placement="magic"
+            />
+          </div>
         </div>
 
         <BlockBody>This has three variants:</BlockBody>

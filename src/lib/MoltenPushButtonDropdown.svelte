@@ -8,7 +8,7 @@
   export let grouped: boolean = false;
   export let menuWidth: number = 0;
   export let width = 0;
-  export let placement: "end" | "start" = "end";
+  export let placement: "end" | "start" | "magic" = "end";
 
   import { writable } from "svelte/store";
   import { createSelect, melt } from "@melt-ui/svelte";
@@ -46,7 +46,7 @@
     disabled: disabled,
     forceVisible: true,
     positioning: {
-      placement: placement === "start" ? "bottom-start" : "bottom-end",
+      placement: placement === "start" || placement === "magic" ? "bottom-start" : "bottom-end",
       fitViewport: true,
     },
     defaultSelected: getDefaultSelected(),
@@ -96,12 +96,18 @@
       {disabled}
       class="dropdown-button style-{style}"
       class:grouped
+      style={placement === "magic" ? `padding-left: ${menuWidth}px;` : ""}
     >
       &#9660;
     </button>
 
     {#if $open}
-      <div {...$menu} use:menu class="menu" style="min-width: {menuWidth + width}px;{placement === 'start' ? ` transform: translateX(-${menuWidth}px);` : ''}">
+      <div
+        {...$menu}
+        use:menu
+        class="menu"
+        style="min-width: {menuWidth + width}px;{placement === 'start' ? ` transform: translateX(-${menuWidth}px);` : ''}"
+      >
         {#each options as item}
           <div
             {...$option({ value: item.value, label: item.title })}

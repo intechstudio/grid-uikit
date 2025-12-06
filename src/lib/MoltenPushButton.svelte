@@ -89,6 +89,7 @@
 
 <style>
   .button-container {
+    z-index: 1;
     position: relative;
     display: inline-flex;
   }
