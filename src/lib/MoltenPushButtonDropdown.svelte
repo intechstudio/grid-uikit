@@ -8,7 +8,6 @@
   export let grouped: boolean = false;
   export let menuWidth: number = 0;
   export let width = 0;
-  export let placement: "end" | "start" | "magic" = "end";
 
   import { writable } from "svelte/store";
   import { createSelect, melt } from "@melt-ui/svelte";
@@ -46,7 +45,7 @@
     disabled: disabled,
     forceVisible: true,
     positioning: {
-      placement: placement === "start" || placement === "magic" ? "bottom-start" : "bottom-end",
+      placement: "bottom-start",
       fitViewport: true,
     },
     defaultSelected: getDefaultSelected(),
@@ -85,7 +84,7 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<div class="dropdown-container">
+<div class="dropdown-container" style={grouped && menuWidth > 0 ? `margin-left: -${menuWidth}px;` : ""}>
   <div {...$trigger} use:trigger style="display: inline-flex;">
     <button
       bind:this={element}
@@ -96,7 +95,7 @@
       {disabled}
       class="dropdown-button style-{style}"
       class:grouped
-      style={placement === "magic" ? `padding-left: ${menuWidth}px;` : ""}
+      style={grouped && menuWidth > 0 ? `padding-left: ${menuWidth}px;` : ""}
     >
       &#9660;
     </button>
@@ -106,7 +105,7 @@
         {...$menu}
         use:menu
         class="menu"
-        style="min-width: {menuWidth + width}px;{placement === 'start' ? ` transform: translateX(-${menuWidth}px);` : ''}"
+        style="min-width: {menuWidth + width}px;"
       >
         {#each options as item}
           <div
@@ -166,7 +165,7 @@
     font-family: inherit;
     font-feature-settings: inherit;
     font-variation-settings: inherit;
-    font-size: 0.75rem;
+    font-size: 100%;
     font-weight: inherit;
     line-height: inherit;
     letter-spacing: inherit;

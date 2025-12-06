@@ -241,7 +241,7 @@
 
         <BlockBody>This has dropdown</BlockBody>
         <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
-        <div style="display: flex; gap: 0;">
+        <div style="display: flex; gap: 0; position: relative;">
           <div
             use:tooltip={{
               text: "Clear the current selection",
@@ -273,7 +273,6 @@
               bind:target={clearButtonTarget}
               grouped={true}
               menuWidth={clearButtonWidth}
-              placement="magic"
             />
           </div>
         </div>

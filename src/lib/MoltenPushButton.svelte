@@ -48,7 +48,7 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<div class="button-container" class:width-full={snap === "full"}>
+<div class="button-container" class:width-full={snap === "full"} class:grouped>
   <button
     bind:this={element}
     on:click={(e) => {
@@ -92,6 +92,10 @@
     z-index: 1;
     position: relative;
     display: inline-flex;
+  }
+
+  .button-container.grouped {
+    position: relative;
   }
 
   .button-container.width-full {
