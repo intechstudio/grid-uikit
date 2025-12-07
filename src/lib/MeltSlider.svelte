@@ -74,12 +74,13 @@
     display: block;
     width: 100%;
     background-color: var(--background-muted);
+    border: 1px solid var(--background-soft);
     border-radius: 9999px;
     height: 8px;
   }
   span.range-selected {
     height: 8px;
-    background-color: var(--foreground-soft);
+    background-color: var(--foreground-disabled);
     border-radius: 9999px;
   }
   span.thumb {
