@@ -73,13 +73,14 @@
   span.range-full {
     display: block;
     width: 100%;
-    background-color: white;
+    background-color: var(--background-muted);
+    border: 1px solid var(--background-soft);
     border-radius: 9999px;
     height: 8px;
   }
   span.range-selected {
     height: 8px;
-    background-color: rgba(115, 115, 115, 1);
+    background-color: var(--foreground-disabled);
     border-radius: 9999px;
   }
   span.thumb {
@@ -87,9 +88,6 @@
     height: var(--thumb-size);
     width: var(--thumb-size);
     border-radius: 9999px;
-    background-color: rgba(115, 115, 115, 1);
-  }
-  span.thumb:focus {
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 1);
+    background-color: var(--foreground-muted);
   }
 </style>

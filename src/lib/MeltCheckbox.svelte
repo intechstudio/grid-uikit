@@ -56,8 +56,8 @@
   }
 
   .checkbox-box {
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: var(--background-muted);
+    border: 1px solid var(--background-soft);
   }
 
   .checkbox-outer {

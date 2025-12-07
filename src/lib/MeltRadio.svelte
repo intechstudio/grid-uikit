@@ -114,8 +114,8 @@
     gap: 1rem;
   }
   .radio-border {
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: var(--background-muted);
+    border: 1px solid var(--background-soft);
   }
   label.row {
     cursor: pointer;
@@ -168,7 +168,7 @@
     padding: 0.25rem 0.5rem;
     width: 100%;
     border-radius: 0.25rem;
-    border: 1px solid rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--background-soft);
   }
   button.style-button:hover {
     background-color: var(--background-muted);

@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: var(--background-soft);
     padding: 0.5rem;
     gap: 0.5rem;
     border-radius: 0.75rem;

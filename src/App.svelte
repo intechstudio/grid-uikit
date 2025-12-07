@@ -13,8 +13,12 @@
   import MeltRadio from "./lib/MeltRadio.svelte";
   import Toggle from "./lib/Toggle.svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
+  import MoltenPushButtonDropdown from "./lib/MoltenPushButtonDropdown.svelte";
+  import MoltenPushButtonGroup from "./lib/MoltenPushButtonGroup.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
+  import ControlGroup from "./lib/ControlGroup.svelte";
   import { fly } from "svelte/transition";
+  import { tick } from "svelte";
   import LogMessage from "./lib/LogMessage.svelte";
   import { LogMessageType } from "./lib/LogMessageType.ts";
   import { writable } from "svelte/store";
@@ -61,6 +65,8 @@
   let logMessageTimeout: number;
 
   let clearButtonTarget = "default";
+  let clearButtonWidth = 0;
+
   let clearButtonOptions = [
     {
       title: "Default",
@@ -72,6 +78,13 @@
     {
       title: "PS Config",
       value: "other",
+      onclick: (e) => {
+        alert(e);
+      },
+    },
+    {
+      title: "Clear Everything",
+      value: "long",
       onclick: (e) => {
         alert(e);
       },
@@ -92,12 +105,40 @@
 <main on:contextmenu|preventDefault>
   <div class="main-container">
     <div class="mock-panel">
+      <Block border="yellow">
+        <BlockTitle>To Be Deprecated</BlockTitle>
+        <BlockBody
+          >The following components are scheduled for deprecation:</BlockBody
+        >
+        <MoltenButton title={"MoltenButton"} click={() => {}} />
+        <ControlGroup>
+          <div slot="header">ControlGroup</div>
+          <div slot="content">This component wraps content with a header</div>
+        </ControlGroup>
+      </Block>
+    </div>
+
+    <div class="mock-panel">
       <span class="color-preview-label"
         ><div
           class="color-preview-box"
           style="background-color: var(--background);"
         ></div>
         --background</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--background-muted);"
+        ></div>
+        --background-muted</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--background-soft);"
+        ></div>
+        --background-soft</span
       >
       <span class="color-preview-label"
         ><div
@@ -126,6 +167,41 @@
           style="background-color: var(--foreground-disabled);"
         ></div>
         --foreground-disabled</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--shadow);"
+        ></div>
+        --shadow</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--accent);"
+        ></div>
+        --accent</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--accent-muted);"
+        ></div>
+        --accent-muted</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--accent-soft);"
+        ></div>
+        --accent-soft</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--error);"
+        ></div>
+        --error</span
       >
       <span class="color-preview-label"
         ><div
@@ -229,15 +305,41 @@
         <BlockTitle>MoltenPushButton</BlockTitle>
 
         <BlockBody>This has dropdown</BlockBody>
-        <MoltenPushButton
-          disabled={buttonsDisabled}
-          click={() => {}}
-          text={"Clear"}
-          style={"normal"}
-          options={clearButtonOptions}
-          bind:target={clearButtonTarget}
-          decorations={["(", ")"]}
-        />
+        <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
+        <MoltenPushButtonGroup>
+          <div
+            use:tooltip={{
+              text: "Clear the current selection",
+              placement: "top",
+            }}
+          >
+            <MoltenPushButton
+              disabled={buttonsDisabled}
+              click={() => {}}
+              text={"Clear"}
+              style={"normal"}
+              options={clearButtonOptions}
+              bind:target={clearButtonTarget}
+              bind:width={clearButtonWidth}
+              decorations={["(", ")"]}
+              grouped={true}
+            />
+          </div>
+          <div
+            use:tooltip={{
+              text: "More options",
+              placement: "top",
+            }}
+          >
+            <MoltenPushButtonDropdown
+              disabled={buttonsDisabled}
+              style={"normal"}
+              options={clearButtonOptions}
+              bind:target={clearButtonTarget}
+              menuWidth={clearButtonWidth}
+            />
+          </div>
+        </MoltenPushButtonGroup>
 
         <BlockBody>This has three variants:</BlockBody>
         <MoltenPushButton
@@ -245,8 +347,11 @@
           click={() => {}}
           text={"Normal w/ popup"}
           style={"normal"}
+          popup={{}}
         >
-          <span slot="popup">Popup</span>
+          <span slot="popup"
+            >Button clicked! This message will disappear in 3 seconds.</span
+          >
         </MoltenPushButton>
         <MoltenPushButton
           disabled={buttonsDisabled}
