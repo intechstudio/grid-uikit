@@ -126,6 +126,20 @@
       <span class="color-preview-label"
         ><div
           class="color-preview-box"
+          style="background-color: var(--background-muted);"
+        ></div>
+        --background-muted</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--background-soft);"
+        ></div>
+        --background-soft</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
           style="background-color: var(--foreground);"
         ></div>
         --foreground</span
@@ -150,6 +164,41 @@
           style="background-color: var(--foreground-disabled);"
         ></div>
         --foreground-disabled</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--shadow);"
+        ></div>
+        --shadow</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--accent);"
+        ></div>
+        --accent</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--accent-muted);"
+        ></div>
+        --accent-muted</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--accent-soft);"
+        ></div>
+        --accent-soft</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--error);"
+        ></div>
+        --error</span
       >
       <span class="color-preview-label"
         ><div
