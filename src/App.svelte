@@ -14,6 +14,7 @@
   import Toggle from "./lib/Toggle.svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
   import MoltenPushButtonDropdown from "./lib/MoltenPushButtonDropdown.svelte";
+  import MoltenPushButtonGroup from "./lib/MoltenPushButtonGroup.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
   import ControlGroup from "./lib/ControlGroup.svelte";
   import { fly } from "svelte/transition";
@@ -303,7 +304,7 @@
 
         <BlockBody>This has dropdown</BlockBody>
         <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
-        <div style="display: flex; gap: 0; position: relative;">
+        <MoltenPushButtonGroup>
           <div
             use:tooltip={{
               text: "Clear the current selection",
@@ -336,7 +337,7 @@
               menuWidth={clearButtonWidth}
             />
           </div>
-        </div>
+        </MoltenPushButtonGroup>
 
         <BlockBody>This has three variants:</BlockBody>
         <MoltenPushButton
