@@ -194,6 +194,6 @@
 
   button.style-accept:disabled {
     color: var(--foreground-disabled);
-    background-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    background-color: var(--accent-soft);
   }
 </style>

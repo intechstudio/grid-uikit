@@ -192,48 +192,48 @@
   /* Style variants */
   .dropdown-button.style-normal {
     color: var(--foreground-muted);
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.4);
+    background-color: var(--background-muted);
+    border: 1px solid var(--background-soft);
   }
 
   .dropdown-button.style-normal:hover {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: var(--background-soft);
   }
 
   .dropdown-button.style-normal:disabled {
     color: var(--foreground-disabled);
-    background-color: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(0, 0, 0, 0.25);
+    background-color: var(--background-soft);
+    border: 1px solid var(--background-soft);
   }
 
   .dropdown-button.style-outlined {
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 164, 130, 1);
+    background-color: var(--background-muted);
+    border: 1px solid var(--accent);
     color: var(--foreground-muted);
   }
 
   .dropdown-button.style-outlined:hover {
-    background-color: rgba(0, 111, 83, 1);
-    border-color: rgba(27, 164, 135);
+    background-color: var(--accent-soft);
+    border-color: var(--accent-muted);
   }
 
   .dropdown-button.style-outlined:disabled {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--background-muted);
     color: var(--foreground-disabled);
-    border: 1px solid rgba(0, 163, 130, 1);
+    border: 1px solid var(--accent);
   }
 
   .dropdown-button.style-accept {
     color: var(--foreground);
-    background-color: rgba(11, 164, 132, 1);
+    background-color: var(--accent);
   }
 
   .dropdown-button.style-accept:hover {
-    background-color: rgba(0, 111, 83, 1);
+    background-color: var(--accent-soft);
   }
 
   .dropdown-button.style-accept:disabled {
     color: var(--foreground-disabled);
-    background-color: rgba(11, 164, 132, 0.5);
+    background-color: var(--accent-soft);
   }
 </style>
