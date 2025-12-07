@@ -282,8 +282,9 @@
           click={() => {}}
           text={"Normal w/ popup"}
           style={"normal"}
+          popup={{}}
         >
-          <span slot="popup">Popup</span>
+          <span slot="popup">Button clicked! This message will disappear in 3 seconds.</span>
         </MoltenPushButton>
         <MoltenPushButton
           disabled={buttonsDisabled}
