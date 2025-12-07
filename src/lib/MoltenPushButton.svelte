@@ -30,7 +30,7 @@
     }
   }
 
-  $: element, target, windowWidth, updateWidth();
+  $: (element, target, windowWidth, updateWidth());
 
   $: {
     if (typeof options === "undefined" || typeof target === "undefined") {

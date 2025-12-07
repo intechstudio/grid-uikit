@@ -22,7 +22,7 @@
     }
   }
 
-  $: element, windowWidth, updateWidth();
+  $: (element, windowWidth, updateWidth());
 
   const customOpen = writable(false);
 
@@ -83,7 +83,10 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<div class="dropdown-container" style={menuWidth > 0 ? `margin-left: -${menuWidth}px;` : ""}>
+<div
+  class="dropdown-container"
+  style={menuWidth > 0 ? `margin-left: -${menuWidth}px;` : ""}
+>
   <div {...$trigger} use:trigger style="display: inline-flex;">
     <button
       bind:this={element}

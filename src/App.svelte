@@ -107,7 +107,9 @@
     <div class="mock-panel">
       <Block border="yellow">
         <BlockTitle>To Be Deprecated</BlockTitle>
-        <BlockBody>The following components are scheduled for deprecation:</BlockBody>
+        <BlockBody
+          >The following components are scheduled for deprecation:</BlockBody
+        >
         <MoltenButton title={"MoltenButton"} click={() => {}} />
         <ControlGroup>
           <div slot="header">ControlGroup</div>
@@ -347,7 +349,9 @@
           style={"normal"}
           popup={{}}
         >
-          <span slot="popup">Button clicked! This message will disappear in 3 seconds.</span>
+          <span slot="popup"
+            >Button clicked! This message will disappear in 3 seconds.</span
+          >
         </MoltenPushButton>
         <MoltenPushButton
           disabled={buttonsDisabled}
