@@ -274,18 +274,18 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    border: 1px solid rgba(0, 0, 0, 1);
+    border: 1px solid var(--background-soft);
     padding: 0.5rem;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.25);
+    color: var(--foreground);
+    background-color: var(--background-muted);
     margin: 0.25rem 0rem 0rem;
   }
   input.error {
-    border-color: rgba(220, 38, 38, 1);
+    border-color: var(--error);
   }
   input.disabled {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: rgba(255, 255, 255, 0.4);
+    background-color: var(--background-muted);
+    color: var(--foreground-disabled);
   }
   .menu {
     background-color: var(--popover-background);

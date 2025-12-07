@@ -26,6 +26,8 @@
   --accent-muted: color-mix(in srgb, var(--accent), var(--shadow) 30%);
   --accent-soft: color-mix(in srgb, var(--accent), var(--shadow) 50%);
 
+  --error: #dc2626;
+
   --popover-background: color-mix(
     in srgb,
     var(--background),
