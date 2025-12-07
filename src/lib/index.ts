@@ -7,7 +7,6 @@ export { default as MeltCheckbox } from "./MeltCheckbox.svelte";
 export { default as MeltRadio } from "./MeltRadio.svelte";
 export { default as MeltSlider } from "./MeltSlider.svelte";
 export { default as MeltSelect } from "./MeltSelect.svelte";
-export { default as MoltenButton } from "./MoltenButton.svelte";
 export { default as MoltenInput } from "./MoltenInput.svelte";
 export { default as MoltenTooltip } from "./MoltenTooltip.svelte";
 export { default as MoltenPushButton } from "./MoltenPushButton.svelte";
@@ -39,6 +38,5 @@ export {
   default as ColorLayerSelector,
   type LayerClickDetail,
 } from "./ColorLayerSelector.svelte";
-export { default as ControlGroup } from "./ControlGroup.svelte";
 export { default as LogMessage } from "./LogMessage.svelte";
 export { LogMessageType } from "./LogMessageType";

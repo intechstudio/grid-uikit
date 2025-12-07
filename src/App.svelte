@@ -2,7 +2,6 @@
   import Block from "./lib/Block.svelte";
   import BlockRow from "./lib/BlockRow.svelte";
   import MeltCheckbox from "./lib/MeltCheckbox.svelte";
-  import MoltenButton from "./lib/MoltenButton.svelte";
   import MeltCombo from "./lib/MeltCombo.svelte";
   import BlockBody from "./lib/BlockBody.svelte";
   import BlockTitle from "./lib/BlockTitle.svelte";
@@ -16,7 +15,6 @@
   import MoltenPushButtonDropdown from "./lib/MoltenPushButtonDropdown.svelte";
   import MoltenPushButtonGroup from "./lib/MoltenPushButtonGroup.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
-  import ControlGroup from "./lib/ControlGroup.svelte";
   import { fly } from "svelte/transition";
   import { tick } from "svelte";
   import LogMessage from "./lib/LogMessage.svelte";
@@ -104,20 +102,6 @@
 
 <main on:contextmenu|preventDefault>
   <div class="main-container">
-    <div class="mock-panel">
-      <Block border="yellow">
-        <BlockTitle>To Be Deprecated</BlockTitle>
-        <BlockBody
-          >The following components are scheduled for deprecation:</BlockBody
-        >
-        <MoltenButton title={"MoltenButton"} click={() => {}} />
-        <ControlGroup>
-          <div slot="header">ControlGroup</div>
-          <div slot="content">This component wraps content with a header</div>
-        </ControlGroup>
-      </Block>
-    </div>
-
     <div class="mock-panel">
       <span class="color-preview-label"
         ><div
@@ -272,9 +256,6 @@
           bind:target={buttonsDisabled}
           title={"Disable Buttons"}
         />{buttonsDisabled}
-        <BlockTitle>MoltenButton</BlockTitle>
-        <BlockBody>This has no variants:</BlockBody>
-        <MoltenButton title={"Press Me"} click={switchSuggestions} />
 
         <div
           use:tooltip={{
