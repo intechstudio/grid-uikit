@@ -63,25 +63,29 @@
   class:container-vertical={orientation === "vertical"}
   class:container-button={style === "button"}
   class:radio-border={style !== "button"}
-  class:disabled={disabled}
+  class:disabled
   class="container"
 >
   {#each options as option}
     <!-- Convert value to string in case it was originally boolean -->
     {@const value = option.value.toString()}
     {@const title = option.title}
-    <label class:horizontal-padding={style !== "button"} class:disabled={disabled} class="row">
+    <label
+      class:horizontal-padding={style !== "button"}
+      class:disabled
+      class="row"
+    >
       {#if style === "radio"}
-        <button {...$item(value)} use:item id={title} class:disabled={disabled}>
-          <div class="style-radio" class:disabled={disabled}>
+        <button {...$item(value)} use:item id={title} class:disabled>
+          <div class="style-radio" class:disabled>
             <div
               style:display={$isChecked(value) ? "block" : "none"}
               class="style-radio-inside"
-              class:disabled={disabled}
+              class:disabled
             />
           </div>
         </button>
-        <span class:disabled={disabled}>{title}</span>
+        <span class:disabled>{title}</span>
       {/if}
       {#if style === "button"}
         <button
@@ -90,10 +94,10 @@
           id={title}
           class="style-button"
           class:selected={$isChecked(value)}
-          class:disabled={disabled}
+          class:disabled
         >
           {#if typeof title !== "undefined"}
-            <span class:disabled={disabled}>{title}</span>
+            <span class:disabled>{title}</span>
           {:else}
             <span style:visibility="hidden">N/A</span>
           {/if}

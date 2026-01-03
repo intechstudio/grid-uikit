@@ -56,9 +56,15 @@
     --toggle-height: 1.75em;
     --toggle-padding: 0.25em;
     --toggle-border: 0.0625em; /* 1px at 16px base = 0.0625em */
-    --toggle-knob-size: calc(var(--toggle-height) - 2 * var(--toggle-padding) - 2 * var(--toggle-border));
+    --toggle-knob-size: calc(
+      var(--toggle-height) - 2 * var(--toggle-padding) - 2 *
+        var(--toggle-border)
+    );
     --toggle-width: calc(var(--toggle-height) * 1.6);
-    --toggle-translate: calc(var(--toggle-width) - 2 * var(--toggle-padding) - var(--toggle-knob-size) - 2 * var(--toggle-border));
+    --toggle-translate: calc(
+      var(--toggle-width) - 2 * var(--toggle-padding) -
+        var(--toggle-knob-size) - 2 * var(--toggle-border)
+    );
 
     height: var(--toggle-height);
     width: var(--toggle-width);
@@ -82,7 +88,9 @@
     height: var(--toggle-knob-size);
     border-radius: 50%;
     background-color: var(--foreground-muted);
-    transition: transform 0.15s ease-out, background-color 0.15s ease;
+    transition:
+      transform 0.15s ease-out,
+      background-color 0.15s ease;
   }
 
   .toggle:checked {

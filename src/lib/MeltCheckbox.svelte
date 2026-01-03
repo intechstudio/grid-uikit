@@ -38,17 +38,25 @@
   }
 </script>
 
-<label class:checkbox-box={style === "box"} class:disabled={disabled}>
-  <button {...$root} use:root class:disabled={disabled}>
-    <div class="checkbox-outer" class:disabled={disabled}>
-      <div style:display={target ? "block" : "none"} class="checkbox-inner" class:disabled={disabled} />
+<label class:checkbox-box={style === "box"} class:disabled>
+  <button {...$root} use:root class:disabled>
+    <div class="checkbox-outer" class:disabled>
+      <div
+        style:display={target ? "block" : "none"}
+        class="checkbox-inner"
+        class:disabled
+      />
     </div>
 
     <input {...$input} use:input />
   </button>
 
   {#if title}
-    <div class:checkbox-title-selected={target} class="checkbox-title" class:disabled={disabled}>
+    <div
+      class:checkbox-title-selected={target}
+      class="checkbox-title"
+      class:disabled
+    >
       {title}
     </div>
   {/if}

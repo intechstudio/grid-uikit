@@ -59,7 +59,13 @@
     <span {...$range} use:range class="range-selected" class:disabled />
   </span>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <span {...$thumbs[0]} use:thumbs class="thumb" class:disabled on:blur={handleThumbBlur} />
+  <span
+    {...$thumbs[0]}
+    use:thumbs
+    class="thumb"
+    class:disabled
+    on:blur={handleThumbBlur}
+  />
 </span>
 
 <style>

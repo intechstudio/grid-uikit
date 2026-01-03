@@ -27,7 +27,7 @@
 
   // Expose buttonsDisabled to window for external control
   let buttonsDisabled = $state(false);
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     (window as any).setButtonsDisabled = (value: boolean) => {
       buttonsDisabled = value;
     };
@@ -232,8 +232,16 @@
         </div>
         <BlockTitle>MeltCheckbox</BlockTitle>
         <BlockBody>Comes in two wariants:</BlockBody>
-        <MeltCheckbox target={t} title={"Block style (Default)"} disabled={buttonsDisabled} />
-        <MeltCheckbox target={t} title={"Block style (Default)"} disabled={buttonsDisabled} />
+        <MeltCheckbox
+          target={t}
+          title={"Block style (Default)"}
+          disabled={buttonsDisabled}
+        />
+        <MeltCheckbox
+          target={t}
+          title={"Block style (Default)"}
+          disabled={buttonsDisabled}
+        />
         <MeltCheckbox
           target={t}
           style={"transparent"}
@@ -250,7 +258,11 @@
       <Block border="red">
         <BlockTitle>Important border added</BlockTitle>
         <BlockBody>This is dangerous setting:</BlockBody>
-        <MeltCheckbox target={t} title={"Destory enabled"} disabled={buttonsDisabled} />
+        <MeltCheckbox
+          target={t}
+          title={"Destory enabled"}
+          disabled={buttonsDisabled}
+        />
       </Block>
       <Block>
         <BlockTitle>Toggle</BlockTitle>
@@ -480,7 +492,13 @@
     <div class="mock-panel">
       <span>MeltSlider:</span>
       <span>Value: {sliderValue}</span>
-      <MeltSlider bind:target={sliderValue} min={0} max={100} step={1} disabled={buttonsDisabled} />
+      <MeltSlider
+        bind:target={sliderValue}
+        min={0}
+        max={100}
+        step={1}
+        disabled={buttonsDisabled}
+      />
     </div>
 
     <div class="mock-panel">
