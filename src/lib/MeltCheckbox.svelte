@@ -59,7 +59,7 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.5em;
   }
 
   label.disabled {
@@ -72,9 +72,9 @@
   }
 
   .checkbox-outer {
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 0.25rem;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 0.25em;
     margin: auto;
     border: 1px solid var(--foreground);
     display: flex;
@@ -87,10 +87,10 @@
   }
 
   .checkbox-inner {
-    width: 0.75rem;
-    height: 0.75rem;
+    width: 0.75em;
+    height: 0.75em;
     background-color: var(--foreground);
-    border-radius: 0.125rem;
+    border-radius: 0.125em;
   }
 
   .checkbox-inner.disabled {
@@ -98,7 +98,7 @@
   }
 
   .checkbox-title {
-    padding-left: 0.5rem;
+    padding-left: 0.5em;
     color: var(--foreground-muted);
   }
 
@@ -111,6 +111,7 @@
     padding: 0; /* 3 */
     background-color: transparent; /* 2 */
     cursor: pointer;
+    font-size: inherit;
   }
 
   button.disabled {

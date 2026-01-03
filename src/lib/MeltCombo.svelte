@@ -256,12 +256,12 @@
   div.content {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.25em;
   }
   label {
     color: var(--foreground);
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    font-size: 0.875em;
+    line-height: 1.25em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -275,10 +275,11 @@
     display: flex;
     flex-direction: row;
     border: 1px solid var(--background-soft);
-    padding: 0.5rem;
+    padding: 0.5em;
     color: var(--foreground);
     background-color: var(--background-muted);
-    margin: 0.25rem 0rem 0rem;
+    margin: 0.25em 0em 0em;
+    font-size: inherit;
   }
   input.error {
     border-color: var(--error);
@@ -293,9 +294,9 @@
     color: var(--foreground-muted);
     border-width: 1px;
     border-color: var(--foreground-muted);
-    border-radius: 0.25rem;
+    border-radius: 0.25em;
     z-index: 40;
-    max-height: 8rem;
+    max-height: 8em;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -308,10 +309,10 @@
     white-space: nowrap;
     display: flex;
     width: 100%;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
   }
   option.suggestion:hover {
     background-color: var(--popover-selection);
@@ -319,8 +320,8 @@
   }
   div.info-value {
     color: var(--foreground-soft);
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    font-size: 0.875em;
+    line-height: 1.25em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

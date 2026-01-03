@@ -110,7 +110,7 @@
     overflow: visible;
     display: grid;
     grid-auto-flow: column;
-    padding: 0.5rem 0;
+    padding: 0.5em 0;
   }
   div.container-full {
     width: 100%;
@@ -118,10 +118,10 @@
   div.container-vertical {
     grid-auto-flow: row;
     margin: 0;
-    gap: 1rem;
+    gap: 1em;
   }
   div.container-button {
-    gap: 1rem;
+    gap: 1em;
   }
   .radio-border {
     background-color: var(--background-muted);
@@ -133,12 +133,12 @@
     align-items: center;
   }
   label.vertical-padding {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
   }
   label.horizontal-padding {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
   div.style-radio {
     position: relative;
@@ -148,16 +148,16 @@
     border-radius: 9999px;
     border-width: 1px;
     border-color: var(--foreground);
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 0.75rem;
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: 0.75em;
   }
   div.style-radio-inside {
     position: absolute;
     border-radius: 9999px;
     background-color: var(--foreground);
-    width: 0.75rem;
-    height: 0.75rem;
+    width: 0.75em;
+    height: 0.75em;
   }
   button {
     font-family: inherit; /* 1 */
@@ -175,9 +175,9 @@
   }
   button.style-button {
     position: relative;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25em 0.5em;
     width: 100%;
-    border-radius: 0.25rem;
+    border-radius: 0.25em;
     border: 1px solid var(--background-soft);
   }
   button.style-button:hover {

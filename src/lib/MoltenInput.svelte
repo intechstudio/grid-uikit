@@ -94,10 +94,11 @@
   input {
     width: 100%;
     display: flex;
-    padding: 0.5rem;
+    padding: 0.5em;
     background-color: var(--background-muted);
     color: var(--foreground);
     border: 1px solid var(--background-soft);
+    font-size: inherit;
   }
   input:focus {
     outline: 2px solid transparent;
