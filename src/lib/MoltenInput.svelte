@@ -104,8 +104,7 @@
     outline-offset: 2px;
   }
   input:disabled {
-    cursor: not-allowed;
+    cursor: default;
     color: var(--foreground-disabled);
-    border: 1px solid var(--foreground-disabled);
   }
 </style>

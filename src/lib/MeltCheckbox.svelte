@@ -5,6 +5,7 @@
   export let target: boolean;
   export let title: string;
   export let style: "box" | "transparent" = "box";
+  export let disabled: boolean = false;
 
   const dispatch = createEventDispatcher();
 
@@ -14,6 +15,7 @@
     states: { checked },
   } = createCheckbox({
     defaultChecked: target,
+    disabled: disabled,
   });
 
   let oldTarget;
@@ -25,23 +27,28 @@
     }
 
     if (target !== $checked) {
-      oldTarget = target = $checked;
-      dispatch("change", target);
+      if (!disabled) {
+        oldTarget = target = $checked;
+        dispatch("change", target);
+      } else {
+        // Reset internal state if it changed while disabled
+        $checked = target;
+      }
     }
   }
 </script>
 
-<label class:checkbox-box={style === "box"}>
-  <button {...$root} use:root>
-    <div class="checkbox-outer">
-      <div style:display={target ? "block" : "none"} class="checkbox-inner" />
+<label class:checkbox-box={style === "box"} class:disabled={disabled}>
+  <button {...$root} use:root class:disabled={disabled}>
+    <div class="checkbox-outer" class:disabled={disabled}>
+      <div style:display={target ? "block" : "none"} class="checkbox-inner" class:disabled={disabled} />
     </div>
 
     <input {...$input} use:input />
   </button>
 
   {#if title}
-    <div class:checkbox-title-selected={target} class="checkbox-title">
+    <div class:checkbox-title-selected={target} class="checkbox-title" class:disabled={disabled}>
       {title}
     </div>
   {/if}
@@ -53,6 +60,10 @@
     align-items: center;
     cursor: pointer;
     padding: 0.5rem;
+  }
+
+  label.disabled {
+    cursor: default;
   }
 
   .checkbox-box {
@@ -71,20 +82,38 @@
     justify-content: center;
   }
 
+  .checkbox-outer.disabled {
+    border-color: var(--foreground-disabled);
+  }
+
   .checkbox-inner {
     width: 0.75rem;
     height: 0.75rem;
     background-color: var(--foreground);
     border-radius: 0.125rem;
   }
+
+  .checkbox-inner.disabled {
+    background-color: var(--foreground-disabled);
+  }
+
   .checkbox-title {
     padding-left: 0.5rem;
     color: var(--foreground-muted);
   }
+
+  .checkbox-title.disabled {
+    color: var(--foreground-disabled);
+  }
+
   button {
     margin: 0; /* 2 */
     padding: 0; /* 3 */
     background-color: transparent; /* 2 */
     cursor: pointer;
+  }
+
+  button.disabled {
+    cursor: default;
   }
 </style>

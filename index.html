@@ -9,6 +9,8 @@
   <body>
     <input type="checkbox" id="darkModeToggle" checked />
     <label for="darkModeToggle">Toggle Dark Mode</label>
+    <input type="checkbox" id="disableButtonsToggle" />
+    <label for="disableButtonsToggle">Disable Buttons</label>
     <div id="app"></div>
     <script>
       const toggle = document.getElementById("darkModeToggle");
@@ -17,6 +19,13 @@
           "color-scheme",
           toggle.checked ? "dark" : "light",
         );
+      });
+
+      const disableToggle = document.getElementById("disableButtonsToggle");
+      disableToggle.addEventListener("change", (e) => {
+        if (window.setButtonsDisabled) {
+          window.setButtonsDisabled(disableToggle.checked);
+        }
       });
     </script>
     <script type="module" src="src/main.ts"></script>

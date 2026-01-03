@@ -105,9 +105,7 @@
   }
   button.disabled {
     color: var(--foreground-disabled);
-
-    cursor: not-allowed;
-    border: 1px solid var(--foreground-disabled);
+    cursor: default;
   }
   .menu {
     background-color: var(--popover-background);

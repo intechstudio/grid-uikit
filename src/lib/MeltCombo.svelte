@@ -286,6 +286,7 @@
   input.disabled {
     background-color: var(--background-muted);
     color: var(--foreground-disabled);
+    cursor: default;
   }
   .menu {
     background-color: var(--popover-background);

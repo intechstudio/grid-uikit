@@ -24,6 +24,14 @@
   import { tooltip } from "./lib/tooltip.ts";
 
   let t = false;
+
+  // Expose buttonsDisabled to window for external control
+  let buttonsDisabled = $state(false);
+  if (typeof window !== 'undefined') {
+    (window as any).setButtonsDisabled = (value: boolean) => {
+      buttonsDisabled = value;
+    };
+  }
   let suggestionElement: any;
   let input2Value = "";
   let input3Value = "";
@@ -96,8 +104,6 @@
       logMessageCount = 0;
     }, 3000);
   }
-
-  let buttonsDisabled = false;
 </script>
 
 <main on:contextmenu|preventDefault>
@@ -226,37 +232,34 @@
         </div>
         <BlockTitle>MeltCheckbox</BlockTitle>
         <BlockBody>Comes in two wariants:</BlockBody>
-        <MeltCheckbox target={t} title={"Block style (Default)"} />
-        <MeltCheckbox target={t} title={"Block style (Default)"} />
+        <MeltCheckbox target={t} title={"Block style (Default)"} disabled={buttonsDisabled} />
+        <MeltCheckbox target={t} title={"Block style (Default)"} disabled={buttonsDisabled} />
         <MeltCheckbox
           target={t}
           style={"transparent"}
           title={"Transparent style"}
+          disabled={buttonsDisabled}
         />
         <MeltCheckbox
           target={t}
           style={"transparent"}
           title={"Transparent style"}
+          disabled={buttonsDisabled}
         />
       </Block>
       <Block border="red">
         <BlockTitle>Important border added</BlockTitle>
         <BlockBody>This is dangerous setting:</BlockBody>
-        <MeltCheckbox target={t} title={"Destory enabled"} />
+        <MeltCheckbox target={t} title={"Destory enabled"} disabled={buttonsDisabled} />
       </Block>
       <Block>
         <BlockTitle>Toggle</BlockTitle>
-        <Toggle title={"Test toggle"} />
+        <Toggle title={"Test toggle"} disabled={buttonsDisabled} />
       </Block>
     </div>
 
     <div class="mock-panel">
       <Block>
-        <MeltCheckbox
-          bind:target={buttonsDisabled}
-          title={"Disable Buttons"}
-        />{buttonsDisabled}
-
         <div
           use:tooltip={{
             text: "Confirm text",
@@ -378,11 +381,13 @@
           title={"Field 1"}
           bind:value={input3Value}
           suggestions={suggestion3}
+          disabled={buttonsDisabled}
         />
         <MeltCombo
           title={"Field 2"}
           bind:value={input4Value}
           suggestions={suggestion4}
+          disabled={buttonsDisabled}
         />
         <BlockTitle>MeltCombo</BlockTitle>
         <BlockBody>Now in a row:</BlockBody>
@@ -391,11 +396,13 @@
             title={"Field 1"}
             bind:value={input3Value}
             suggestions={suggestion3}
+            disabled={buttonsDisabled}
           />
           <MeltCombo
             title={"Field 2"}
             bind:value={input4Value}
             suggestions={suggestion4}
+            disabled={buttonsDisabled}
           />
         </BlockRow>
       </Block>
@@ -407,11 +414,13 @@
             title={"Field 1"}
             bind:value={input3Value}
             suggestions={suggestion3}
+            disabled={buttonsDisabled}
           />
           <MeltCombo
             title={"Field 2"}
             bind:value={input4Value}
             suggestions={suggestion4}
+            disabled={buttonsDisabled}
           />
         </BlockRow>
       </Block>
@@ -471,7 +480,7 @@
     <div class="mock-panel">
       <span>MeltSlider:</span>
       <span>Value: {sliderValue}</span>
-      <MeltSlider bind:target={sliderValue} min={0} max={100} step={1} />
+      <MeltSlider bind:target={sliderValue} min={0} max={100} step={1} disabled={buttonsDisabled} />
     </div>
 
     <div class="mock-panel">
@@ -486,7 +495,7 @@
             { title: "2", value: 2 },
             { title: "3", value: 3 },
           ]}
-          disabled={false}
+          disabled={buttonsDisabled}
         />
         <BlockBody>Disabled:</BlockBody>
         <MeltSelect
@@ -497,11 +506,11 @@
             { title: "2", value: 2 },
             { title: "3", value: 3 },
           ]}
-          disabled={true}
+          disabled={buttonsDisabled}
         />
 
-        <MoltenInput bind:target={moltenInputText} />
-        <MoltenInput bind:target={moltenInputText} disabled={true} />
+        <MoltenInput bind:target={moltenInputText} disabled={buttonsDisabled} />
+        <MoltenInput bind:target={moltenInputText} disabled={buttonsDisabled} />
       </Block>
     </div>
     <div class="mock-panel">
@@ -518,6 +527,7 @@
             { title: "1", value: 1 },
             { title: "2", value: 2 },
           ]}
+          disabled={buttonsDisabled}
         />
         <BlockBody>Button vertical</BlockBody>
         <MeltRadio
@@ -530,6 +540,7 @@
             { title: "1", value: 1 },
             { title: "2", value: 2 },
           ]}
+          disabled={buttonsDisabled}
         />
         <BlockBody>Radio horizontal</BlockBody>
         <MeltRadio
@@ -542,6 +553,7 @@
             { title: "1", value: 1 },
             { title: "2", value: 2 },
           ]}
+          disabled={buttonsDisabled}
         />
         <BlockBody>Radio vertical</BlockBody>
         <MeltRadio
@@ -554,6 +566,7 @@
             { title: "1", value: 1 },
             { title: "2", value: 2 },
           ]}
+          disabled={buttonsDisabled}
         /></Block
       >
     </div>
@@ -561,6 +574,7 @@
       <MoltenPushButton
         text="Show me a LogMessage"
         click={handleShowLogMessage}
+        disabled={buttonsDisabled}
       />
       <MeltSelect
         bind:target={logMessageType}
@@ -571,6 +585,7 @@
           { title: "Fail", value: LogMessageType.FAIL },
           { title: "Progress", value: LogMessageType.PROGRESS },
         ]}
+        disabled={buttonsDisabled}
       />
 
       <LogMessage

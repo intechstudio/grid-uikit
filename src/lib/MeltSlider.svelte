@@ -9,6 +9,7 @@
   export let min: number;
   export let max: number;
   export let step: number;
+  export let disabled = false;
 
   const {
     elements: { root, range, thumbs },
@@ -17,6 +18,7 @@
     min: min,
     max: max,
     step: step,
+    disabled: disabled,
     onValueCommitted: handleValueCommited,
   });
 
@@ -30,8 +32,13 @@
 
   function syncInternalToExternal(internal: number) {
     if (target !== internal) {
-      oldTarget = target = internal;
-      dispatch("change", { value: target });
+      if (!disabled) {
+        oldTarget = target = internal;
+        dispatch("change", { value: target });
+      } else {
+        // Reset internal state if it changed while disabled
+        $value[0] = target;
+      }
     }
   }
 
@@ -47,12 +54,12 @@
   $: syncInternalToExternal($value[0]);
 </script>
 
-<span {...$root} use:root class="container">
-  <span class="range-full">
-    <span {...$range} use:range class="range-selected" />
+<span {...$root} use:root class="container" class:disabled>
+  <span class="range-full" class:disabled>
+    <span {...$range} use:range class="range-selected" class:disabled />
   </span>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <span {...$thumbs[0]} use:thumbs class="thumb" on:blur={handleThumbBlur} />
+  <span {...$thumbs[0]} use:thumbs class="thumb" class:disabled on:blur={handleThumbBlur} />
 </span>
 
 <style>
@@ -89,5 +96,14 @@
     width: var(--thumb-size);
     border-radius: 9999px;
     background-color: var(--foreground-muted);
+  }
+
+  span.container.disabled {
+    pointer-events: none;
+  }
+
+  span.thumb.disabled {
+    background-color: var(--foreground-disabled);
+    cursor: default;
   }
 </style>

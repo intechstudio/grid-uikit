@@ -6,6 +6,7 @@
   export let value = false;
   export let title: string = "";
   export let testid;
+  export let disabled = false;
 
   function handleChange() {
     dispatch("change", {});
@@ -24,6 +25,7 @@
     bind:checked={value}
     on:change={handleChange}
     class="{$$props.class} toggle"
+    {disabled}
   />
 </div>
 
@@ -75,10 +77,22 @@
   }
 
   .toggle:checked {
-    border-color: rgb(11, 164, 132);
+    border-color: var(--accent);
   }
 
   .toggle:checked::after {
     transform: translateX(14px);
+  }
+
+  .toggle:disabled {
+    cursor: default;
+  }
+
+  .toggle:disabled::after {
+    background-color: var(--foreground-disabled);
+  }
+
+  .toggle:checked:disabled {
+    border-color: var(--accent-soft);
   }
 </style>
