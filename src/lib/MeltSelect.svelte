@@ -77,7 +77,7 @@
   div.container {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.25em;
     background-color: var(--background-muted);
   }
   div.container-grow {
@@ -90,12 +90,12 @@
     flex-direction: row;
     justify-content: space-between;
     border: 1px solid var(--background-soft);
-    padding: 0.5rem;
+    padding: 0.5em;
 
     font-family: inherit; /* 1 */
     font-feature-settings: inherit; /* 1 */
     font-variation-settings: inherit; /* 1 */
-    font-size: 100%; /* 1 */
+    font-size: inherit;
     font-weight: inherit; /* 1 */
     line-height: inherit; /* 1 */
     letter-spacing: inherit; /* 1 */
@@ -105,20 +105,18 @@
   }
   button.disabled {
     color: var(--foreground-disabled);
-
-    cursor: not-allowed;
-    border: 1px solid var(--foreground-disabled);
+    cursor: default;
   }
   .menu {
     background-color: var(--popover-background);
     color: var(--foreground-muted);
     border: 1px solid var(--foreground-muted);
-    border-radius: 0.25rem;
+    border-radius: 0.25em;
     z-index: 40;
   }
   div.option {
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.5em;
   }
   div.option:hover {
     background-color: var(--popover-selection);

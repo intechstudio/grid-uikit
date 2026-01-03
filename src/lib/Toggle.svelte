@@ -6,6 +6,7 @@
   export let value = false;
   export let title: string = "";
   export let testid;
+  export let disabled = false;
 
   function handleChange() {
     dispatch("change", {});
@@ -24,6 +25,7 @@
     bind:checked={value}
     on:change={handleChange}
     class="{$$props.class} toggle"
+    {disabled}
   />
 </div>
 
@@ -34,7 +36,7 @@
   }
 
   .toggle-label {
-    margin-right: 0.5rem;
+    margin-right: 0.5em;
   }
 
   input[type="checkbox"] {
@@ -43,6 +45,7 @@
     appearance: none;
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
+    font-size: inherit;
   }
 
   input[type="checkbox"]:focus {
@@ -50,35 +53,63 @@
   }
 
   .toggle {
-    height: 22px;
-    width: 36px;
-    border-radius: 16px;
+    --toggle-height: 1.75em;
+    --toggle-padding: 0.25em;
+    --toggle-border: 0.0625em; /* 1px at 16px base = 0.0625em */
+    --toggle-knob-size: calc(
+      var(--toggle-height) - 2 * var(--toggle-padding) - 2 *
+        var(--toggle-border)
+    );
+    --toggle-width: calc(var(--toggle-height) * 1.6);
+    --toggle-translate: calc(
+      var(--toggle-width) - 2 * var(--toggle-padding) -
+        var(--toggle-knob-size) - 2 * var(--toggle-border)
+    );
+
+    height: var(--toggle-height);
+    width: var(--toggle-width);
+    border-radius: calc(var(--toggle-height) / 2);
     display: inline-block;
     position: relative;
     margin: 0;
-    border: 1px solid var(--background-soft);
+    border: var(--toggle-border) solid var(--background-soft);
     background-color: var(--background-muted);
-    transition: all 0.2s ease;
+    transition: border-color 0.2s ease;
     pointer-events: auto;
+    box-sizing: border-box;
   }
 
   .toggle::after {
     content: "";
     position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 14px;
-    height: 14px;
+    top: var(--toggle-padding);
+    left: var(--toggle-padding);
+    width: var(--toggle-knob-size);
+    height: var(--toggle-knob-size);
     border-radius: 50%;
     background-color: var(--foreground-muted);
-    transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+    transition:
+      transform 0.15s ease-out,
+      background-color 0.15s ease;
   }
 
   .toggle:checked {
-    border-color: rgb(11, 164, 132);
+    border-color: var(--accent);
   }
 
   .toggle:checked::after {
-    transform: translateX(14px);
+    transform: translateX(var(--toggle-translate));
+  }
+
+  .toggle:disabled {
+    cursor: default;
+  }
+
+  .toggle:disabled::after {
+    background-color: var(--foreground-disabled);
+  }
+
+  .toggle:checked:disabled {
+    border-color: var(--accent-soft);
   }
 </style>

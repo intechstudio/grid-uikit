@@ -12,6 +12,7 @@
   export let orientation: "vertical" | "horizontal" = "vertical";
   export let style: "button" | "radio" = "radio";
   export let size: "auto" | "full" = "auto";
+  export let disabled: boolean = false;
 
   const {
     elements: { root, item },
@@ -20,6 +21,7 @@
   } = createRadioGroup({
     defaultValue: target,
     orientation: orientation,
+    disabled: disabled,
   });
 
   let oldTarget;
@@ -31,19 +33,24 @@
     }
 
     if (target.toString() !== $value) {
-      oldTarget = $value;
+      if (!disabled) {
+        oldTarget = $value;
 
-      if ($value === "true") {
-        // Convert back to boolean automatically
-        target = true;
-      } else if ($value === "false") {
-        // Convert back to boolean automatically
-        target = false;
-      } else if ($value !== "" && !isNaN(Number($value))) {
-        // Convert back to number automatically
-        target = Number($value);
+        if ($value === "true") {
+          // Convert back to boolean automatically
+          target = true;
+        } else if ($value === "false") {
+          // Convert back to boolean automatically
+          target = false;
+        } else if ($value !== "" && !isNaN(Number($value))) {
+          // Convert back to number automatically
+          target = Number($value);
+        } else {
+          target = $value;
+        }
       } else {
-        target = $value;
+        // Reset internal state if it changed while disabled
+        $value = target.toString();
       }
     }
   }
@@ -56,23 +63,29 @@
   class:container-vertical={orientation === "vertical"}
   class:container-button={style === "button"}
   class:radio-border={style !== "button"}
+  class:disabled
   class="container"
 >
   {#each options as option}
     <!-- Convert value to string in case it was originally boolean -->
     {@const value = option.value.toString()}
     {@const title = option.title}
-    <label class:horizontal-padding={style !== "button"} class="row">
+    <label
+      class:horizontal-padding={style !== "button"}
+      class:disabled
+      class="row"
+    >
       {#if style === "radio"}
-        <button {...$item(value)} use:item id={title}>
-          <div class="style-radio">
+        <button {...$item(value)} use:item id={title} class:disabled>
+          <div class="style-radio" class:disabled>
             <div
               style:display={$isChecked(value) ? "block" : "none"}
               class="style-radio-inside"
+              class:disabled
             />
           </div>
         </button>
-        <span>{title}</span>
+        <span class:disabled>{title}</span>
       {/if}
       {#if style === "button"}
         <button
@@ -81,9 +94,10 @@
           id={title}
           class="style-button"
           class:selected={$isChecked(value)}
+          class:disabled
         >
           {#if typeof title !== "undefined"}
-            <span>{title}</span>
+            <span class:disabled>{title}</span>
           {:else}
             <span style:visibility="hidden">N/A</span>
           {/if}
@@ -100,7 +114,7 @@
     overflow: visible;
     display: grid;
     grid-auto-flow: column;
-    padding: 0.5rem 0;
+    padding: 0.5em 0;
   }
   div.container-full {
     width: 100%;
@@ -108,10 +122,10 @@
   div.container-vertical {
     grid-auto-flow: row;
     margin: 0;
-    gap: 1rem;
+    gap: 1em;
   }
   div.container-button {
-    gap: 1rem;
+    gap: 1em;
   }
   .radio-border {
     background-color: var(--background-muted);
@@ -123,12 +137,12 @@
     align-items: center;
   }
   label.vertical-padding {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
   }
   label.horizontal-padding {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
   div.style-radio {
     position: relative;
@@ -138,16 +152,16 @@
     border-radius: 9999px;
     border-width: 1px;
     border-color: var(--foreground);
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 0.75rem;
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: 0.75em;
   }
   div.style-radio-inside {
     position: absolute;
     border-radius: 9999px;
     background-color: var(--foreground);
-    width: 0.75rem;
-    height: 0.75rem;
+    width: 0.75em;
+    height: 0.75em;
   }
   button {
     font-family: inherit; /* 1 */
@@ -165,9 +179,9 @@
   }
   button.style-button {
     position: relative;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25em 0.5em;
     width: 100%;
-    border-radius: 0.25rem;
+    border-radius: 0.25em;
     border: 1px solid var(--background-soft);
   }
   button.style-button:hover {
@@ -175,5 +189,49 @@
   }
   button.style-button.selected {
     background-color: var(--background-soft);
+  }
+
+  /* Disabled styles */
+  label.row.disabled {
+    cursor: default;
+  }
+
+  button.disabled {
+    cursor: default;
+  }
+
+  div.style-radio.disabled {
+    border-color: var(--foreground-disabled);
+  }
+
+  div.style-radio-inside.disabled {
+    background-color: var(--foreground-disabled);
+  }
+
+  button.style-button.disabled {
+    color: var(--foreground-disabled);
+    background-color: var(--background-muted);
+    border: 1px solid var(--background-muted);
+  }
+
+  button.style-button.selected.disabled {
+    background-color: var(--background-soft);
+  }
+
+  button.style-button.disabled:hover {
+    background-color: var(--background-muted);
+  }
+
+  button.style-button.selected.disabled:hover {
+    background-color: var(--background-soft);
+  }
+
+  /* Prevent pointer events on disabled container */
+  div.container.disabled {
+    pointer-events: none;
+  }
+
+  span.disabled {
+    color: var(--foreground-disabled);
   }
 </style>

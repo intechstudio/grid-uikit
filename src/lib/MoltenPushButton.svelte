@@ -180,7 +180,7 @@
   button.style-outlined:disabled {
     background-color: var(--background-muted);
     color: var(--foreground-disabled);
-    border: 1px solid var(--accent);
+    border: 1px solid var(--accent-soft);
   }
 
   button.style-accept {
