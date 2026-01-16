@@ -1,0 +1,32 @@
+name: Version & Tag
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      # Date-based version: 1.YYYYMMDD.HHMM (UTC)
+      - name: Bump version
+        run: |
+          VERSION="1.$(date -u +%Y%m%d.%H%M)"
+          npm version "$VERSION" -m "v%s"
+
+      - run: git push --follow-tags
