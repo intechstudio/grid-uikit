@@ -1,6 +1,6 @@
 {
   "name": "@intechstudio/grid-uikit",
-  "version": "0.0.171",
+  "version": "1.20260116.1149",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
