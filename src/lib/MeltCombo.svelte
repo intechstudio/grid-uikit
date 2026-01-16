@@ -239,9 +239,11 @@
     </div>
   {/if}
 
-  <div class="info-value">
-    {infoValue}&nbsp;
-  </div>
+  {#if valueInfoEnabled}
+    <div class="info-value">
+      {infoValue}&nbsp;
+    </div>
+  {/if}
 </div>
 
 <style>
