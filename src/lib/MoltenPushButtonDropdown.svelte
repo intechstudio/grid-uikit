@@ -17,7 +17,9 @@
     if (element) {
       await tick();
       requestAnimationFrame(() => {
-        width = element.offsetWidth;
+        if (element) {
+          width = element.offsetWidth;
+        }
       });
     }
   }
