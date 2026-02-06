@@ -1,24 +1,23 @@
 import type { Action } from "svelte/action";
 import ContextMenu, { type ContextMenuItem } from "./ContextMenu.svelte";
+import { mount, unmount } from "svelte";
 import { get, writable, type Writable } from "svelte/store";
 
 export interface ContextMenuOptions {
   items: ContextMenuItem[];
 }
 
-interface ContextMenuWritable extends Writable<ContextMenu | undefined> {
+interface ContextMenuStore extends Writable<Record<string, any> | undefined> {
   close: () => void;
 }
 
-export let contextMenu: ContextMenuWritable = createContextMenuStore();
-
-function createContextMenuStore(): ContextMenuWritable {
-  const store: Writable<ContextMenu | undefined> = writable(undefined);
+function createContextMenuStore(): ContextMenuStore {
+  const store: Writable<Record<string, any> | undefined> = writable(undefined);
 
   const close = () => {
     const cm = get(store);
     if (cm) {
-      cm.$destroy(); // Ensure that the context menu has a $destroy method
+      unmount(cm);
       store.set(undefined);
     }
   };
@@ -28,6 +27,8 @@ function createContextMenuStore(): ContextMenuWritable {
     close,
   };
 }
+
+export const contextMenu: ContextMenuStore = createContextMenuStore();
 
 export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
   node: HTMLElement,
@@ -45,7 +46,7 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
     contextMenu.close();
 
     contextMenu.set(
-      new ContextMenu({
+      mount(ContextMenu, {
         target: document.body,
         props: {
           target: node,
