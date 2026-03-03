@@ -31,7 +31,7 @@
     handleSelectionChange();
   }
 
-  $: if (target) {
+  $: if (target != null) {
     handleTargetChange();
   }
 
