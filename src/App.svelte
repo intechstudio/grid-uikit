@@ -44,6 +44,11 @@
   let suggestion2 = [{ info: "Test 2", value: "test2" }];
   let suggestion3 = suggestion1;
   let suggestion4 = suggestion1;
+  let suggestionEvenTest = [
+    { info: "This is a very long suggestion name", value: "test1" },
+    { info: "Another extremely long suggestion label", value: "test2" },
+    { info: "Short", value: "short" },
+  ];
 
   function switchSuggestions() {
     let tmp = suggestion1;
@@ -405,15 +410,30 @@
         <BlockBody>Now in a row:</BlockBody>
         <BlockRow>
           <MeltCombo
-            title={"Field 1"}
+            title={"Ch"}
             bind:value={input3Value}
-            suggestions={suggestion3}
+            suggestions={suggestionEvenTest}
             disabled={buttonsDisabled}
           />
           <MeltCombo
-            title={"Field 2"}
+            title={"A Very Long Field Name"}
             bind:value={input4Value}
-            suggestions={suggestion4}
+            suggestions={suggestionEvenTest}
+            disabled={buttonsDisabled}
+          />
+        </BlockRow>
+        <BlockBody>Row with even spacing:</BlockBody>
+        <BlockRow even>
+          <MeltCombo
+            title={"Ch"}
+            bind:value={input3Value}
+            suggestions={suggestionEvenTest}
+            disabled={buttonsDisabled}
+          />
+          <MeltCombo
+            title={"A Very Long Field Name"}
+            bind:value={input4Value}
+            suggestions={suggestionEvenTest}
             disabled={buttonsDisabled}
           />
         </BlockRow>

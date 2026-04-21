@@ -1,9 +1,11 @@
 <script lang="ts">
   export let border: string = "transparent";
+  export let even: boolean = false;
 </script>
 
 <div
   class:transparent-block={border === "transparent"}
+  class:even-block={even}
   style:border-color={border}
 >
   <slot />
@@ -23,5 +25,10 @@
     padding: 0rem;
     border-width: 0px;
     margin: 0rem;
+  }
+
+  .even-block > :global(*) {
+    flex: 1;
+    min-width: 0;
   }
 </style>
