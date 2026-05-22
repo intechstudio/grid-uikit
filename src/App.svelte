@@ -305,7 +305,7 @@
         </div>
         <BlockTitle>MoltenPushButton</BlockTitle>
 
-        <BlockBody>This has dropdown</BlockBody>
+        <BlockBody>This has dropdown value {clearButtonTarget}</BlockBody>
         <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
         <MoltenPushButtonGroup>
           <div
