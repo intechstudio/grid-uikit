@@ -4,8 +4,10 @@
   export let target: any;
   export let size: "auto" | "full" = "auto";
   export let disabled = false;
+  export let title = "";
+  export let valueInfoEnabled = true;
 
-  type SelectOption = { title: string; value: any };
+  type SelectOption = { title: string; value: any; info?: string };
 
   function getDefaultSelected() {
     const obj = options.find((e: SelectOption) => e.value === target);
@@ -26,6 +28,8 @@
     },
     defaultSelected: getDefaultSelected(),
   });
+
+  $: infoValue = options.find((e) => e.value === $selected?.value)?.info ?? "";
 
   $: if ($selected) {
     handleSelectionChange();
@@ -53,6 +57,9 @@
 </script>
 
 <div class="container" class:container-grow={size === "full"}>
+  {#if title?.length > 0}
+    <label>{title}</label>
+  {/if}
   <button {...$trigger} use:trigger class="select" class:disabled>
     <span>{$selectedLabel || " "}</span>
     <span>&#9660;</span>
@@ -71,14 +78,24 @@
       {/each}
     </div>
   {/if}
+  {#if valueInfoEnabled}
+    <div class="info-value">{infoValue}&nbsp;</div>
+  {/if}
 </div>
 
 <style>
+  label {
+    color: var(--foreground);
+    font-size: 0.875em;
+    line-height: 1.25em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   div.container {
     display: flex;
     flex-direction: column;
     gap: 0.25em;
-    background-color: var(--background-muted);
   }
   div.container-grow {
     flex-grow: 1;
@@ -100,7 +117,7 @@
     line-height: inherit; /* 1 */
     letter-spacing: inherit; /* 1 */
     margin: 0; /* 2 */
-    background-color: transparent; /* 2 */
+    background-color: var(--background-muted);
     cursor: pointer;
   }
   button.disabled {
@@ -124,5 +141,13 @@
   }
   div.option-selected {
     background-color: var(--popover-reference);
+  }
+  div.info-value {
+    color: var(--foreground-soft);
+    font-size: 0.875em;
+    line-height: 1.25em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 </style>

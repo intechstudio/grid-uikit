@@ -535,9 +535,10 @@
           ]}
           disabled={buttonsDisabled}
         />
-        <BlockBody>Disabled:</BlockBody>
+        <BlockBody>With label:</BlockBody>
         <MeltSelect
-          bind:target={meltSelectValue2}
+          bind:target={meltSelectValue1}
+          title="My Label"
           options={[
             { title: "0", value: 0 },
             { title: "1", value: 1 },
@@ -546,9 +547,18 @@
           ]}
           disabled={buttonsDisabled}
         />
-
-        <MoltenInput bind:target={moltenInputText} disabled={buttonsDisabled} />
-        <MoltenInput bind:target={moltenInputText} disabled={buttonsDisabled} />
+        <BlockBody>With label and info:</BlockBody>
+        <MeltSelect
+          bind:target={meltSelectValue1}
+          title="My Label"
+          options={[
+            { title: "0", value: 0, info: "Description for option 0" },
+            { title: "1", value: 1, info: "Description for option 1" },
+            { title: "2", value: 2, info: "Description for option 2" },
+            { title: "3", value: 3, info: "Description for option 3" },
+          ]}
+          disabled={buttonsDisabled}
+        />
       </Block>
     </div>
     <div class="mock-panel">
