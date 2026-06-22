@@ -5,7 +5,7 @@
   export let size: "auto" | "full" = "auto";
   export let disabled = false;
   export let title = "";
-  export let valueInfoEnabled = true;
+  export let valueInfoEnabled = false;
 
   type SelectOption = { title: string; value: any; info?: string };
 
