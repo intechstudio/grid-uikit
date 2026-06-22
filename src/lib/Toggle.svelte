@@ -49,7 +49,8 @@
   }
 
   input[type="checkbox"]:focus {
-    outline: 0;
+    outline: 1px dashed var(--focus);
+    outline-offset: 2px;
   }
 
   .toggle {

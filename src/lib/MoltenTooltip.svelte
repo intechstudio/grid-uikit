@@ -20,6 +20,7 @@
 
   let showbuttons = $state(false);
   let showTooltip = $state(false);
+  let tooltipKey = $state(0);
 
   let tooltipElement: HTMLDivElement | undefined = $state();
   let previousFocusedElement: HTMLElement | null = null;
@@ -49,12 +50,11 @@
       }
     }
     if (triggerEvents.includes("show-buttons")) {
-      if (!showbuttons) {
-        clearTimeout(openTimeout);
-        showTooltip = true;
-        if (buttons.length > 0) {
-          showbuttons = true;
-        }
+      clearTimeout(openTimeout);
+      tooltipKey++;
+      showTooltip = true;
+      if (buttons.length > 0) {
+        showbuttons = true;
       }
     }
     if (triggerEvents.includes("hover") && !showbuttons) {
@@ -85,14 +85,14 @@
       clearTimeout(openTimeout);
       closeTimeout = setTimeout(
         () => {
-          showTooltip = false;
+          close();
         },
         instant ? 0 : 100,
       );
     }
     if (triggerEvents.includes("click")) {
       closeTimeout = setTimeout(() => {
-        showTooltip = false;
+        close();
       }, 100);
     }
     //e.stopPropagation();
@@ -109,7 +109,7 @@
   function handleReferenceElementBlur(e: any) {
     if (triggerEvents.includes("focus")) {
       closeTimeout = setTimeout(() => {
-        showTooltip = false;
+        close();
       }, 100);
     }
     //e.stopPropagation();
@@ -216,8 +216,9 @@
   }
 </script>
 
+{#key tooltipKey}
 <Popover
-  bind:isOpen={showTooltip}
+  isOpen={showTooltip}
   triggerEvents={["manual"]}
   {referenceElement}
   bind:placement
@@ -288,6 +289,7 @@
     <div class="tooltip-absolute" id="arrow_face" />
   </div>
 </Popover>
+{/key}
 
 <style global>
   div.tooltip-container {
@@ -299,6 +301,11 @@
     border-radius: 0.375rem;
     z-index: 99;
     padding: 0.25rem;
+    outline: 1px dashed transparent;
+  }
+  div.tooltip-container:focus {
+    outline: 1px dashed var(--focus);
+    outline-offset: 2px;
   }
 
   div.tooltip-container-content {

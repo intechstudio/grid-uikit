@@ -120,6 +120,10 @@
     background-color: var(--background-muted);
     cursor: pointer;
   }
+  button.select:focus {
+    outline: 1px dashed var(--focus);
+    outline-offset: 2px;
+  }
   button.disabled {
     color: var(--foreground-disabled);
     cursor: default;

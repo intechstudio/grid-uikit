@@ -194,6 +194,20 @@
       <span class="color-preview-label"
         ><div
           class="color-preview-box"
+          style="background-color: var(--focus);"
+        ></div>
+        --focus</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
+          style="background-color: var(--focus-muted);"
+        ></div>
+        --focus-muted</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
           style="background-color: var(--error);"
         ></div>
         --error</span

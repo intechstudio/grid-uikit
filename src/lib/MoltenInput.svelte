@@ -101,7 +101,7 @@
     font-size: inherit;
   }
   input:focus {
-    outline: 2px solid transparent;
+    outline: 1px dashed var(--focus);
     outline-offset: 2px;
   }
   input:disabled {

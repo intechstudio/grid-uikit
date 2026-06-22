@@ -349,8 +349,7 @@
   }
   input {
     cursor: auto;
-    outline: 2px solid transparent;
-    outline-offset: 2px;
+    outline: none;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -360,6 +359,10 @@
     background-color: var(--background-muted);
     margin: 0.25em 0em 0em;
     font-size: inherit;
+  }
+  input:focus {
+    outline: 1px dashed var(--focus);
+    outline-offset: 2px;
   }
   input.error {
     border-color: var(--error);
