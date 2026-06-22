@@ -103,6 +103,10 @@
     border-radius: 9999px;
     background-color: var(--foreground-muted);
   }
+  span.thumb:focus {
+    outline: 1px dashed var(--focus);
+    outline-offset: 2px;
+  }
 
   span.container.disabled {
     pointer-events: none;
