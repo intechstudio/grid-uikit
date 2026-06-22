@@ -168,13 +168,6 @@
     }
   }
 
-  function handleFocus() {
-    if (searchable) {
-      inputElement.select();
-    }
-    open.set(true);
-  }
-
   function handleBlur() {
     open.set(false);
   }
@@ -238,7 +231,7 @@
   <div class="content">
     {#if title?.length > 0}
       <label>
-        {title}
+        <span class="label-text">{title}</span>
         <div bind:clientWidth={menuWidth}>
           <input
             bind:this={inputElement}
@@ -247,7 +240,6 @@
             use:trigger
             bind:value={inputValue}
             on:change={handleChange}
-            on:focus={handleFocus}
             on:blur={handleBlur}
             on:m-keydown={(e) => {
               e.preventDefault();
@@ -272,7 +264,6 @@
           use:trigger
           bind:value={inputValue}
           on:change={handleChange}
-          on:focus={handleFocus}
           on:blur={handleBlur}
           on:m-keydown={(e) => {
             e.preventDefault();
@@ -342,17 +333,19 @@
     color: var(--foreground);
     font-size: 0.875em;
     line-height: 1.25em;
+    align-items: center;
+  }
+  .label-text {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    align-items: center;
+    display: block;
   }
   input {
     cursor: auto;
     outline: none;
     width: 100%;
-    display: flex;
-    flex-direction: row;
+    box-sizing: border-box;
     border: 1px solid var(--background-soft);
     padding: 0.5em;
     color: var(--foreground);
@@ -405,6 +398,7 @@
     color: var(--foreground-soft);
     font-size: 0.875em;
     line-height: 1.25em;
+    margin-top: 0.25em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
