@@ -26,6 +26,7 @@
   let previousFocusedElement: HTMLElement | null = null;
   let closeTimeout: any;
   let openTimeout: any;
+  let isRestoringFocus = false;
 
   function handleClick(e: any) {
     //handleReferenceElementClick(e);
@@ -100,14 +101,19 @@
 
   function handleReferenceElementFocus(e: any) {
     if (triggerEvents.includes("focus")) {
+      if (isRestoringFocus) return;
       clearTimeout(closeTimeout);
       showTooltip = true;
     }
     //e.stopPropagation();
   }
 
-  function handleReferenceElementBlur(e: any) {
+  function handleReferenceElementBlur(e: FocusEvent) {
     if (triggerEvents.includes("focus")) {
+      const relatedTarget = e.relatedTarget as Node | null;
+      if (relatedTarget && tooltipElement?.contains(relatedTarget)) {
+        return;
+      }
       closeTimeout = setTimeout(() => {
         close();
       }, 100);
@@ -147,6 +153,17 @@
     if (tooltipElement) {
       previousFocusedElement = document.activeElement as HTMLElement | null;
       tooltipElement.focus();
+      const handleFocusOut = (e: FocusEvent) => {
+        const relatedTarget = e.relatedTarget as Node | null;
+        if (relatedTarget && tooltipElement?.contains(relatedTarget)) {
+          return;
+        }
+        close();
+      };
+      tooltipElement.addEventListener("focusout", handleFocusOut);
+      return () => {
+        tooltipElement?.removeEventListener("focusout", handleFocusOut);
+      };
     }
   });
 
@@ -204,14 +221,18 @@
     );
   }
 
-  function close() {
+  function close(restoreFocus = true) {
     clearTimeout(openTimeout);
     clearTimeout(closeTimeout);
     showTooltip = false;
     showbuttons = false;
-    if (previousFocusedElement) {
+    if (restoreFocus && previousFocusedElement) {
+      isRestoringFocus = true;
       previousFocusedElement.focus();
       previousFocusedElement = null;
+      requestAnimationFrame(() => {
+        isRestoringFocus = false;
+      });
     }
   }
 </script>
