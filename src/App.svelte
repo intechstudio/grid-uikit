@@ -71,7 +71,7 @@
 
   let moltenInputText = "hello";
 
-  let logMessageCount = 0;
+  let logMessageCount = $state(0);
   let logMessageType = LogMessageType.NORMAL;
   let logMessageTimeout: number;
 
