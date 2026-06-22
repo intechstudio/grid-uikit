@@ -84,8 +84,8 @@
               class:disabled
             />
           </div>
+          <span class:disabled>{title}</span>
         </button>
-        <span class:disabled>{title}</span>
       {/if}
       {#if style === "button"}
         <button
@@ -176,6 +176,12 @@
     padding: 0; /* 3 */
     background-color: transparent; /* 2 */
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+  }
+  button:focus {
+    outline: 1px dashed var(--focus);
+    outline-offset: 2px;
   }
   button.style-button {
     position: relative;
@@ -183,6 +189,7 @@
     width: 100%;
     border-radius: 0.25em;
     border: 1px solid var(--background-soft);
+    justify-content: center;
   }
   button.style-button:hover {
     background-color: var(--background-muted);
