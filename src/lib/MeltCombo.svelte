@@ -183,20 +183,27 @@
     if (e.key === "ArrowDown") {
       e.preventDefault();
       if (filteredSuggestions.length === 0) return;
-      if (!$open) open.set(true);
-      highlightedIndex =
-        highlightedIndex < filteredSuggestions.length - 1
-          ? highlightedIndex + 1
-          : 0;
-      scrollIntoView();
+      if (!$open) {
+        open.set(true);
+      } else {
+        highlightedIndex =
+          highlightedIndex < filteredSuggestions.length - 1
+            ? highlightedIndex + 1
+            : 0;
+        scrollIntoView();
+      }
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       if (filteredSuggestions.length === 0) return;
-      highlightedIndex =
-        highlightedIndex > 0
-          ? highlightedIndex - 1
-          : filteredSuggestions.length - 1;
-      scrollIntoView();
+      if (!$open) {
+        open.set(true);
+      } else {
+        highlightedIndex =
+          highlightedIndex > 0
+            ? highlightedIndex - 1
+            : filteredSuggestions.length - 1;
+        scrollIntoView();
+      }
     } else if (e.key === "Enter") {
       if (
         highlightedIndex >= 0 &&
@@ -299,10 +306,10 @@
             {...$close}
             use:close
             class="suggestion"
-            data-highlighted={highlightedIndex === i ? "" : undefined}
             data-combo-index={i}
             on:click={() => selected.set(suggestion)}
             on:mouseenter={() => (highlightedIndex = i)}
+            style={highlightedIndex === i ? "background-color: var(--popover-selection); color: var(--foreground);" : ""}
             >{suggestion.info}</option
           >
         {/each}
@@ -387,8 +394,7 @@
     padding-top: 0.25em;
     padding-bottom: 0.25em;
   }
-  option.suggestion:hover,
-  option.suggestion[data-highlighted] {
+  option.suggestion:hover {
     background-color: var(--popover-selection);
     color: var(--foreground);
   }
