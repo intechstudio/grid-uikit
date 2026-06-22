@@ -56,7 +56,7 @@
     suggestion2 = tmp;
   }
 
-  let textColor = "rgb(255,0,0)";
+  let textColor = $state("rgb(255,0,0)");
   function changeTextColor() {
     textColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
   }
