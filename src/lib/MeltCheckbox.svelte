@@ -39,7 +39,17 @@
 </script>
 
 <label class:checkbox-box={style === "box"} class:disabled>
-  <button {...$root} use:root class:disabled>
+  <button
+    {...$root}
+    use:root
+    class:disabled
+    on:keydown={(e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        e.currentTarget.click();
+      }
+    }}
+  >
     <div class="checkbox-outer" class:disabled>
       <div
         style:display={target ? "block" : "none"}
@@ -120,6 +130,10 @@
     background-color: transparent; /* 2 */
     cursor: pointer;
     font-size: inherit;
+  }
+  button:focus {
+    outline: 1px dashed var(--focus);
+    outline-offset: 2px;
   }
 
   button.disabled {

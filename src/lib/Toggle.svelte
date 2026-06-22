@@ -26,6 +26,13 @@
     on:change={handleChange}
     class="{$$props.class} toggle"
     {disabled}
+    on:keydown={(e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        value = !value;
+        handleChange();
+      }
+    }}
   />
 </div>
 
