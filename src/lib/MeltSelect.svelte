@@ -135,7 +135,8 @@
     cursor: pointer;
     padding: 0.5em;
   }
-  div.option:hover {
+  div.option:hover,
+  div.option[data-highlighted] {
     background-color: var(--popover-selection);
     color: var(--foreground);
   }
