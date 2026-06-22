@@ -20,7 +20,7 @@
 </script>
 
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, tick } from "svelte";
   import { createPopover } from "@melt-ui/svelte";
   import { fade } from "svelte/transition";
   import { writable, type Writable } from "svelte/store";
@@ -53,6 +53,16 @@
   let selected: Writable<MeltComboSuggestion> = writable();
 
   let inputElement: any;
+  let highlightedIndex = -1;
+
+  $: if (!$open) {
+    highlightedIndex = -1;
+  } else if ($open && filteredSuggestions.length > 0) {
+    const match = filteredSuggestions.findIndex(
+      (s) => String(s.value).trim() === String(inputValue).trim(),
+    );
+    highlightedIndex = match >= 0 ? match : 0;
+  }
 
   const open = writable(false);
 
@@ -80,13 +90,24 @@
   $: handleSelectionChange($selected);
   $: handleInputChange(inputValue);
 
-  $: filteredSuggestions = searchable
+  $: baseList = searchable
     ? suggestions.filter(
         (e) =>
           e.info.toLowerCase().includes(inputValue?.toLowerCase()) ||
           e.value.toLowerCase().includes(inputValue?.toLowerCase()),
       )
     : suggestions;
+
+  $: filteredSuggestions =
+    inputValue.trim() &&
+    !suggestions.some(
+      (s) => String(s.value).trim() === String(inputValue).trim(),
+    )
+      ? [
+          { info: "Manual entry: " + inputValue, value: inputValue },
+          ...baseList,
+        ]
+      : baseList;
 
   $: infoValue =
     suggestions.find((s) => String(s.value).trim() == String(inputValue).trim())
@@ -148,7 +169,6 @@
   }
 
   function handleFocus() {
-    filteredSuggestions = suggestions;
     if (searchable) {
       inputElement.select();
     }
@@ -157,6 +177,51 @@
 
   function handleBlur() {
     open.set(false);
+  }
+
+  function handleKeydown(e: KeyboardEvent) {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (filteredSuggestions.length === 0) return;
+      if (!$open) open.set(true);
+      highlightedIndex =
+        highlightedIndex < filteredSuggestions.length - 1
+          ? highlightedIndex + 1
+          : 0;
+      scrollIntoView();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (filteredSuggestions.length === 0) return;
+      highlightedIndex =
+        highlightedIndex > 0
+          ? highlightedIndex - 1
+          : filteredSuggestions.length - 1;
+      scrollIntoView();
+    } else if (e.key === "Enter") {
+      if (
+        highlightedIndex >= 0 &&
+        highlightedIndex < filteredSuggestions.length
+      ) {
+        e.preventDefault();
+        selected.set(filteredSuggestions[highlightedIndex]);
+        highlightedIndex = -1;
+      } else if (!$open) {
+        e.preventDefault();
+        open.set(true);
+      }
+    } else if (e.key === "Escape") {
+      highlightedIndex = -1;
+      open.set(false);
+    }
+  }
+
+  function scrollIntoView() {
+    tick().then(() => {
+      const el = document.querySelector(
+        `[data-combo-index="${highlightedIndex}"]`,
+      );
+      el?.scrollIntoView({ block: "nearest" });
+    });
   }
 
   let menuWidth;
@@ -180,6 +245,7 @@
             on:m-keydown={(e) => {
               e.preventDefault();
             }}
+            on:keydown={handleKeydown}
             on:click={() => {
               open.set(true);
             }}
@@ -204,6 +270,7 @@
           on:m-keydown={(e) => {
             e.preventDefault();
           }}
+          on:keydown={handleKeydown}
           on:click={() => {
             open.set(true);
           }}
@@ -216,7 +283,7 @@
     {/if}
   </div>
 
-  {#if $open && !disabled && suggestions.length > 0}
+  {#if $open && !disabled && filteredSuggestions.length > 0}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
       {...$content}
@@ -227,12 +294,16 @@
       style="min-width: {menuWidth}px;"
     >
       <div>
-        {#each filteredSuggestions as suggestion}
+        {#each filteredSuggestions as suggestion, i}
           <option
             {...$close}
             use:close
             class="suggestion"
-            on:click={() => selected.set(suggestion)}>{suggestion.info}</option
+            data-highlighted={highlightedIndex === i ? "" : undefined}
+            data-combo-index={i}
+            on:click={() => selected.set(suggestion)}
+            on:mouseenter={() => (highlightedIndex = i)}
+            >{suggestion.info}</option
           >
         {/each}
       </div>
@@ -316,7 +387,8 @@
     padding-top: 0.25em;
     padding-bottom: 0.25em;
   }
-  option.suggestion:hover {
+  option.suggestion:hover,
+  option.suggestion[data-highlighted] {
     background-color: var(--popover-selection);
     color: var(--foreground);
   }
