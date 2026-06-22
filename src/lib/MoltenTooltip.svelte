@@ -4,20 +4,25 @@
   import { onDestroy, onMount } from "svelte";
   import MoltenPushButton from "./MoltenPushButton.svelte";
 
-  export let text = "";
-  export let placement = "top";
-  export let duration = 250;
-  export let delay = 750;
-  export let instant = false;
-  export let nowrap = false;
-  export let buttons: any[] = [];
-  export let triggerEvents = ["hover"];
-  export let referenceElement: HTMLElement;
-  export let component: any | undefined = undefined;
+  let {
+    text = "",
+    placement = "top",
+    duration = 250,
+    delay = 750,
+    instant = false,
+    nowrap = false,
+    buttons = [] as any[],
+    triggerEvents = ["hover"],
+    referenceElement,
+    component = undefined,
+    class: className = "",
+  } = $props();
 
-  let showbuttons = false;
-  let showTooltip: boolean;
+  let showbuttons = $state(false);
+  let showTooltip = $state(false);
 
+  let tooltipElement: HTMLDivElement | undefined = $state();
+  let previousFocusedElement: HTMLElement | null = null;
   let closeTimeout: any;
   let openTimeout: any;
 
@@ -110,6 +115,41 @@
     //e.stopPropagation();
   }
 
+  function handleDocumentKeyDown(e: KeyboardEvent) {
+    if (e.key === "Escape" && (showbuttons || showTooltip)) {
+      const active = document.activeElement;
+      if (
+        active === referenceElement ||
+        active === tooltipElement ||
+        tooltipElement?.contains(active) ||
+        referenceElement.contains(active)
+      ) {
+        e.stopImmediatePropagation();
+        close();
+      }
+    }
+  }
+
+  function handleDocumentMouseDown(e: MouseEvent) {
+    if (!showbuttons && !showTooltip) return;
+    const target = e.target as Node;
+    const popover = document.querySelector(".svelte-easy-popover");
+    if (
+      popover &&
+      !popover.contains(target) &&
+      !referenceElement.contains(target)
+    ) {
+      close();
+    }
+  }
+
+  $effect(() => {
+    if (tooltipElement) {
+      previousFocusedElement = document.activeElement as HTMLElement | null;
+      tooltipElement.focus();
+    }
+  });
+
   onMount(() => {
     referenceElement.addEventListener(
       "mouseenter",
@@ -122,6 +162,8 @@
     referenceElement.addEventListener("click", handleReferenceElementClick);
     referenceElement.addEventListener("focus", handleReferenceElementFocus);
     referenceElement.addEventListener("blur", handleReferenceElementBlur);
+    document.addEventListener("mousedown", handleDocumentMouseDown);
+    document.addEventListener("keydown", handleDocumentKeyDown);
   });
 
   onDestroy(() => {
@@ -136,6 +178,8 @@
     referenceElement.removeEventListener("click", handleReferenceElementClick);
     referenceElement.removeEventListener("focus", handleReferenceElementFocus);
     referenceElement.removeEventListener("blur", handleReferenceElementBlur);
+    document.removeEventListener("mousedown", handleDocumentMouseDown);
+    document.removeEventListener("keydown", handleDocumentKeyDown);
   });
 
   function interceptEvent(e: any) {
@@ -165,6 +209,10 @@
     clearTimeout(closeTimeout);
     showTooltip = false;
     showbuttons = false;
+    if (previousFocusedElement) {
+      previousFocusedElement.focus();
+      previousFocusedElement = null;
+    }
   }
 </script>
 
@@ -181,7 +229,9 @@
     on:mouseenter={handleMouseEnter}
     on:mouseleave={handleMouseLeave}
     on:click={handleClick}
-    class="{$$props.class} tooltip-container"
+    bind:this={tooltipElement}
+    tabindex="-1"
+    class="{className} tooltip-container"
     transition:fade|global={{
       duration: instant ? 0 : duration, //Make it instant when explicitly clicked
     }}
