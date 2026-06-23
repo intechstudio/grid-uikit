@@ -15,4 +15,7 @@ export default defineConfig({
       input: "index.html", // Adjusted to match the file structure
     },
   },
+  server: {
+    port: 3000,
+  },
 });
