@@ -185,8 +185,8 @@
   }
 
   .dropdown-button:focus {
-    outline: 1px dashed var(--focus);
-    outline-offset: 2px;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-offset);
   }
 
   .dropdown-button.grouped {

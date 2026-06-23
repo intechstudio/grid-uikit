@@ -238,78 +238,78 @@
 </script>
 
 {#key tooltipKey}
-<Popover
-  isOpen={showTooltip}
-  triggerEvents={["manual"]}
-  {referenceElement}
-  bind:placement
-  spaceAway={10}
->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div
-    on:mouseenter={handleMouseEnter}
-    on:mouseleave={handleMouseLeave}
-    on:click={handleClick}
-    bind:this={tooltipElement}
-    tabindex="-1"
-    class="{className} tooltip-container"
-    transition:fade|global={{
-      duration: instant ? 0 : duration, //Make it instant when explicitly clicked
-    }}
+  <Popover
+    isOpen={showTooltip}
+    triggerEvents={["manual"]}
+    {referenceElement}
+    bind:placement
+    spaceAway={10}
   >
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      class="tooltip-container-content"
-      class:tooltip-gap-2={buttons.length > 0}
+      on:mouseenter={handleMouseEnter}
+      on:mouseleave={handleMouseLeave}
+      on:click={handleClick}
+      bind:this={tooltipElement}
+      tabindex="-1"
+      class="{className} tooltip-container"
+      transition:fade|global={{
+        duration: instant ? 0 : duration, //Make it instant when explicitly clicked
+      }}
     >
-      {#if typeof component === "undefined"}
-        <div
-          class="tooltip-container-text"
-          class:tooltip-whitespace-nowrap={nowrap}
-        >
-          {text}
-        </div>
-      {:else}
-        <svelte:component
-          this={component.object}
-          {...component.props}
-          class="tooltip-container-component"
-          on:event={interceptEvent}
-        />
-      {/if}
+      <div
+        class="tooltip-container-content"
+        class:tooltip-gap-2={buttons.length > 0}
+      >
+        {#if typeof component === "undefined"}
+          <div
+            class="tooltip-container-text"
+            class:tooltip-whitespace-nowrap={nowrap}
+          >
+            {text}
+          </div>
+        {:else}
+          <svelte:component
+            this={component.object}
+            {...component.props}
+            class="tooltip-container-component"
+            on:event={interceptEvent}
+          />
+        {/if}
 
-      {#if showbuttons}
-        <div
-          transition:slide|global={{ duration: instant ? 0 : 100 }}
-          class="tooltip-container-buttons"
-        >
-          {#each buttons as button}
-            <MoltenPushButton
-              text={button.label}
-              snap={"full"}
-              click={() => {
-                if (typeof button.handler !== "undefined") {
-                  button.handler();
-                }
-                close();
-              }}
-            />
-          {/each}
-        </div>
-      {/if}
+        {#if showbuttons}
+          <div
+            transition:slide|global={{ duration: instant ? 0 : 100 }}
+            class="tooltip-container-buttons"
+          >
+            {#each buttons as button}
+              <MoltenPushButton
+                text={button.label}
+                snap={"full"}
+                click={() => {
+                  if (typeof button.handler !== "undefined") {
+                    button.handler();
+                  }
+                  close();
+                }}
+              />
+            {/each}
+          </div>
+        {/if}
+      </div>
     </div>
-  </div>
-  <div
-    transition:fade|global={{
-      duration: instant ? 0 : duration,
-    }}
-    class="tooltip-absolute"
-    id="arrow"
-    data-popper-arrow
-  >
-    <div class="tooltip-absolute" id="arrow_face" />
-  </div>
-</Popover>
+    <div
+      transition:fade|global={{
+        duration: instant ? 0 : duration,
+      }}
+      class="tooltip-absolute"
+      id="arrow"
+      data-popper-arrow
+    >
+      <div class="tooltip-absolute" id="arrow_face" />
+    </div>
+  </Popover>
 {/key}
 
 <style global>
@@ -325,8 +325,8 @@
     outline: 1px dashed transparent;
   }
   div.tooltip-container:focus {
-    outline: 1px dashed var(--focus);
-    outline-offset: 2px;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-offset);
   }
 
   div.tooltip-container-content {

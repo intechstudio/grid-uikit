@@ -27,7 +27,8 @@
   --accent-soft: color-mix(in srgb, var(--accent), var(--shadow) 50%);
 
   --focus: #0000ff;
-  --focus-muted: #0000cc;
+  --focus-outline: 1px solid var(--focus);
+  --focus-offset: 1px;
 
   --error: #dc2626;
 

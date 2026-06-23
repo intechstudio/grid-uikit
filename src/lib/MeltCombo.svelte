@@ -300,8 +300,9 @@
             data-combo-index={i}
             on:click={() => selected.set(suggestion)}
             on:mouseenter={() => (highlightedIndex = i)}
-            style={highlightedIndex === i ? "background-color: var(--popover-selection); color: var(--foreground);" : ""}
-            >{suggestion.info}</option
+            style={highlightedIndex === i
+              ? "background-color: var(--popover-selection); color: var(--foreground);"
+              : ""}>{suggestion.info}</option
           >
         {/each}
       </div>
@@ -354,8 +355,8 @@
     font-size: inherit;
   }
   input:focus {
-    outline: 1px dashed var(--focus);
-    outline-offset: 2px;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-offset);
   }
   input.error {
     border-color: var(--error);
