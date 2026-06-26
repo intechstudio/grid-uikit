@@ -510,6 +510,7 @@
           width={150}
           height={150}
         />
+        <SvgIcon iconPath="file" fill="#FFF" width={20} height={20} />
         <SvgIcon iconPath="folder_open" fill="#FFF" width={150} height={150} />
         <SvgIcon iconPath="edit" fill="#FFF" width={15} height={15} />
         <SvgIcon iconPath="edit" fill="#F00" width={30} height={30} />
