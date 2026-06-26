@@ -113,7 +113,7 @@ const iconMap: IconMap = {
   tick,
   user_account_02,
   rotate,
-  file
+  file,
 };
 
 export default iconMap;
