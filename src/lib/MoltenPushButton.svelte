@@ -149,6 +149,10 @@
   button.grouped {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    /* Cap the label width so a long selected label truncates (…) instead
+       of stretching the split button. The button already has
+       overflow/ellipsis/nowrap; it just needs a width bound to act on. */
+    max-width: 16em;
   }
 
   button.style-normal {

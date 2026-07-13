@@ -99,6 +99,13 @@
         alert(e);
       },
     },
+    {
+      title: "Pressure Sensitive Defaults With An Absurdly Long Name",
+      value: "superlong",
+      onclick: (e) => {
+        alert(e);
+      },
+    },
   ];
 
   function handleShowLogMessage() {
