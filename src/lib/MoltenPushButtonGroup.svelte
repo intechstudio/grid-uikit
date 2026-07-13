@@ -200,7 +200,8 @@
 
   .menu {
     z-index: 40;
-    width: 10em;
+    width: max-content;
+    min-width: 8em;
     background-color: var(--popover-background);
     color: var(--foreground-muted);
     border: 1px solid var(--foreground-muted);
@@ -210,7 +211,14 @@
   .option {
     cursor: pointer;
     padding: 0.5rem;
+    /* Cap width here, not on .menu: floating-ui writes an inline
+       max-width on the menu element (fitViewport), which would override
+       a stylesheet max-width. The menu is width:max-content, so capping
+       the options caps the menu's intrinsic width too. */
+    max-width: 20em;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .option:hover,
