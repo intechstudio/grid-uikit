@@ -5,7 +5,6 @@
   export let style: "normal" | "outlined" | "accept" = "normal";
   export let disabled: boolean = false;
   export let popup: { duration?: number } | undefined = undefined;
-  export let ratio = "normal";
   export let snap = "auto";
   export let click: (...args: any) => void;
   export let options: any = undefined;
@@ -67,10 +66,9 @@
     }}
     {disabled}
     class="main style-{style}"
-    class:px-4={ratio === "normal"}
-    class:px-1={ratio === "box"}
     class:w-full={snap === "full"}
     class:w-fit={snap === "auto"}
+    class:w-wide={snap === "wide"}
     class:grouped
   >
     <span>{text}</span>
@@ -105,11 +103,11 @@
 
   button {
     cursor: pointer;
-    border-radius: 0.25rem;
+    border-radius: var(--radius);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: 0.25rem;
+    padding: 0.5rem;
 
     font-family: inherit;
     font-feature-settings: inherit;
@@ -132,13 +130,13 @@
     width: 100%;
   }
 
-  button.w-fit {
-    width: fit-content;
+  button.w-wide {
+    width: 10em;
+    height: 3em;
   }
 
-  button.px-4 {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  button.w-fit {
+    width: fit-content;
   }
 
   button:focus {
@@ -152,9 +150,9 @@
   }
 
   button.style-normal {
-    color: var(--foreground-muted);
+    color: var(--foreground);
     background-color: var(--background-muted);
-    border: 1px solid var(--background-soft);
+    border: 1px solid var(--foreground);
   }
 
   button.style-normal:hover {
@@ -164,12 +162,12 @@
   button.style-normal:disabled {
     color: var(--foreground-disabled);
     background-color: var(--background-soft);
-    border: 1px solid var(--background-soft);
+    border: var(--border-thickness) solid var(--background-soft);
   }
 
   button.style-outlined {
     background-color: var(--background-muted);
-    border: 1px solid var(--accent);
+    border: var(--border-thickness) solid var(--accent);
     color: var(--foreground-muted);
   }
 
@@ -181,16 +179,17 @@
   button.style-outlined:disabled {
     background-color: var(--background-muted);
     color: var(--foreground-disabled);
-    border: 1px solid var(--accent-soft);
+    border: var(--border-thickness) solid var(--accent-soft);
   }
 
   button.style-accept {
     color: var(--foreground);
-    background-color: var(--accent);
+    background-color: var(--accent-soft);
+    border: var(--border-thickness) solid var(--accent-muted);
   }
 
   button.style-accept:hover {
-    background-color: var(--accent-soft);
+    background-color: var(--accent);
   }
 
   button.style-accept:disabled {

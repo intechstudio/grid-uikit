@@ -173,6 +173,13 @@
       <span class="color-preview-label"
         ><div
           class="color-preview-box"
+          style="background-color: var(--border);"
+        ></div>
+        --border</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="color-preview-box"
           style="background-color: var(--accent);"
         ></div>
         --accent</span
@@ -366,6 +373,12 @@
           click={() => {}}
           text={"Accept"}
           style={"accept"}
+        />
+        <MoltenPushButton
+          disabled={buttonsDisabled}
+          click={() => {}}
+          text={"Store"}
+          snap={"wide"}
         />
         <MoltenPushButton
           disabled={buttonsDisabled}

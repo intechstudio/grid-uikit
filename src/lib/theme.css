@@ -1,6 +1,6 @@
 :root {
-  --foreground: #fff;
-  --background: #1e2628;
+  --foreground: #e3e3e3;
+  --background: #1f1f1f;
   --shadow: #000;
 
   --foreground-muted: color-mix(
@@ -22,6 +22,7 @@
   --background-muted: color-mix(in srgb, var(--background), var(--shadow) 20%);
   --background-soft: color-mix(in srgb, var(--background), var(--shadow) 50%);
 
+  --border: #b6b6b6;
   --accent: #0ba484;
   --accent-muted: color-mix(in srgb, var(--accent), var(--shadow) 30%);
   --accent-soft: color-mix(in srgb, var(--accent), var(--shadow) 50%);
@@ -40,6 +41,9 @@
 
   --popover-selection: var(--background-muted);
   --popover-reference: var(--background-soft);
+
+  --radius: 0.5em;
+  --border-thickness: 1px;
 }
 
 html[color-scheme="light"] {
