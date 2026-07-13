@@ -65,7 +65,8 @@
     <span>&#9660;</span>
   </button>
   {#if $open}
-    <div {...$menu} use:menu class="menu">
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div {...$menu} use:menu on:mousedown|preventDefault class="menu">
       {#each options as item}
         <div
           {...$option({ value: item.value, label: item.title })}

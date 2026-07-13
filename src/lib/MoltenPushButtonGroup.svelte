@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { writable } from "svelte/store";
   import { createSelect, melt } from "@melt-ui/svelte";
 
   export let options: {
@@ -10,8 +9,6 @@
   export let style: "normal" | "outlined" | "accept" = "normal";
   export let disabled: boolean = false;
   export let target: any = undefined;
-
-  const customOpen = writable(false);
 
   function getDefaultSelected() {
     if (!options?.length) return undefined;
@@ -24,7 +21,6 @@
     states: { selected, selectedLabel, open },
     helpers: { isSelected },
   } = createSelect({
-    open: customOpen,
     disabled: disabled,
     forceVisible: true,
     positioning: {
@@ -38,27 +34,23 @@
     handleSelectionChange();
   }
 
-  $: if (target) {
+  $: if (target != null) {
     handleTargetChange();
   }
 
   function handleTargetChange() {
-    if (!selected || !$selected || $selected.value === target) return;
+    if ($selected?.value === target) return;
     const obj = options.find((e) => e.value === target);
     selected.set({ label: obj?.title ?? "", value: obj?.value });
   }
 
   function handleSelectionChange() {
-    if (!selected || !$selected || $selected.value === target) return;
+    if (!$selected || $selected.value === target) return;
     target = $selected.value;
   }
 
-  function toggleDropdown() {
-    $customOpen = !$customOpen;
-  }
-
   function closeDropdown() {
-    $customOpen = false;
+    open.set(false);
   }
 
   function handleAction() {
@@ -80,36 +72,31 @@
     />
   </div>
 
-  <div class="trigger-wrapper" {...$trigger} use:trigger>
-    <button
-      class="trigger style-{style}"
-      {disabled}
-      on:click|stopPropagation={toggleDropdown}
-      on:keydown={(e) => {
-        if (e.key === "Escape") closeDropdown();
-      }}
-      aria-label="Open dropdown"
-    >
-      &#9660;
-    </button>
+  <button
+    {...$trigger}
+    use:trigger
+    class="trigger style-{style}"
+    {disabled}
+    aria-label="Open dropdown"
+  >
+    &#9660;
+  </button>
 
-    {#if $open}
-      <div {...$menu} use:menu class="menu" role="listbox">
-        {#each options as item}
-          <div
-            {...$option({ value: item.value, label: item.title })}
-            use:option
-            class="option"
-            class:option-selected={$isSelected(item.value)}
-            role="option"
-            aria-selected={$isSelected(item.value)}
-          >
-            {item.title}
-          </div>
-        {/each}
-      </div>
-    {/if}
-  </div>
+  {#if $open}
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div {...$menu} use:menu on:mousedown|preventDefault class="menu">
+      {#each options as item}
+        <div
+          {...$option({ value: item.value, label: item.title })}
+          use:option
+          class="option"
+          class:option-selected={$isSelected(item.value)}
+        >
+          {item.title}
+        </div>
+      {/each}
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -120,11 +107,6 @@
 
   .main-button-wrapper {
     display: inline-flex;
-  }
-
-  .trigger-wrapper {
-    display: inline-flex;
-    position: relative;
   }
 
   .trigger {
@@ -217,16 +199,12 @@
   }
 
   .menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
     z-index: 40;
     width: 10em;
     background-color: var(--popover-background);
     color: var(--foreground-muted);
     border: 1px solid var(--foreground-muted);
     border-radius: var(--radius, 0.25rem);
-    margin-top: 2px;
   }
 
   .option {
@@ -235,7 +213,8 @@
     white-space: nowrap;
   }
 
-  .option:hover {
+  .option:hover,
+  .option[data-highlighted] {
     background-color: var(--popover-selection);
     color: var(--foreground);
   }
