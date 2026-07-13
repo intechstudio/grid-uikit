@@ -34,7 +34,7 @@
     defaultSelected: getDefaultSelected(),
   });
 
-  $: if (selected) {
+  $: if ($selected) {
     handleSelectionChange();
   }
 

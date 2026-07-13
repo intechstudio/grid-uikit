@@ -74,8 +74,8 @@
   let logMessageType = LogMessageType.NORMAL;
   let logMessageTimeout: number;
 
-  let clearButtonTarget = "default";
-  let clearButtonWidth = 0;
+  let clearButtonTarget = $state("default");
+  let clearButtonWidth = $state(0);
 
   let clearButtonOptions = [
     {
