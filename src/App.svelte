@@ -67,6 +67,8 @@
   let meltRadioValue2 = 0;
   let meltRadioValue3 = 0;
   let meltRadioValue4 = 0;
+  let meltRadioValue5 = 0;
+  let meltRadioValue6 = 0;
 
   let moltenInputText = "hello";
 
@@ -636,6 +638,33 @@
             { title: "0", value: 0 },
             { title: "1", value: 1 },
             { title: "2", value: 2 },
+          ]}
+          disabled={buttonsDisabled}
+        />
+        <BlockBody>Button with individual options disabled</BlockBody>
+        <MeltRadio
+          bind:target={meltRadioValue5}
+          style="button"
+          orientation="horizontal"
+          size="full"
+          options={[
+            { title: "0", value: 0 },
+            { title: "1", value: 1, disabled: true },
+            { title: "2", value: 2 },
+            { title: "3", value: 3, disabled: true },
+          ]}
+          disabled={buttonsDisabled}
+        />
+        <BlockBody>Radio with individual options disabled</BlockBody>
+        <MeltRadio
+          bind:target={meltRadioValue6}
+          style="radio"
+          orientation="vertical"
+          size="full"
+          options={[
+            { title: "Enabled", value: 0 },
+            { title: "Disabled", value: 1, disabled: true },
+            { title: "Also enabled", value: 2 },
           ]}
           disabled={buttonsDisabled}
         /></Block
