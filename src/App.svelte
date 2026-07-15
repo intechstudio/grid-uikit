@@ -12,7 +12,6 @@
   import MeltRadio from "./lib/MeltRadio.svelte";
   import Toggle from "./lib/Toggle.svelte";
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
-  import MoltenPushButtonDropdown from "./lib/MoltenPushButtonDropdown.svelte";
   import MoltenPushButtonGroup from "./lib/MoltenPushButtonGroup.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
   import { fly } from "svelte/transition";
@@ -68,6 +67,8 @@
   let meltRadioValue2 = 0;
   let meltRadioValue3 = 0;
   let meltRadioValue4 = 0;
+  let meltRadioValue5 = 0;
+  let meltRadioValue6 = 0;
 
   let moltenInputText = "hello";
 
@@ -75,8 +76,8 @@
   let logMessageType = LogMessageType.NORMAL;
   let logMessageTimeout: number;
 
-  let clearButtonTarget = "default";
-  let clearButtonWidth = 0;
+  let clearButtonTarget = $state("default");
+  let clearButtonWidth = $state(0);
 
   let clearButtonOptions = [
     {
@@ -96,6 +97,13 @@
     {
       title: "Clear Everything",
       value: "long",
+      onclick: (e) => {
+        alert(e);
+      },
+    },
+    {
+      title: "Pressure Sensitive Defaults With An Absurdly Long Name",
+      value: "superlong",
       onclick: (e) => {
         alert(e);
       },
@@ -321,37 +329,46 @@
 
         <BlockBody>This has dropdown value {clearButtonTarget}</BlockBody>
         <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
-        <MoltenPushButtonGroup>
+        <MoltenPushButtonGroup
+          options={clearButtonOptions}
+          bind:target={clearButtonTarget}
+          style="normal"
+          disabled={buttonsDisabled}
+        >
           <div
             use:tooltip={{
               text: "Clear the current selection",
               placement: "top",
+              buttons: [
+                {
+                  label: "Cancel",
+                  handler: undefined,
+                },
+                {
+                  label: "Confirm",
+                  handler: () => {
+                    handleAction();
+                    closeDropdown();
+                  },
+                },
+              ],
+              triggerEvents: ["show-buttons", "hover"],
             }}
+            slot="button"
+            let:closeDropdown
+            let:handleAction
+            let:selectedLabel
           >
             <MoltenPushButton
               disabled={buttonsDisabled}
               click={() => {}}
-              text={"Clear"}
+              text={selectedLabel || "Clear"}
               style={"normal"}
               options={clearButtonOptions}
               bind:target={clearButtonTarget}
               bind:width={clearButtonWidth}
               decorations={["(", ")"]}
               grouped={true}
-            />
-          </div>
-          <div
-            use:tooltip={{
-              text: "More options",
-              placement: "top",
-            }}
-          >
-            <MoltenPushButtonDropdown
-              disabled={buttonsDisabled}
-              style={"normal"}
-              options={clearButtonOptions}
-              bind:target={clearButtonTarget}
-              menuWidth={clearButtonWidth}
             />
           </div>
         </MoltenPushButtonGroup>
@@ -634,6 +651,33 @@
             { title: "0", value: 0 },
             { title: "1", value: 1 },
             { title: "2", value: 2 },
+          ]}
+          disabled={buttonsDisabled}
+        />
+        <BlockBody>Button with individual options disabled</BlockBody>
+        <MeltRadio
+          bind:target={meltRadioValue5}
+          style="button"
+          orientation="horizontal"
+          size="full"
+          options={[
+            { title: "0", value: 0 },
+            { title: "1", value: 1, disabled: true },
+            { title: "2", value: 2 },
+            { title: "3", value: 3, disabled: true },
+          ]}
+          disabled={buttonsDisabled}
+        />
+        <BlockBody>Radio with individual options disabled</BlockBody>
+        <MeltRadio
+          bind:target={meltRadioValue6}
+          style="radio"
+          orientation="vertical"
+          size="full"
+          options={[
+            { title: "Enabled", value: 0 },
+            { title: "Disabled", value: 1, disabled: true },
+            { title: "Also enabled", value: 2 },
           ]}
           disabled={buttonsDisabled}
         /></Block

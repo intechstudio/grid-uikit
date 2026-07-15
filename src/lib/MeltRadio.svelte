@@ -5,6 +5,7 @@
   interface option_t {
     title: string;
     value: string | boolean | number; // melt uses string values internally
+    disabled?: boolean; // per-option disable; defaults to enabled
   }
 
   export let options: option_t[];
@@ -70,34 +71,41 @@
     <!-- Convert value to string in case it was originally boolean -->
     {@const value = option.value.toString()}
     {@const title = option.title}
+    <!-- Option is disabled if the group is disabled or the option opts in -->
+    {@const optionDisabled = disabled || option.disabled === true}
     <label
       class:horizontal-padding={style !== "button"}
-      class:disabled
+      class:disabled={optionDisabled}
       class="row"
     >
       {#if style === "radio"}
-        <button {...$item(value)} use:item id={title} class:disabled>
-          <div class="style-radio" class:disabled>
+        <button
+          {...$item({ value, disabled: optionDisabled })}
+          use:item
+          id={title}
+          class:disabled={optionDisabled}
+        >
+          <div class="style-radio" class:disabled={optionDisabled}>
             <div
               style:display={$isChecked(value) ? "block" : "none"}
               class="style-radio-inside"
-              class:disabled
+              class:disabled={optionDisabled}
             />
           </div>
-          <span class:disabled>{title}</span>
+          <span class:disabled={optionDisabled}>{title}</span>
         </button>
       {/if}
       {#if style === "button"}
         <button
-          {...$item(value)}
+          {...$item({ value, disabled: optionDisabled })}
           use:item
           id={title}
           class="style-button"
           class:selected={$isChecked(value)}
-          class:disabled
+          class:disabled={optionDisabled}
         >
           {#if typeof title !== "undefined"}
-            <span class:disabled>{title}</span>
+            <span class:disabled={optionDisabled}>{title}</span>
           {:else}
             <span style:visibility="hidden">N/A</span>
           {/if}
