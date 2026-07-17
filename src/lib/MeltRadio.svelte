@@ -122,7 +122,7 @@
     overflow: visible;
     display: grid;
     grid-auto-flow: column;
-    padding: 0.5em 0;
+    padding: 0em 0;
   }
   div.container-full {
     width: 100%;
@@ -157,7 +157,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 9999px;
+    border-radius: var(--radius);
     border-width: 1px;
     border-color: var(--foreground);
     width: 1.5em;
@@ -166,7 +166,7 @@
   }
   div.style-radio-inside {
     position: absolute;
-    border-radius: 9999px;
+    border-radius: var(--radius);
     background-color: var(--foreground);
     width: 0.75em;
     height: 0.75em;
@@ -195,7 +195,7 @@
     position: relative;
     padding: 0.25em 0.5em;
     width: 100%;
-    border-radius: 0.25em;
+    border-radius: var(--radius);
     border: 1px solid var(--background-soft);
     justify-content: center;
   }
