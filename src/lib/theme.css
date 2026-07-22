@@ -25,7 +25,7 @@
         --focus-outline: 1px solid var(--focus);
         --focus-offset: 1px;
 
-        --error: #ff2323;
+        --error: #9a3838;
 
         --popover-background: color-mix(in srgb,
                         var(--background),
