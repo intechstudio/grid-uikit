@@ -11,7 +11,6 @@
 
   const {
     elements: { root, input },
-    helpers: { isChecked, isIndeterminate },
     states: { checked },
   } = createCheckbox({
     defaultChecked: target,
@@ -38,10 +37,11 @@
   }
 </script>
 
-<label class:checkbox-box={style === "box"} class:disabled>
+<label class="row" class:checkbox-box={style === "box"} class:disabled>
   <button
     {...$root}
     use:root
+    class="checkbox-button"
     class:disabled
     on:keydown={(e) => {
       if (e.key === "Enter") {
@@ -58,29 +58,24 @@
       />
     </div>
 
+    {#if title}
+      <span class:disabled>{title}</span>
+    {/if}
+
     <input {...$input} use:input />
   </button>
-
-  {#if title}
-    <div
-      class:checkbox-title-selected={target}
-      class="checkbox-title"
-      class:disabled
-    >
-      {title}
-    </div>
-  {/if}
 </label>
 
 <style>
-  label {
+  label.row {
     display: flex;
     align-items: center;
     cursor: pointer;
-    padding: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
 
-  label.disabled {
+  label.row.disabled {
     cursor: default;
   }
 
@@ -90,10 +85,11 @@
   }
 
   .checkbox-outer {
+    position: relative;
     width: 1.5em;
     height: 1.5em;
-    border-radius: 0.25em;
-    margin: auto;
+    border-radius: var(--radius);
+    margin-right: 0.75em;
     border: 1px solid var(--foreground);
     display: flex;
     align-items: center;
@@ -105,32 +101,38 @@
   }
 
   .checkbox-inner {
+    position: absolute;
     width: 0.75em;
     height: 0.75em;
     background-color: var(--foreground);
-    border-radius: 0.125em;
+    border-radius: var(--radius);
   }
 
   .checkbox-inner.disabled {
     background-color: var(--foreground-disabled);
   }
 
-  .checkbox-title {
-    padding-left: 0.5em;
-    color: var(--foreground-muted);
-  }
-
-  .checkbox-title.disabled {
-    color: var(--foreground-disabled);
-  }
-
   button {
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    color: inherit;
     margin: 0; /* 2 */
     padding: 0; /* 3 */
     background-color: transparent; /* 2 */
     cursor: pointer;
-    font-size: inherit;
+    display: inline-flex;
+    align-items: center;
   }
+
+  button.checkbox-button {
+    color: var(--foreground-muted);
+  }
+
   button:focus {
     outline: var(--focus-outline);
     outline-offset: var(--focus-offset);
@@ -138,5 +140,9 @@
 
   button.disabled {
     cursor: default;
+  }
+
+  span.disabled {
+    color: var(--foreground-disabled);
   }
 </style>

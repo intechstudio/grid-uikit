@@ -13,12 +13,7 @@
   }
 </script>
 
-<div class="toggle-container">
-  {#if title}
-    <span class="toggle-label">
-      {title}
-    </span>
-  {/if}
+<label class="toggle-container" class:disabled>
   <input
     data-testid={testid}
     type="checkbox"
@@ -34,16 +29,31 @@
       }
     }}
   />
-</div>
+  {#if title}
+    <span class="toggle-label" class:disabled>
+      {title}
+    </span>
+  {/if}
+</label>
 
 <style>
   .toggle-container {
     display: flex;
     align-items: center;
+    cursor: pointer;
+    color: var(--foreground-muted);
+  }
+
+  .toggle-container.disabled {
+    cursor: default;
   }
 
   .toggle-label {
-    margin-right: 0.5em;
+    margin-left: 0.75em;
+  }
+
+  .toggle-label.disabled {
+    color: var(--foreground-disabled);
   }
 
   input[type="checkbox"] {
@@ -61,9 +71,9 @@
   }
 
   .toggle {
-    --toggle-height: 1.75em;
+    --toggle-height: 1.5em;
     --toggle-padding: 0.25em;
-    --toggle-border: 0.0625em; /* 1px at 16px base = 0.0625em */
+    --toggle-border: 0px;
     --toggle-knob-size: calc(
       var(--toggle-height) - 2 * var(--toggle-padding) - 2 *
         var(--toggle-border)
@@ -76,13 +86,13 @@
 
     height: var(--toggle-height);
     width: var(--toggle-width);
-    border-radius: calc(var(--toggle-height) / 2);
+    border-radius: var(--radius);
     display: inline-block;
     position: relative;
     margin: 0;
-    border: var(--toggle-border) solid var(--background-soft);
+    border: none;
     background-color: var(--background-muted);
-    transition: border-color 0.2s ease;
+    transition: background-color 0.2s ease;
     pointer-events: auto;
     box-sizing: border-box;
   }
@@ -94,7 +104,7 @@
     left: var(--toggle-padding);
     width: var(--toggle-knob-size);
     height: var(--toggle-knob-size);
-    border-radius: 50%;
+    border-radius: var(--radius);
     background-color: var(--foreground-muted);
     transition:
       transform 0.15s ease-out,
@@ -102,11 +112,12 @@
   }
 
   .toggle:checked {
-    border-color: var(--accent);
+    background-color: var(--accent-soft);
   }
 
   .toggle:checked::after {
     transform: translateX(var(--toggle-translate));
+    background-color: var(--foreground-muted);
   }
 
   .toggle:disabled {
@@ -118,6 +129,6 @@
   }
 
   .toggle:checked:disabled {
-    border-color: var(--accent-soft);
+    background-color: var(--background-muted);
   }
 </style>
