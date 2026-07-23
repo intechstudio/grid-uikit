@@ -199,5 +199,6 @@
   button.style-accept:disabled {
     color: var(--foreground-disabled);
     background-color: var(--accent-soft);
+    opacity: 0.55;
   }
 </style>

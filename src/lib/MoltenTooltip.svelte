@@ -319,7 +319,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    border-radius: 0.375rem;
+    border-radius: var(--radius);
     z-index: 99;
     padding: 0.25rem;
     outline: 1px dashed transparent;
