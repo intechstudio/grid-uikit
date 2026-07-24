@@ -73,7 +73,7 @@
   .toggle {
     --toggle-height: 1.5em;
     --toggle-padding: 0.25em;
-    --toggle-border: 0px;
+    --toggle-border: 1px;
     --toggle-knob-size: calc(
       var(--toggle-height) - 2 * var(--toggle-padding) - 2 *
         var(--toggle-border)
@@ -90,7 +90,7 @@
     display: inline-block;
     position: relative;
     margin: 0;
-    border: none;
+    border: var(--toggle-border) solid var(--border);
     background-color: var(--background-muted);
     transition: background-color 0.2s ease;
     pointer-events: auto;

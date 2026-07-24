@@ -156,11 +156,11 @@
   button.style-normal {
     color: var(--foreground);
     background-color: var(--background-muted);
-    border: 1px solid var(--foreground);
+    border: 1px solid var(--foreground-soft);
   }
 
   button.style-normal:hover {
-    background-color: var(--background-soft);
+    background-color: var(--background);
   }
 
   button.style-normal:disabled {
