@@ -53,7 +53,7 @@
     display: flex;
     align-items: center;
     width: 30rem;
-    border: none;
+    border: solid 1px var(--border);
     background: none;
     cursor: pointer;
   }

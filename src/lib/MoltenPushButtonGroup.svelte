@@ -196,6 +196,7 @@
     color: var(--foreground-disabled);
     background-color: var(--accent-soft);
     border-left: none;
+    opacity: 0.55;
   }
 
   .menu {

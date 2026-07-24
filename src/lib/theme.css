@@ -1,57 +1,106 @@
 :root {
-  --foreground: #fff;
-  --background: #1e2628;
-  --shadow: #000;
+        --foreground: #e3e3e3;
+        --background: #1f1f1f;
+        --shadow: #000;
 
-  --foreground-muted: color-mix(
-    in srgb,
-    var(--foreground) 70%,
-    var(--background) 30%
-  );
-  --foreground-soft: color-mix(
-    in srgb,
-    var(--foreground) 50%,
-    var(--background) 50%
-  );
-  --foreground-disabled: color-mix(
-    in srgb,
-    var(--foreground) 30%,
-    var(--background) 70%
-  );
+        --foreground-muted: color-mix(in srgb,
+                        var(--foreground) 70%,
+                        var(--background) 30%);
+        --foreground-soft: color-mix(in srgb,
+                        var(--foreground) 50%,
+                        var(--background) 50%);
+        --foreground-disabled: color-mix(in srgb,
+                        var(--foreground) 30%,
+                        var(--background) 70%);
 
-  --background-muted: color-mix(in srgb, var(--background), var(--shadow) 20%);
-  --background-soft: color-mix(in srgb, var(--background), var(--shadow) 50%);
+        --background-muted: color-mix(in srgb, var(--background), var(--shadow) 20%);
+        --background-soft: color-mix(in srgb, var(--background), var(--shadow) 50%);
 
-  --accent: #0ba484;
-  --accent-muted: color-mix(in srgb, var(--accent), var(--shadow) 30%);
-  --accent-soft: color-mix(in srgb, var(--accent), var(--shadow) 50%);
+        --border: #6a6a6a;
+        --accent: #0ba484;
+        --accent-muted: color-mix(in srgb, var(--accent), var(--shadow) 30%);
+        --accent-soft: color-mix(in srgb, var(--accent), var(--shadow) 50%);
 
-  --focus: #0000ff;
-  --focus-outline: 1px solid var(--focus);
-  --focus-offset: 1px;
+        --focus: #ffffff6a;
+        --focus-outline: 1px solid var(--focus);
+        --focus-offset: 1px;
 
-  --error: #dc2626;
+        --error: #ff0000;
 
-  --popover-background: color-mix(
-    in srgb,
-    var(--background),
-    rgba(0, 0, 0, 1) 70%
-  );
+        --popover-background: color-mix(in srgb,
+                        var(--background),
+                        rgba(0, 0, 0, 1) 70%);
 
-  --popover-selection: var(--background-muted);
-  --popover-reference: var(--background-soft);
+        --popover-selection: var(--background-muted);
+        --popover-reference: var(--background-soft);
+        --background-grain: none;
+        --background-grain-size: auto;
+
+        --radius: 0em;
+        --border-thickness: 1px;
 }
 
-html[color-scheme="light"] {
-  --foreground: #000;
-  --background: #e0e0e0;
-  --popover-background: color-mix(
-    in srgb,
-    var(--background),
-    rgba(255, 255, 255, 1) 70%
-  );
-  --shadow: #787878;
+html[color-scheme="moss"] {
+        --foreground: #24352c;
+        --background: #e1ebdf;
+        --shadow: #8ca08d;
 
-  --popover-selection: var(--background-soft);
-  --popover-reference: var(--background-muted);
+        --border: #6e8473;
+        --accent: #16735f;
+        --focus: #16735f80;
+        --error: #af4355;
+
+        --foreground-disabled: #5c715f;
+        --background-soft: #b7c9b5;
+
+        --popover-background: color-mix(in srgb,
+                        var(--background),
+                        rgba(255, 255, 255, 1) 70%);
+
+        --popover-selection: var(--background-soft);
+        --popover-reference: var(--background-muted);
+}
+
+html[color-scheme="sunset"] {
+        --foreground: #30194d;
+        --background: #fffaf2;
+        --shadow: #76519a;
+
+        --border: #69458b;
+        --accent: #e76f2d;
+        --focus: #69458b80;
+        --error: #bd3b4c;
+
+        --foreground-disabled: #c7bcd2;
+        --background-soft: #d2cac0;
+        --background-grain: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2369458b' fill-opacity='.32'%3E%3Ccircle cx='4' cy='8' r='.8'/%3E%3Ccircle cx='20' cy='15' r='1.1'/%3E%3Ccircle cx='43' cy='5' r='.6'/%3E%3Ccircle cx='63' cy='20' r='.9'/%3E%3Ccircle cx='91' cy='9' r='.7'/%3E%3Ccircle cx='112' cy='27' r='1.2'/%3E%3Ccircle cx='12' cy='42' r='1'/%3E%3Ccircle cx='35' cy='35' r='.6'/%3E%3Ccircle cx='77' cy='46' r='1.1'/%3E%3Ccircle cx='99' cy='38' r='.8'/%3E%3Ccircle cx='5' cy='72' r='.7'/%3E%3Ccircle cx='28' cy='60' r='1.2'/%3E%3Ccircle cx='54' cy='78' r='.9'/%3E%3Ccircle cx='87' cy='68' r='.6'/%3E%3Ccircle cx='115' cy='82' r='1'/%3E%3Ccircle cx='17' cy='104' r='1.1'/%3E%3Ccircle cx='42' cy='96' r='.7'/%3E%3Ccircle cx='71' cy='111' r='1.2'/%3E%3Ccircle cx='102' cy='101' r='.8'/%3E%3C/g%3E%3Cg fill='%23e76f2d' fill-opacity='.36'%3E%3Ccircle cx='11' cy='24' r='.7'/%3E%3Ccircle cx='31' cy='4' r='1'/%3E%3Ccircle cx='52' cy='29' r='.8'/%3E%3Ccircle cx='82' cy='25' r='1.2'/%3E%3Ccircle cx='105' cy='13' r='.6'/%3E%3Ccircle cx='23' cy='48' r='.9'/%3E%3Ccircle cx='48' cy='57' r='1.1'/%3E%3Ccircle cx='68' cy='38' r='.7'/%3E%3Ccircle cx='94' cy='55' r='1'/%3E%3Ccircle cx='118' cy='62' r='.8'/%3E%3Ccircle cx='14' cy='84' r='1.2'/%3E%3Ccircle cx='38' cy='75' r='.6'/%3E%3Ccircle cx='65' cy='91' r='1'/%3E%3Ccircle cx='83' cy='79' r='.8'/%3E%3Ccircle cx='108' cy='96' r='1.1'/%3E%3Ccircle cx='2' cy='113' r='.7'/%3E%3Ccircle cx='30' cy='115' r='1'/%3E%3Ccircle cx='57' cy='104' r='.8'/%3E%3Ccircle cx='91' cy='116' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
+        --background-grain-size: 120px 120px;
+
+        --popover-background: color-mix(in srgb,
+                        var(--background),
+                        rgba(255, 255, 255, 1) 78%);
+
+        --popover-selection: var(--background-soft);
+        --popover-reference: var(--background-muted);
+}
+
+html[color-scheme="icy"] {
+        --foreground: #000000;
+        --background: #ffffff;
+        --shadow: #3d5899;
+
+        --border: #5d8d9b;
+        --accent: #087ea4;
+        --focus: #087ea480;
+        --error: #b74c61;
+
+        --foreground-disabled: #818282;
+        --background-soft: #d1f6fe;
+
+        --popover-background: color-mix(in srgb,
+                        var(--background),
+                        rgba(255, 255, 255, 1) 82%);
+
+        --popover-selection: var(--background-soft);
+        --popover-reference: var(--background-muted);
 }
