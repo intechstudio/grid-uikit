@@ -40,7 +40,7 @@
         --border-thickness: 1px;
 }
 
-html[color-scheme="light"] {
+html[color-scheme="moss"] {
         --foreground: #24352c;
         --background: #e1ebdf;
         --shadow: #8ca08d;
@@ -61,7 +61,7 @@ html[color-scheme="light"] {
         --popover-reference: var(--background-muted);
 }
 
-html[color-scheme="retro"] {
+html[color-scheme="sunset"] {
         --foreground: #30194d;
         --background: #fffaf2;
         --shadow: #76519a;
@@ -79,6 +79,27 @@ html[color-scheme="retro"] {
         --popover-background: color-mix(in srgb,
                         var(--background),
                         rgba(255, 255, 255, 1) 78%);
+
+        --popover-selection: var(--background-soft);
+        --popover-reference: var(--background-muted);
+}
+
+html[color-scheme="icy"] {
+        --foreground: #000000;
+        --background: #ffffff;
+        --shadow: #3d5899;
+
+        --border: #5d8d9b;
+        --accent: #087ea4;
+        --focus: #087ea480;
+        --error: #b74c61;
+
+        --foreground-disabled: #818282;
+        --background-soft: #d1f6fe;
+
+        --popover-background: color-mix(in srgb,
+                        var(--background),
+                        rgba(255, 255, 255, 1) 82%);
 
         --popover-selection: var(--background-soft);
         --popover-reference: var(--background-muted);
