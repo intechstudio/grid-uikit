@@ -157,7 +157,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius);
+    border-radius: 9999px;
     border-width: 1px;
     border-color: var(--foreground);
     width: 1.5em;
@@ -166,7 +166,7 @@
   }
   div.style-radio-inside {
     position: absolute;
-    border-radius: var(--radius);
+    border-radius: 9999px;
     background-color: var(--foreground);
     width: 0.75em;
     height: 0.75em;
