@@ -57,6 +57,4 @@ body {
   /* 2 */
   color: var(--foreground);
   background-color: var(--background);
-  background-image: var(--background-grain);
-  background-size: var(--background-grain-size);
 }

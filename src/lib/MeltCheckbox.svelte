@@ -37,7 +37,7 @@
   }
 </script>
 
-<label class="row" class:checkbox-box={style === "box"} class:disabled>
+<label class:checkbox-box={style === "box"} class:disabled>
   <button
     {...$root}
     use:root
@@ -67,7 +67,7 @@
 </label>
 
 <style>
-  label.row {
+  label {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -75,7 +75,7 @@
     padding-right: 0.5em;
   }
 
-  label.row.disabled {
+  label.disabled {
     cursor: default;
   }
 

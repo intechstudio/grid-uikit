@@ -3,9 +3,9 @@
 
   export let text: string = "";
   export let style: "normal" | "outlined" | "accept" = "normal";
+  export let snap: "auto" | "full" | "wide" = "auto";
   export let disabled: boolean = false;
   export let popup: { duration?: number } | undefined = undefined;
-  export let snap = "auto";
   export let click: (...args: any) => void;
   export let options: any = undefined;
   export let target: any = undefined;
@@ -199,6 +199,5 @@
   button.style-accept:disabled {
     color: var(--foreground-disabled);
     background-color: var(--accent-soft);
-    opacity: 0.55;
   }
 </style>
