@@ -68,12 +68,7 @@
         on:click={() => handleItemClicked(item)}
       >
         {#if item.iconPath}
-          <SvgIcon
-            width={12}
-            height={12}
-            fill="#FFF"
-            iconPath={item.iconPath}
-          />
+          <SvgIcon fill="#FFF" iconPath={item.iconPath} />
         {/if}
         <span>{item.text[0]}</span>
         <!-- Spacer for alignment -->
