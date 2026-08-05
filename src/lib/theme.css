@@ -1,6 +1,6 @@
 :root {
-  --foreground: #fff;
-  --background: #1e2628;
+  --foreground: #e3e3e3;
+  --background: #1f1f1f;
   --shadow: #000;
 
   --foreground-muted: color-mix(
@@ -22,15 +22,16 @@
   --background-muted: color-mix(in srgb, var(--background), var(--shadow) 20%);
   --background-soft: color-mix(in srgb, var(--background), var(--shadow) 50%);
 
+  --border: #6a6a6a;
   --accent: #0ba484;
   --accent-muted: color-mix(in srgb, var(--accent), var(--shadow) 30%);
   --accent-soft: color-mix(in srgb, var(--accent), var(--shadow) 50%);
 
-  --focus: #0000ff;
+  --focus: #ffffff6a;
   --focus-outline: 1px solid var(--focus);
   --focus-offset: 1px;
 
-  --error: #dc2626;
+  --error: #ff0000;
 
   --popover-background: color-mix(
     in srgb,
@@ -40,17 +41,75 @@
 
   --popover-selection: var(--background-muted);
   --popover-reference: var(--background-soft);
+
+  --radius: 0em;
+  --border-thickness: 1px;
 }
 
-html[color-scheme="light"] {
-  --foreground: #000;
-  --background: #e0e0e0;
+html[color-scheme="moss"] {
+  --foreground: #24352c;
+  --background: #e1ebdf;
+  --shadow: #8ca08d;
+
+  --border: #6e8473;
+  --accent: #16735f;
+  --focus: #16735f80;
+  --error: #af4355;
+
+  --foreground-disabled: #5c715f;
+  --background-soft: #b7c9b5;
+
   --popover-background: color-mix(
     in srgb,
     var(--background),
     rgba(255, 255, 255, 1) 70%
   );
-  --shadow: #787878;
+
+  --popover-selection: var(--background-soft);
+  --popover-reference: var(--background-muted);
+}
+
+html[color-scheme="sunset"] {
+  --foreground: #30194d;
+  --background: #fffaf2;
+  --shadow: #76519a;
+
+  --border: #69458b;
+  --accent: #e76f2d;
+  --focus: #69458b80;
+  --error: #bd3b4c;
+
+  --foreground-disabled: #c7bcd2;
+  --background-soft: #d2cac0;
+
+  --popover-background: color-mix(
+    in srgb,
+    var(--background),
+    rgba(255, 255, 255, 1) 78%
+  );
+
+  --popover-selection: var(--background-soft);
+  --popover-reference: var(--background-muted);
+}
+
+html[color-scheme="icy"] {
+  --foreground: #000000;
+  --background: #ffffff;
+  --shadow: #3d5899;
+
+  --border: #5d8d9b;
+  --accent: #087ea4;
+  --focus: #087ea480;
+  --error: #b74c61;
+
+  --foreground-disabled: #818282;
+  --background-soft: #d1f6fe;
+
+  --popover-background: color-mix(
+    in srgb,
+    var(--background),
+    rgba(255, 255, 255, 1) 82%
+  );
 
   --popover-selection: var(--background-soft);
   --popover-reference: var(--background-muted);

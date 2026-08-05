@@ -14,7 +14,7 @@
     padding: 0.25rem;
     margin-top: auto;
     margin-bottom: auto;
-    border-radius: 0.25rem;
+    border-radius: var(--radius);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -312,14 +312,14 @@
   </Popover>
 {/key}
 
-<style global>
+<style>
   div.tooltip-container {
     background-color: var(--popover-background);
     cursor: default;
     display: flex;
     flex-direction: column;
     position: relative;
-    border-radius: 0.375rem;
+    border-radius: 0em;
     z-index: 99;
     padding: 0.25rem;
     outline: 1px dashed transparent;
