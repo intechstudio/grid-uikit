@@ -166,10 +166,13 @@
   }
   div.style-radio-inside {
     position: absolute;
+    top: 50%;
+    left: 50%;
     border-radius: 9999px;
     background-color: var(--foreground);
     width: 0.75em;
     height: 0.75em;
+    transform: translate(-50%, -50%);
   }
   button {
     font-family: inherit; /* 1 */

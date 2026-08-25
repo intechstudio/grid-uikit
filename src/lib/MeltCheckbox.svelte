@@ -102,8 +102,11 @@
 
   .checkbox-inner {
     position: absolute;
+    top: 50%;
+    left: 50%;
     width: 0.75em;
     height: 0.75em;
+    transform: translate(-50%, -50%);
     background-color: var(--foreground);
     border-radius: var(--radius);
   }
