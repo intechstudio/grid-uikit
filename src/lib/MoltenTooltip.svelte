@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { fade, slide } from "svelte/transition";
+  import { fade } from "svelte/transition";
   import Popover from "svelte-easy-popover";
   import { onDestroy, onMount } from "svelte";
   import MoltenPushButton from "./MoltenPushButton.svelte";
@@ -21,8 +21,41 @@
   let showbuttons = $state(false);
   let showTooltip = $state(false);
   let tooltipKey = $state(0);
+  let popperInstance: any = $state();
+
+  // Popper computes its position/flip-away-from-edge decision once, when
+  // the popover mounts, and never re-checks it if the popover's own content
+  // later changes size (e.g. the buttons block appearing) — it only reacts
+  // to window scroll/resize. The buttons row now uses a fade (opacity only,
+  // no layout size change), so this isn't currently reachable, but it's
+  // kept as a safety net against any future content or transition that
+  // does resize the popover after it's already positioned.
+  const SHOWBUTTONS_TRANSITION_DURATION = 100;
+  $effect(() => {
+    if (showbuttons && popperInstance) {
+      const t = setTimeout(
+        () => popperInstance?.update(),
+        instant ? 0 : SHOWBUTTONS_TRANSITION_DURATION,
+      );
+      return () => clearTimeout(t);
+    }
+  });
 
   let tooltipElement: HTMLDivElement | undefined = $state();
+
+  // Same safety net as above, but continuous: watches the popover's actual
+  // rendered size and recomputes on every change, rather than once after a
+  // fixed delay. Currently a no-op in practice since nothing resizes the
+  // popover post-mount, but keeps position correct if that changes later.
+  $effect(() => {
+    if (!tooltipElement || !popperInstance) return;
+    const ro = new ResizeObserver(() => {
+      popperInstance?.update();
+    });
+    ro.observe(tooltipElement);
+    return () => ro.disconnect();
+  });
+
   let previousFocusedElement: HTMLElement | null = null;
   let closeTimeout: any;
   let openTimeout: any;
@@ -243,6 +276,7 @@
     triggerEvents={["manual"]}
     {referenceElement}
     bind:placement
+    bind:popperInstance
     spaceAway={10}
   >
     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -280,7 +314,7 @@
 
         {#if showbuttons}
           <div
-            transition:slide|global={{ duration: instant ? 0 : 100 }}
+            transition:fade|global={{ duration: instant ? 0 : 100 }}
             class="tooltip-container-buttons"
           >
             {#each buttons as button}
