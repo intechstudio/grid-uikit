@@ -63,7 +63,6 @@
     class:grouped
   >
     <span>{text}</span>
-    <slot name="content" />
     {#if selectedLabel}
       {#if decorations?.length === 2}
         <span>{decorations[0] + selectedLabel + decorations[1]}</span>
