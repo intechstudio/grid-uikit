@@ -5,14 +5,12 @@
   export let style: "normal" | "outlined" | "accept" = "normal";
   export let snap: "auto" | "full" | "wide" = "auto";
   export let disabled: boolean = false;
-  export let popup: { duration?: number } | undefined = undefined;
   export let click: (...args: any) => void;
   export let options: any = undefined;
   export let target: any = undefined;
   export let decorations: string[] = [];
   export let grouped: boolean = false;
 
-  let showPopup: boolean = false;
   let element: HTMLButtonElement;
   let selectedLabel = "";
 
@@ -53,13 +51,6 @@
   <button
     bind:this={element}
     on:click={(e) => {
-      if (!showPopup && popup) {
-        showPopup = true;
-        setTimeout(() => {
-          showPopup = false;
-        }, popup?.duration ?? 3000);
-      }
-
       if (typeof click !== "undefined") {
         click();
       }
@@ -81,10 +72,6 @@
       {/if}
     {/if}
   </button>
-
-  {#if showPopup}
-    <slot name="popup" />
-  {/if}
 </div>
 
 <style>
