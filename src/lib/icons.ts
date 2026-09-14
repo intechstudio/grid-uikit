@@ -53,6 +53,7 @@ import tick from "./assets/icons/tick.svg?raw";
 import user_account_02 from "./assets/icons/user_account_02.svg?raw";
 import rotate from "./assets/icons/rotate.svg?raw";
 import file from "./assets/icons/file.svg?raw";
+import refresh from "./assets/icons/refresh.svg?raw";
 
 type IconMap = {
   [key: string]: string;
@@ -114,6 +115,7 @@ const iconMap: IconMap = {
   user_account_02,
   rotate,
   file,
+  refresh,
 };
 
 export default iconMap;
