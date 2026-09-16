@@ -95,7 +95,8 @@
         duration: tooltipDuration,
         buttons: tooltipButtons,
         triggerEvents:
-          tooltipTriggerEvents ?? (tooltipButtons ? ["show-buttons", "hover"] : undefined),
+          tooltipTriggerEvents ??
+          (tooltipButtons ? ["show-buttons", "hover"] : undefined),
       }
     : undefined}
   class="icon-button"
