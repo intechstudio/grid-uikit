@@ -7,6 +7,7 @@
   import BlockTitle from "./lib/BlockTitle.svelte";
   import { contextTarget } from "./lib";
   import SvgIcon from "./lib/SvgIcon.svelte";
+  import IconButton from "./lib/IconButton.svelte";
   import MeltSlider from "./lib/MeltSlider.svelte";
   import MeltSelect from "./lib/MeltSelect.svelte";
   import MeltRadio from "./lib/MeltRadio.svelte";
@@ -530,6 +531,30 @@
         <SvgIcon iconPath="edit" fill="#F00" />
         <SvgIcon iconPath="edit" fill="#00F" />
       </div>
+    </div>
+    <div class="mock-panel">
+      <Block>
+        <BlockTitle>IconButton</BlockTitle>
+        <BlockBody>Default and compact:</BlockBody>
+        <BlockRow>
+          <IconButton iconPath="edit" tooltipText="Edit" />
+          <IconButton
+            iconPath="deleteIcon"
+            compact
+            tooltipText="Delete (compact)"
+          />
+        </BlockRow>
+        <BlockBody>Disabled:</BlockBody>
+        <IconButton iconPath="deleteIcon" disabled tooltipText="Delete" />
+        <BlockBody>As a link:</BlockBody>
+        <IconButton
+          iconPath="folder_open"
+          href="https://intech.studio/"
+          target="_blank"
+          rel="noreferrer"
+          tooltipText="Open in new tab"
+        />
+      </Block>
     </div>
     <div class="mock-panel">
       <span>MeltSlider:</span>

@@ -17,6 +17,8 @@ export {
   type ContextMenuOptions,
 } from "./context-target";
 export { default as SvgIcon } from "./SvgIcon.svelte";
+export { default as IconButton } from "./IconButton.svelte";
+export { tooltip } from "./tooltip";
 export {
   default as MeltCombo,
   type MeltComboSuggestion,
