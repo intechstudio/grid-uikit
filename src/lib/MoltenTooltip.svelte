@@ -6,6 +6,7 @@
 
   let {
     text = "",
+    extendedText = undefined,
     placement = "top",
     duration = 250,
     delay = 750,
@@ -301,7 +302,7 @@
             class="tooltip-container-text"
             class:tooltip-whitespace-nowrap={nowrap}
           >
-            {text}
+            {showbuttons && extendedText !== undefined ? extendedText : text}
           </div>
         {:else}
           <svelte:component

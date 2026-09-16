@@ -20,6 +20,9 @@
   export let rel: string | undefined = undefined;
   export let tooltipDelay: number | undefined = undefined;
   export let tooltipDuration: number | undefined = undefined;
+  export let tooltipExtendedText: string | undefined = undefined;
+  export let tooltipButtons: any[] | undefined = undefined;
+  export let tooltipTriggerEvents: string[] | undefined = undefined;
 
   // `pressed` shows the squish instantly (no transition) for as long as the
   // button is physically held down. `clicking` takes over on release to ease
@@ -85,7 +88,15 @@
   on:animationend={() => (clicking = false)}
   disabled={href ? undefined : disabled}
   use:tooltip={tooltipText
-    ? { text: tooltipText, delay: tooltipDelay, duration: tooltipDuration }
+    ? {
+        text: tooltipText,
+        extendedText: tooltipExtendedText,
+        delay: tooltipDelay,
+        duration: tooltipDuration,
+        buttons: tooltipButtons,
+        triggerEvents:
+          tooltipTriggerEvents ?? (tooltipButtons ? ["show-buttons", "hover"] : undefined),
+      }
     : undefined}
   class="icon-button"
   class:compact
