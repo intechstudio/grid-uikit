@@ -87,6 +87,9 @@ console.log(answer);</code></pre>
   let sliderChangeValue: number | undefined = $state();
   let sliderCommitValue: number | undefined = $state();
   let sliderBlurCount = $state(0);
+  let moltenInputText = $state("Editable text");
+  let moltenInputPassword = $state("secret");
+  let moltenInputLimited = $state("max 10");
   let meltSelectValue1 = 0;
   let meltSelectValue2 = 0;
   let meltRadioValue1 = 0;
@@ -95,8 +98,6 @@ console.log(answer);</code></pre>
   let meltRadioValue4 = 0;
   let meltRadioValue5 = 0;
   let meltRadioValue6 = 0;
-
-  let moltenInputText = "hello";
 
   let logMessageCount = $state(0);
   let logMessageType = LogMessageType.NORMAL;
@@ -667,6 +668,36 @@ console.log(answer);</code></pre>
         thumbBackground={`hsl(${sliderGradientValue}, 100%, 50%)`}
         disabled={buttonsDisabled}
       />
+    </div>
+
+    <div class="mock-panel">
+      <Block>
+        <BlockTitle>MoltenInput</BlockTitle>
+        <BlockBody>Text: {moltenInputText}</BlockBody>
+        <MoltenInput
+          bind:target={moltenInputText}
+          placeholder="Type something…"
+          disabled={buttonsDisabled}
+        />
+        <BlockBody>Password:</BlockBody>
+        <MoltenInput
+          bind:target={moltenInputPassword}
+          password
+          placeholder="Password"
+          disabled={buttonsDisabled}
+        />
+        <BlockBody>
+          Char limit (10): {moltenInputLimited.length}/10
+        </BlockBody>
+        <MoltenInput
+          bind:target={moltenInputLimited}
+          availableCharacters={10}
+          placeholder="Max 10 chars"
+          disabled={buttonsDisabled}
+        />
+        <BlockBody>Disabled:</BlockBody>
+        <MoltenInput target={"Can't edit this"} disabled />
+      </Block>
     </div>
 
     <div class="mock-panel">
