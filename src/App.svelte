@@ -287,6 +287,34 @@ console.log(answer);</code></pre>
         ></div>
         --popover-reference</span
       >
+      <span class="color-preview-label"
+        ><div
+          class="radius-preview-box"
+          style="border-radius: var(--radius);"
+        ></div>
+        --radius</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="radius-preview-box"
+          style="border-radius: var(--radius-small);"
+        ></div>
+        --radius-small</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="radius-preview-box"
+          style="border-radius: var(--radius-medium);"
+        ></div>
+        --radius-medium</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="radius-preview-box"
+          style="border-radius: var(--radius-large);"
+        ></div>
+        --radius-large</span
+      >
     </div>
 
     <div class="mock-panel">
@@ -878,6 +906,16 @@ console.log(answer);</code></pre>
     display: block;
     font-size: 0.75rem;
     margin-left: 5px;
+  }
+  .radius-preview-box {
+    display: inline-block;
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid var(--foreground-muted);
+    background-color: var(--background-muted);
+    margin: 0 5px 0 0;
+    position: relative;
+    top: 1rem;
   }
 
   main {
