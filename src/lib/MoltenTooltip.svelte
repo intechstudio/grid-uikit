@@ -355,9 +355,10 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    border-radius: 0em;
+    border-radius: var(--radius-large);
+    overflow: hidden;
     z-index: 99;
-    padding: 0.25rem;
+    padding: 0.5rem;
   }
   div.tooltip-container:focus-visible {
     outline: var(--focus-outline);

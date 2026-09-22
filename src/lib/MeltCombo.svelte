@@ -375,7 +375,7 @@
     background-color: var(--popover-background);
     color: var(--foreground-muted);
     border: 1px solid var(--foreground-muted);
-    border-radius: var(--radius);
+    border-radius: var(--radius-large);
     z-index: 40;
     max-height: 8em;
     display: flex;

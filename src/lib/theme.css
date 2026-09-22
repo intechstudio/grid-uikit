@@ -43,9 +43,12 @@
   --popover-reference: var(--background-soft);
 
   --radius: 0em;
-  /* Radius capped small, for previews that must stay a rounded square and not
-     round into a circle at large --radius (e.g. the checkbox check preview). */
+  /* Radius capped at increasing ceilings, for elements that should track
+     --radius up to a point but never round into a circle (e.g. small square
+     previews like the checkbox check). Each follows --radius, then holds. */
   --radius-small: min(var(--radius), 0.25em);
+  --radius-medium: min(var(--radius), 0.5em);
+  --radius-large: min(var(--radius), 1em);
   --border-thickness: 1px;
 }
 
