@@ -35,14 +35,14 @@
         value="12"
       />
       <label for="radiusSlider"
-        >Radius: <span id="radiusValue">0</span>px</label
+        >Radius: <span id="radiusValue">0</span>em</label
       >
       <input
         type="range"
         id="radiusSlider"
         min="0"
-        max="16"
-        step="1"
+        max="2"
+        step="0.05"
         value="0"
       />
     </div>
@@ -78,7 +78,7 @@
       radiusSlider.addEventListener("input", (e) => {
         const radius = radiusSlider.value;
         // Set on :root so portaled popup menus inherit it too.
-        document.documentElement.style.setProperty("--radius", radius + "px");
+        document.documentElement.style.setProperty("--radius", radius + "em");
         radiusValue.textContent = radius;
       });
     </script>

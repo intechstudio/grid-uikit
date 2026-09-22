@@ -90,7 +90,7 @@
     position: relative;
     width: 1.5em;
     height: 1.5em;
-    border-radius: var(--radius);
+    border-radius: var(--radius-small);
     margin-right: 0.75em;
     border: 1px solid var(--foreground);
     display: flex;
@@ -110,7 +110,7 @@
     height: 0.75em;
     transform: translate(-50%, -50%);
     background-color: var(--foreground);
-    border-radius: var(--radius);
+    border-radius: var(--radius-small);
   }
 
   .checkbox-inner.disabled {

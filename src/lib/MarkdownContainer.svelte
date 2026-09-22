@@ -120,12 +120,12 @@
   :global(.markdown-container code) {
     font-family: monospace;
     padding: 0.1em 0.3em;
-    border-radius: 3px;
+    border-radius: 0.2em;
   }
 
   :global(.markdown-container pre) {
     padding: 1em;
-    border-radius: 5px;
+    border-radius: 0.3em;
     overflow-x: auto;
   }
 
