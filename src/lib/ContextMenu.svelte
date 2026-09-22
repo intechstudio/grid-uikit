@@ -63,7 +63,7 @@
     {#each items as item}
       {@const disabled = item.isDisabled ? item.isDisabled() : false}
       <button
-        class:disabled={disabled}
+        class:disabled
         {disabled}
         on:click={() => handleItemClicked(item)}
       >
@@ -92,11 +92,12 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border: 1px solid var(--background-soft);
-    border-radius: 0.25rem;
+    border: 1px solid var(--foreground-muted);
+    border-radius: var(--radius, 0.25rem);
     position: absolute;
-    color: var(--foreground);
-    background-color: var(--background);
+    z-index: 40;
+    color: var(--foreground-muted);
+    background-color: var(--popover-background);
   }
 
   button {
@@ -123,7 +124,8 @@
     cursor: pointer;
   }
   button:hover:not(.disabled) {
-    background-color: var(--background-muted);
+    background-color: var(--popover-selection);
+    color: var(--foreground);
   }
 
   button.disabled {

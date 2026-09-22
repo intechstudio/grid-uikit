@@ -24,3 +24,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Agent guide symlinks (point outside the repo)
+CLAUDE.md
+AGENTS.md

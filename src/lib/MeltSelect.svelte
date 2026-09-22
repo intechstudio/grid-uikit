@@ -133,12 +133,12 @@
     background-color: var(--popover-background);
     color: var(--foreground-muted);
     border: 1px solid var(--foreground-muted);
-    border-radius: 0.25em;
+    border-radius: var(--radius, 0.25rem);
     z-index: 40;
   }
   div.option {
     cursor: pointer;
-    padding: 0.5em;
+    padding: 0.5rem;
   }
   div.option:hover,
   div.option[data-highlighted] {
