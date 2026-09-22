@@ -111,8 +111,8 @@
 
   .trigger {
     cursor: pointer;
-    border-top-right-radius: var(--radius, 0.25rem);
-    border-bottom-right-radius: var(--radius, 0.25rem);
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     overflow: hidden;
@@ -205,7 +205,7 @@
     background-color: var(--popover-background);
     color: var(--foreground-muted);
     border: 1px solid var(--foreground-muted);
-    border-radius: var(--radius, 0.25rem);
+    border-radius: var(--radius);
     overflow: hidden;
   }
 
