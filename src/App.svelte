@@ -19,6 +19,7 @@
   import { tick } from "svelte";
   import LogMessage from "./lib/LogMessage.svelte";
   import { LogMessageType } from "./lib/LogMessageType.ts";
+  import MarkdownContainer from "./lib/MarkdownContainer.svelte";
   import { writable } from "svelte/store";
 
   import { Color } from "./lib/color";
@@ -39,6 +40,22 @@
       buttonsDisabled = value;
     };
   }
+
+  const markdownSample = `# Markdown heading
+
+Some **bold** and *italic* text with \`inline code\` and a
+[link](https://intech.studio).
+
+- first item
+- second item
+- third item
+
+\`\`\`ts
+const answer = 42;
+console.log(answer);
+\`\`\`
+
+> A blockquote for good measure.`;
   let suggestionElement: any;
   let input2Value = "";
   let input3Value = "";
@@ -835,6 +852,15 @@
           on:remove-layer={handleRemoveLayer}
           on:layer-click={(e) => (layerSelected = e.detail.index)}
         />
+      </Block>
+    </div>
+
+    <div class="mock-panel">
+      <Block>
+        <BlockTitle>MarkdownContainer</BlockTitle>
+        <BlockBody>
+          <MarkdownContainer markdown={markdownSample} />
+        </BlockBody>
       </Block>
     </div>
   </div>
