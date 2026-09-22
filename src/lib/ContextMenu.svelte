@@ -63,12 +63,15 @@
     {#each items as item}
       {@const disabled = item.isDisabled ? item.isDisabled() : false}
       <button
-        style:opacity={disabled ? 0.25 : 0.75}
+        class:disabled={disabled}
         {disabled}
         on:click={() => handleItemClicked(item)}
       >
         {#if item.iconPath}
-          <SvgIcon fill="#FFF" iconPath={item.iconPath} />
+          <SvgIcon
+            fill={disabled ? "var(--foreground-disabled)" : "var(--foreground)"}
+            iconPath={item.iconPath}
+          />
         {/if}
         <span>{item.text[0]}</span>
         <!-- Spacer for alignment -->
@@ -116,9 +119,15 @@
     letter-spacing: inherit; /* 1 */
     margin: 0; /* 2 */
     background-color: transparent; /* 2 */
+    color: inherit;
     cursor: pointer;
   }
-  button:hover {
+  button:hover:not(.disabled) {
     background-color: var(--background-muted);
+  }
+
+  button.disabled {
+    color: var(--foreground-disabled);
+    cursor: default;
   }
 </style>
