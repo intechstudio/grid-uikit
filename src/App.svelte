@@ -384,6 +384,7 @@ console.log(answer);</code></pre>
     <div class="mock-panel">
       <Block>
         <div
+          style="width: fit-content;"
           use:tooltip={{
             text: "Confirm text",
             placement: "top",
