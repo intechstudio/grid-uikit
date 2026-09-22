@@ -23,7 +23,6 @@
   import { writable } from "svelte/store";
 
   import { Color } from "./lib/color";
-  import ColorSlider from "./lib/ColorSlider.svelte";
   import CircleColorPicker from "./lib/CircleColorPicker.svelte";
   import SliderColorPicker from "./lib/SliderColorPicker.svelte";
   import SquareColorPicker from "./lib/SquareColorPicker.svelte";
@@ -139,7 +138,6 @@ console.log(answer);</code></pre>
 
   // Color editing components
   let pickerColor = $state(new Color.HSL(200, 100, 50));
-  let colorSliderValue = $state(50);
   let layerColors = $state([
     { red: "255", green: "0", blue: "0", alpha: "1" },
     { red: "0", green: "128", blue: "255", alpha: "1" },
@@ -868,37 +866,6 @@ console.log(answer);</code></pre>
 
     <div class="mock-panel">
       <Block>
-        <BlockTitle>ColorSlider</BlockTitle>
-        <BlockBody>Value: {Math.round(colorSliderValue)}</BlockBody>
-        <BlockBody>Horizontal:</BlockBody>
-        <ColorSlider
-          direction="horizontal"
-          max={100}
-          bind:value={colorSliderValue}
-          on:input={(e) => (colorSliderValue = e.detail.value)}
-        />
-        <BlockBody>Horizontal (round):</BlockBody>
-        <ColorSlider
-          direction="horizontal"
-          max={100}
-          round
-          bind:value={colorSliderValue}
-          on:input={(e) => (colorSliderValue = e.detail.value)}
-        />
-        <BlockBody>Vertical:</BlockBody>
-        <div class="vertical-slider">
-          <ColorSlider
-            direction="vertical"
-            max={100}
-            bind:value={colorSliderValue}
-            on:input={(e) => (colorSliderValue = e.detail.value)}
-          />
-        </div>
-      </Block>
-    </div>
-
-    <div class="mock-panel">
-      <Block>
         <BlockTitle>ColorLayerSelector</BlockTitle>
         <BlockBody>Selected layer: {layerSelected}</BlockBody>
         <ColorLayerSelector
@@ -971,9 +938,6 @@ console.log(answer);</code></pre>
   div.svg-row {
     display: flex;
     flex-direction: row;
-  }
-  div.vertical-slider {
-    height: 8rem;
   }
   div.picker-box {
     width: 10rem;
