@@ -89,16 +89,19 @@
     background-color: var(--background-muted);
     border: 1px solid var(--background-soft);
     height: 8px;
+    border-radius: var(--radius);
   }
   span.range-selected {
     height: 8px;
     background-color: var(--foreground-disabled);
+    border-radius: var(--radius);
   }
   span.thumb {
     display: block;
     height: var(--thumb-size);
     width: calc(var(--thumb-size) / 2);
     background-color: var(--foreground-muted);
+    border-radius: var(--radius);
   }
   span.thumb:focus {
     outline: var(--focus-outline);

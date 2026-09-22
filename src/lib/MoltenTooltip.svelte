@@ -350,6 +350,7 @@
 <style>
   div.tooltip-container {
     background-color: var(--popover-background);
+    border: 1px solid var(--foreground-muted);
     cursor: default;
     display: flex;
     flex-direction: column;
@@ -357,9 +358,8 @@
     border-radius: 0em;
     z-index: 99;
     padding: 0.25rem;
-    outline: 1px dashed transparent;
   }
-  div.tooltip-container:focus {
+  div.tooltip-container:focus-visible {
     outline: var(--focus-outline);
     outline-offset: var(--focus-offset);
   }
