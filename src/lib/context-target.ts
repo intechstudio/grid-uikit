@@ -60,6 +60,13 @@ export const contextTarget: Action<HTMLElement, ContextMenuOptions> = (
   node.addEventListener("contextmenu", (event) => handleContextMenu(event));
 
   return {
+    update(newOptions: ContextMenuOptions) {
+      // Without this, `options` stays frozen at whatever it was when this
+      // node first mounted - an unkeyed #each reusing this element across
+      // data updates would keep opening a menu built from stale data (e.g.
+      // an item's name before a rename).
+      options = newOptions;
+    },
     destroy() {
       node.removeEventListener("contextmenu", handleContextMenu);
       // Clean up the current context menu if the node is destroyed
