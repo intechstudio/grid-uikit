@@ -21,6 +21,13 @@
   import { LogMessageType } from "./lib/LogMessageType.ts";
   import { writable } from "svelte/store";
 
+  import { Color } from "./lib/color";
+  import ColorSlider from "./lib/ColorSlider.svelte";
+  import CircleColorPicker from "./lib/CircleColorPicker.svelte";
+  import SliderColorPicker from "./lib/SliderColorPicker.svelte";
+  import SquareColorPicker from "./lib/SquareColorPicker.svelte";
+  import ColorLayerSelector from "./lib/ColorLayerSelector.svelte";
+
   import { tooltip } from "./lib/tooltip.ts";
 
   let t = false;
@@ -110,6 +117,29 @@
       },
     },
   ];
+
+  // Color editing components
+  let pickerColor = $state(new Color.HSL(200, 100, 50));
+  let colorSliderValue = $state(50);
+  let layerColors = $state([
+    { red: "255", green: "0", blue: "0", alpha: "1" },
+    { red: "0", green: "128", blue: "255", alpha: "1" },
+  ]);
+  let layerSelected = $state(0);
+
+  function handleAddLayer() {
+    if (layerColors.length >= 3) return;
+    layerColors = [
+      ...layerColors,
+      { red: "0", green: "255", blue: "0", alpha: "1" },
+    ];
+  }
+  function handleRemoveLayer() {
+    if (layerColors.length <= 1) return;
+    layerColors = layerColors.slice(0, -1);
+    if (layerSelected >= layerColors.length)
+      layerSelected = layerColors.length - 1;
+  }
 
   function handleShowLogMessage() {
     ++logMessageCount;
@@ -732,6 +762,81 @@
         </div>
       {/if}
     </div>
+
+    <div class="mock-panel">
+      <Block>
+        <BlockTitle>Color Pickers</BlockTitle>
+        <BlockBody>
+          HSL: h={Math.round(pickerColor.h)} s={Math.round(pickerColor.s)} l={Math.round(
+            pickerColor.l,
+          )}
+        </BlockBody>
+        <BlockBody>SquareColorPicker:</BlockBody>
+        <div class="picker-box">
+          <SquareColorPicker
+            color={pickerColor}
+            on:input={(e) => (pickerColor = e.detail.color)}
+          />
+        </div>
+        <BlockBody>CircleColorPicker:</BlockBody>
+        <div class="picker-box">
+          <CircleColorPicker
+            color={pickerColor}
+            on:input={(e) => (pickerColor = e.detail.color)}
+          />
+        </div>
+        <BlockBody>SliderColorPicker:</BlockBody>
+        <SliderColorPicker
+          color={pickerColor}
+          on:input={(e) => (pickerColor = e.detail.color)}
+        />
+      </Block>
+    </div>
+
+    <div class="mock-panel">
+      <Block>
+        <BlockTitle>ColorSlider</BlockTitle>
+        <BlockBody>Value: {Math.round(colorSliderValue)}</BlockBody>
+        <BlockBody>Horizontal:</BlockBody>
+        <ColorSlider
+          direction="horizontal"
+          max={100}
+          bind:value={colorSliderValue}
+          on:input={(e) => (colorSliderValue = e.detail.value)}
+        />
+        <BlockBody>Horizontal (round):</BlockBody>
+        <ColorSlider
+          direction="horizontal"
+          max={100}
+          round
+          bind:value={colorSliderValue}
+          on:input={(e) => (colorSliderValue = e.detail.value)}
+        />
+        <BlockBody>Vertical:</BlockBody>
+        <div class="vertical-slider">
+          <ColorSlider
+            direction="vertical"
+            max={100}
+            bind:value={colorSliderValue}
+            on:input={(e) => (colorSliderValue = e.detail.value)}
+          />
+        </div>
+      </Block>
+    </div>
+
+    <div class="mock-panel">
+      <Block>
+        <BlockTitle>ColorLayerSelector</BlockTitle>
+        <BlockBody>Selected layer: {layerSelected}</BlockBody>
+        <ColorLayerSelector
+          colors={layerColors}
+          selected={layerSelected}
+          on:add-layer={handleAddLayer}
+          on:remove-layer={handleRemoveLayer}
+          on:layer-click={(e) => (layerSelected = e.detail.index)}
+        />
+      </Block>
+    </div>
   </div>
 </main>
 
@@ -774,6 +879,13 @@
   div.svg-row {
     display: flex;
     flex-direction: row;
+  }
+  div.vertical-slider {
+    height: 8rem;
+  }
+  div.picker-box {
+    width: 10rem;
+    height: 10rem;
   }
   div.folder-container {
     display: flex;
