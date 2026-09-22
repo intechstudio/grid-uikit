@@ -98,20 +98,20 @@
     z-index: 40;
     color: var(--foreground-muted);
     background-color: var(--popover-background);
+    overflow: hidden;
   }
 
   button {
-    font-size: 0.75rem;
-    line-height: 1rem;
+    font-size: inherit;
+    line-height: 1;
     display: flex;
     flex-direction: row;
-    gap: 0.5rem;
+    gap: 0.5em;
     align-items: center;
     white-space: nowrap;
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.5em;
     text-align: left;
-    font-size: small;
     cursor: default;
     font-family: inherit; /* 1 */
     font-feature-settings: inherit; /* 1 */

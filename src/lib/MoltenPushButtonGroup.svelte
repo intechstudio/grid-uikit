@@ -206,6 +206,7 @@
     color: var(--foreground-muted);
     border: 1px solid var(--foreground-muted);
     border-radius: var(--radius, 0.25rem);
+    overflow: hidden;
   }
 
   .option {

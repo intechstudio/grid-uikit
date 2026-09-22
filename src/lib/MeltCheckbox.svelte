@@ -82,6 +82,8 @@
   .checkbox-box {
     background-color: var(--background-muted);
     border: 1px solid var(--background-soft);
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
   }
 
   .checkbox-outer {

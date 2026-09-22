@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Svelte + TS</title>
     <style>
-      #fontSizeValue {
+      #fontSizeValue,
+      #radiusValue {
         display: inline-block;
         width: 3.5ch;
         text-align: right;
@@ -33,6 +34,17 @@
         step="0.1"
         value="12"
       />
+      <label for="radiusSlider"
+        >Radius: <span id="radiusValue">0</span>px</label
+      >
+      <input
+        type="range"
+        id="radiusSlider"
+        min="0"
+        max="16"
+        step="1"
+        value="0"
+      />
     </div>
     <div id="app"></div>
     <script>
@@ -58,6 +70,16 @@
         const size = fontSizeSlider.value;
         document.body.style.fontSize = size + "px";
         fontSizeValue.textContent = parseFloat(size).toFixed(1);
+      });
+
+      const radiusSlider = document.getElementById("radiusSlider");
+      const radiusValue = document.getElementById("radiusValue");
+
+      radiusSlider.addEventListener("input", (e) => {
+        const radius = radiusSlider.value;
+        // Set on :root so portaled popup menus inherit it too.
+        document.documentElement.style.setProperty("--radius", radius + "px");
+        radiusValue.textContent = radius;
       });
     </script>
     <script type="module" src="src/main.ts"></script>

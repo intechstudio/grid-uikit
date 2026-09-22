@@ -70,6 +70,11 @@
     elements: { trigger, content, arrow, close },
   } = createPopover({
     forceVisible: true,
+    // Render the menu inline (not portaled to <body>) so it stays inside the
+    // theme-variable scope, like the non-portaled MeltSelect/MoltenPushButton
+    // menus. A body-portaled menu escapes any theme vars not defined on :root
+    // (e.g. --radius), falling back to hardcoded defaults.
+    portal: null,
     positioning: {
       placement: "bottom",
     },

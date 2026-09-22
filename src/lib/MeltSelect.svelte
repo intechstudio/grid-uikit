@@ -135,6 +135,7 @@
     border: 1px solid var(--foreground-muted);
     border-radius: var(--radius, 0.25rem);
     z-index: 40;
+    overflow: hidden;
   }
   div.option {
     cursor: pointer;
