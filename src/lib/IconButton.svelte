@@ -112,7 +112,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius);
+    border-radius: var(--radius-medium);
     cursor: pointer;
     pointer-events: auto;
     padding: 0.5rem;

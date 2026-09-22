@@ -205,7 +205,7 @@
     background-color: var(--popover-background);
     color: var(--foreground-muted);
     border: 1px solid var(--foreground-muted);
-    border-radius: var(--radius-large);
+    border-radius: var(--radius-medium);
     overflow: hidden;
   }
 

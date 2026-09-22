@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { Color } from "./color";
-  import ColorSlider from "./ColorSlider.svelte";
+  import MeltSlider from "./MeltSlider.svelte";
 
   function getRandom(a: number, b: number) {
     return 0;
@@ -42,37 +42,38 @@
     dispatch("change", { color: color });
   }
 
-  function getGradient(color: Color.HSL | undefined, channel: Channel) {
+  function getGradient(
+    color: Color.HSL | undefined,
+    channel: Channel,
+  ): string | undefined {
     if (typeof color === "undefined") {
-      return "background-color: white;";
+      return undefined;
     }
 
     const stops = {
-      h: [0, 60, 120, 180, 240, 360].map((h) =>
+      h: [0, 60, 120, 180, 240, 300, 360].map((h) =>
         new Color.HSL(h, color.s, color.l).toHEX(),
       ),
       s: [0, 100].map((s) => new Color.HSL(color.h, s, color.l).toHEX()),
       l: [0, 50, 100].map((l) => new Color.HSL(color.h, color.s, l).toHEX()),
     };
-    return `background: linear-gradient(to right, ${stops[channel].join(
-      ", ",
-    )});`;
+    return `linear-gradient(to right, ${stops[channel].join(", ")})`;
   }
 </script>
 
 <div class="slider-grid">
   {#each sliders as { label, key, max }}
     <span class="slider-label">{label}:</span>
-    <ColorSlider
-      value={color ? color[key] : undefined}
+    <MeltSlider
+      target={color ? color[key] : 0}
+      min={0}
       {max}
-      direction="horizontal"
-      round={true}
-      on:input={(e) => handleInput(key, e.detail.value)}
-      on:change={handleChange}
-    >
-      <div class="slider-gradient" style={getGradient(color, key)} />
-    </ColorSlider>
+      step={1}
+      trackBackground={getGradient(color, key)}
+      thumbBackground={color ? color.toHEX() : undefined}
+      on:change={(e) => handleInput(key, e.detail.value)}
+      on:commit={handleChange}
+    />
   {/each}
 </div>
 
@@ -86,12 +87,7 @@
   }
 
   .slider-label {
-    color: white;
+    color: var(--foreground);
     font-size: 0.875rem;
-  }
-
-  .slider-gradient {
-    width: 100%;
-    height: 100%;
   }
 </style>

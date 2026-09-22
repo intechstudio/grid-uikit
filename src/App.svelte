@@ -83,7 +83,11 @@ console.log(answer);</code></pre>
     textColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
   }
 
-  let sliderValue = 50;
+  let sliderValue = $state(50);
+  let sliderGradientValue = $state(50);
+  let sliderChangeValue: number | undefined = $state();
+  let sliderCommitValue: number | undefined = $state();
+  let sliderBlurCount = $state(0);
   let meltSelectValue1 = 0;
   let meltSelectValue2 = 0;
   let meltRadioValue1 = 0;
@@ -314,6 +318,13 @@ console.log(answer);</code></pre>
           style="border-radius: var(--radius-large);"
         ></div>
         --radius-large</span
+      >
+      <span class="color-preview-label"
+        ><div
+          class="radius-preview-box"
+          style="border-radius: var(--radius-full);"
+        ></div>
+        --radius-full</span
       >
     </div>
 
@@ -633,10 +644,29 @@ console.log(answer);</code></pre>
       <span>MeltSlider:</span>
       <span>Value: {sliderValue}</span>
       <MeltSlider
-        bind:target={sliderValue}
+        target={sliderValue}
         min={0}
         max={100}
         step={1}
+        disabled={buttonsDisabled}
+        on:change={(e) => {
+          sliderValue = e.detail.value;
+          sliderChangeValue = e.detail.value;
+        }}
+        on:commit={(e) => (sliderCommitValue = e.detail.value)}
+        on:blur={() => (sliderBlurCount += 1)}
+      />
+      <div>change (live): {sliderChangeValue ?? "—"}</div>
+      <div>commit (release): {sliderCommitValue ?? "—"}</div>
+      <div>blur count: {sliderBlurCount}</div>
+      <span>With gradient track: {sliderGradientValue}</span>
+      <MeltSlider
+        bind:target={sliderGradientValue}
+        min={0}
+        max={360}
+        step={1}
+        trackBackground="linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%), hsl(360,100%,50%))"
+        thumbBackground={`hsl(${sliderGradientValue}, 100%, 50%)`}
         disabled={buttonsDisabled}
       />
     </div>

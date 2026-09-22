@@ -93,7 +93,7 @@
     flex-direction: column;
     align-items: flex-start;
     border: 1px solid var(--foreground-muted);
-    border-radius: var(--radius-large);
+    border-radius: var(--radius-medium);
     position: absolute;
     z-index: 40;
     color: var(--foreground-muted);

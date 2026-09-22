@@ -49,6 +49,9 @@
   --radius-small: min(var(--radius), 0.25em);
   --radius-medium: min(var(--radius), 0.5em);
   --radius-large: min(var(--radius), 1em);
+  /* Always fully rounded (pill/circle), independent of --radius — for elements
+     that are round by design, e.g. the color-preview slider knob. */
+  --radius-full: 9999px;
   --border-thickness: 1px;
 }
 

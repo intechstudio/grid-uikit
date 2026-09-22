@@ -355,7 +355,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    border-radius: var(--radius-large);
+    border-radius: var(--radius-medium);
     overflow: hidden;
     z-index: 99;
     padding: 0.5rem;

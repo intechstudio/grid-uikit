@@ -10,6 +10,13 @@
   export let max: number;
   export let step: number;
   export let disabled = false;
+  // Optional custom track background (e.g. a color gradient). When set, the
+  // track shows this background and the selected-range fill is hidden so the
+  // full background stays visible.
+  export let trackBackground: string | undefined = undefined;
+  // Optional custom thumb background (e.g. the color at the thumb's value on a
+  // color slider). When unset the thumb uses the default theme color.
+  export let thumbBackground: string | undefined = undefined;
 
   const {
     elements: { root, range, thumbs },
@@ -55,8 +62,19 @@
 </script>
 
 <span {...$root} use:root class="container" class:disabled>
-  <span class="range-full" class:disabled>
-    <span {...$range} use:range class="range-selected" class:disabled />
+  <span
+    class="range-full"
+    class:disabled
+    class:has-background={trackBackground}
+    style:background={trackBackground}
+  >
+    <span
+      {...$range}
+      use:range
+      class="range-selected"
+      class:disabled
+      class:hidden={trackBackground}
+    />
   </span>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <span
@@ -64,6 +82,8 @@
     use:thumbs
     class="thumb"
     class:disabled
+    class:has-color={thumbBackground}
+    style:background={disabled ? undefined : thumbBackground}
     on:blur={handleThumbBlur}
   />
 </span>
@@ -91,10 +111,16 @@
     height: 8px;
     border-radius: var(--radius);
   }
+  span.range-full.has-background {
+    background-color: transparent;
+  }
   span.range-selected {
     height: 8px;
     background-color: var(--foreground-disabled);
     border-radius: var(--radius);
+  }
+  span.range-selected.hidden {
+    background-color: transparent;
   }
   span.thumb {
     display: block;
@@ -102,6 +128,10 @@
     width: calc(var(--thumb-size) / 2);
     background-color: var(--foreground-muted);
     border-radius: var(--radius);
+  }
+  span.thumb.has-color {
+    width: var(--thumb-size);
+    border-radius: var(--radius-full);
   }
   span.thumb:focus {
     outline: var(--focus-outline);
