@@ -41,21 +41,19 @@
     };
   }
 
-  const markdownSample = `# Markdown heading
-
-Some **bold** and *italic* text with \`inline code\` and a
-[link](https://intech.studio).
-
-- first item
-- second item
-- third item
-
-\`\`\`ts
-const answer = 42;
-console.log(answer);
-\`\`\`
-
-> A blockquote for good measure.`;
+  // MarkdownContainer renders its prop as raw HTML ({@html}); it does not
+  // parse markdown. Consumers pass already-rendered HTML.
+  const markdownSample = `<h1>Markdown heading</h1>
+<p>Some <strong>bold</strong> and <em>italic</em> text with
+<code>inline code</code> and a <a href="https://intech.studio">link</a>.</p>
+<ul>
+  <li>first item</li>
+  <li>second item</li>
+  <li>third item</li>
+</ul>
+<pre><code>const answer = 42;
+console.log(answer);</code></pre>
+<blockquote>A blockquote for good measure.</blockquote>`;
   let suggestionElement: any;
   let input2Value = "";
   let input3Value = "";
