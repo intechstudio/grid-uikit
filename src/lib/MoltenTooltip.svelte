@@ -21,7 +21,6 @@
 
   let showbuttons = $state(false);
   let showTooltip = $state(false);
-  let tooltipKey = $state(0);
   let popperInstance: any = $state();
 
   // Popper computes its position/flip-away-from-edge decision once, when
@@ -86,7 +85,13 @@
     }
     if (triggerEvents.includes("show-buttons")) {
       clearTimeout(openTimeout);
-      tooltipKey++;
+      // Show buttons on the existing (already-positioned) popover. Do NOT
+      // recreate the Popover here: recreating it while it is already open
+      // (e.g. hover opened it first) mounts the new instance with isOpen
+      // already true, and popper fails to attach — the surface then renders
+      // in-tree next to the reference instead of absolutely positioned. The
+      // $effect below calls popperInstance.update() to reposition for the
+      // taller buttons content.
       showTooltip = true;
       if (buttons.length > 0) {
         showbuttons = true;
@@ -271,81 +276,79 @@
   }
 </script>
 
-{#key tooltipKey}
-  <Popover
-    isOpen={showTooltip}
-    triggerEvents={["manual"]}
-    {referenceElement}
-    bind:placement
-    bind:popperInstance
-    spaceAway={10}
+<Popover
+  isOpen={showTooltip}
+  triggerEvents={["manual"]}
+  {referenceElement}
+  bind:placement
+  bind:popperInstance
+  spaceAway={10}
+>
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <div
+    on:mouseenter={handleMouseEnter}
+    on:mouseleave={handleMouseLeave}
+    on:click={handleClick}
+    bind:this={tooltipElement}
+    tabindex="-1"
+    class="{className} tooltip-container"
+    transition:fade|global={{
+      duration: instant ? 0 : duration, //Make it instant when explicitly clicked
+    }}
   >
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      on:mouseenter={handleMouseEnter}
-      on:mouseleave={handleMouseLeave}
-      on:click={handleClick}
-      bind:this={tooltipElement}
-      tabindex="-1"
-      class="{className} tooltip-container"
-      transition:fade|global={{
-        duration: instant ? 0 : duration, //Make it instant when explicitly clicked
-      }}
+      class="tooltip-container-content"
+      class:tooltip-gap-2={buttons.length > 0}
     >
-      <div
-        class="tooltip-container-content"
-        class:tooltip-gap-2={buttons.length > 0}
-      >
-        {#if typeof component === "undefined"}
-          <div
-            class="tooltip-container-text"
-            class:tooltip-whitespace-nowrap={nowrap}
-          >
-            {showbuttons && extendedText !== undefined ? extendedText : text}
-          </div>
-        {:else}
-          <svelte:component
-            this={component.object}
-            {...component.props}
-            class="tooltip-container-component"
-            on:event={interceptEvent}
-          />
-        {/if}
+      {#if typeof component === "undefined"}
+        <div
+          class="tooltip-container-text"
+          class:tooltip-whitespace-nowrap={nowrap}
+        >
+          {showbuttons && extendedText !== undefined ? extendedText : text}
+        </div>
+      {:else}
+        <svelte:component
+          this={component.object}
+          {...component.props}
+          class="tooltip-container-component"
+          on:event={interceptEvent}
+        />
+      {/if}
 
-        {#if showbuttons}
-          <div
-            transition:fade|global={{ duration: instant ? 0 : 100 }}
-            class="tooltip-container-buttons"
-          >
-            {#each buttons as button}
-              <MoltenPushButton
-                text={button.label}
-                snap={"full"}
-                click={() => {
-                  if (typeof button.handler !== "undefined") {
-                    button.handler();
-                  }
-                  close();
-                }}
-              />
-            {/each}
-          </div>
-        {/if}
-      </div>
+      {#if showbuttons}
+        <div
+          transition:fade|global={{ duration: instant ? 0 : 100 }}
+          class="tooltip-container-buttons"
+        >
+          {#each buttons as button}
+            <MoltenPushButton
+              text={button.label}
+              snap={"full"}
+              click={() => {
+                if (typeof button.handler !== "undefined") {
+                  button.handler();
+                }
+                close();
+              }}
+            />
+          {/each}
+        </div>
+      {/if}
     </div>
-    <div
-      transition:fade|global={{
-        duration: instant ? 0 : duration,
-      }}
-      class="tooltip-absolute"
-      id="arrow"
-      data-popper-arrow
-    >
-      <div class="tooltip-absolute" id="arrow_face" />
-    </div>
-  </Popover>
-{/key}
+  </div>
+  <div
+    transition:fade|global={{
+      duration: instant ? 0 : duration,
+    }}
+    class="tooltip-absolute"
+    id="arrow"
+    data-popper-arrow
+  >
+    <div class="tooltip-absolute" id="arrow_face" />
+  </div>
+</Popover>
 
 <style>
   div.tooltip-container {
