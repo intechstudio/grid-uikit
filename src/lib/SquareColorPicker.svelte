@@ -89,6 +89,7 @@
   data-testid="rgb-color-picker-canvas"
   class="rgb-picker"
   on:mousedown={(e) => {
+    e.preventDefault();
     isDrag = true;
     calculateColor(e);
   }}
@@ -105,6 +106,7 @@
     width: 100%;
     height: 100%;
     position: relative;
+    user-select: none;
     border: 1px solid black;
     background:
       linear-gradient(to left, red, magenta, blue, cyan, lime, yellow, red),

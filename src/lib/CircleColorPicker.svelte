@@ -64,6 +64,7 @@
   }
 
   function handleMouseDown(e: MouseEvent) {
+    e.preventDefault();
     isDragging = true;
     calculateColor(e);
   }
@@ -89,6 +90,7 @@
   .hue-picker {
     position: relative;
     display: flex;
+    user-select: none;
     height: 100%;
     aspect-ratio: 1 / 1;
     border: 1px solid black;
