@@ -53,7 +53,9 @@
     display: flex;
     align-items: center;
     width: 30rem;
-    border: solid 1px var(--border);
+    padding: 0;
+    margin: 0;
+    border: none;
     background: none;
     cursor: pointer;
   }
@@ -66,7 +68,7 @@
     justify-content: center;
     width: 2.5rem;
     height: 2rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: var(--background-muted);
     border: 1px solid var(--background-soft);
     font-size: 0.875rem;
@@ -79,21 +81,18 @@
     width: 100%;
     padding: 0.5rem;
     margin: 0.25rem 0;
-    border-radius: 0.375rem;
-    background: var(--background);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition:
-      opacity 0.1s ease,
-      background-color 0.1s ease;
+    border: solid 1px var(--border);
+    border-radius: var(--radius-medium);
+    background: var(--popover-background);
   }
 
   .notification-card:hover {
-    opacity: 0.75;
+    background: var(--popover-selection);
   }
 
   .notification-icon {
     padding: 0.5rem;
-    border-radius: 0.375rem;
+    border-radius: var(--radius-medium);
     background: var(--background-muted);
   }
 

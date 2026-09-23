@@ -40,3 +40,10 @@ export {
 } from "./ColorLayerSelector.svelte";
 export { default as LogMessage } from "./LogMessage.svelte";
 export { LogMessageType } from "./LogMessageType";
+export { default as LogStream } from "./LogStream.svelte";
+export {
+  createLogStream,
+  logStreamStore,
+  type LogStreamMessage,
+  type LogStreamOptions,
+} from "./logStream";
