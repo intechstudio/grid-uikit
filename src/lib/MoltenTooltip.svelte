@@ -191,7 +191,7 @@
   $effect(() => {
     if (tooltipElement) {
       previousFocusedElement = document.activeElement as HTMLElement | null;
-      tooltipElement.focus();
+      tooltipElement.focus({ preventScroll: true });
       const handleFocusOut = (e: FocusEvent) => {
         const relatedTarget = e.relatedTarget as Node | null;
         if (relatedTarget && tooltipElement?.contains(relatedTarget)) {
@@ -267,7 +267,7 @@
     showbuttons = false;
     if (restoreFocus && previousFocusedElement) {
       isRestoringFocus = true;
-      previousFocusedElement.focus();
+      previousFocusedElement.focus({ preventScroll: true });
       previousFocusedElement = null;
       requestAnimationFrame(() => {
         isRestoringFocus = false;

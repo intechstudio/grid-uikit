@@ -15,10 +15,10 @@
   import MoltenPushButton from "./lib/MoltenPushButton.svelte";
   import MoltenPushButtonGroup from "./lib/MoltenPushButtonGroup.svelte";
   import MoltenInput from "./lib/MoltenInput.svelte";
-  import { fly } from "svelte/transition";
   import { tick } from "svelte";
-  import LogMessage from "./lib/LogMessage.svelte";
   import { LogMessageType } from "./lib/LogMessageType.ts";
+  import LogStream from "./lib/LogStream.svelte";
+  import { createLogStream } from "./lib/logStream.ts";
   import MarkdownContainer from "./lib/MarkdownContainer.svelte";
   import { writable } from "svelte/store";
 
@@ -99,10 +99,6 @@ console.log(answer);</code></pre>
   let meltRadioValue5 = 0;
   let meltRadioValue6 = 0;
 
-  let logMessageCount = $state(0);
-  let logMessageType = LogMessageType.NORMAL;
-  let logMessageTimeout: number;
-
   let clearButtonTarget = $state("default");
   let clearButtonWidth = $state(0);
 
@@ -159,270 +155,240 @@ console.log(answer);</code></pre>
       layerSelected = layerColors.length - 1;
   }
 
-  function handleShowLogMessage() {
-    ++logMessageCount;
-    clearTimeout(logMessageTimeout);
-    logMessageTimeout = setTimeout(() => {
-      logMessageCount = 0;
-    }, 3000);
+  // LogStream demo: an isolated stream instance (max 3 visible, 5s
+  // auto-dismiss) so this panel doesn't share state with any other consumer.
+  const demoLogStream = createLogStream();
+  let demoLogStreamContentCount = $state(0);
+
+  function pushDemoLog(type: LogMessageType, message: string) {
+    demoLogStream.push({ type, message });
+  }
+
+  function pushDemoBurst() {
+    pushDemoLog(LogMessageType.NORMAL, `Burst message ${Date.now()}`);
   }
 </script>
 
 <main on:contextmenu|preventDefault>
-  <div class="main-container">
-    <div class="mock-panel">
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--background);"
-        ></div>
-        --background</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--background-muted);"
-        ></div>
-        --background-muted</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--background-soft);"
-        ></div>
-        --background-soft</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--foreground);"
-        ></div>
-        --foreground</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--foreground-muted);"
-        ></div>
-        --foreground-muted</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--foreground-soft);"
-        ></div>
-        --foreground-soft</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--foreground-disabled);"
-        ></div>
-        --foreground-disabled</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--shadow);"
-        ></div>
-        --shadow</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--border);"
-        ></div>
-        --border</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--accent);"
-        ></div>
-        --accent</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--accent-muted);"
-        ></div>
-        --accent-muted</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--accent-soft);"
-        ></div>
-        --accent-soft</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--focus);"
-        ></div>
-        --focus</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--error);"
-        ></div>
-        --error</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--popover-background);"
-        ></div>
-        --popover-background</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--popover-selection);"
-        ></div>
-        --popover-selection</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="color-preview-box"
-          style="background-color: var(--popover-reference);"
-        ></div>
-        --popover-reference</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="radius-preview-box"
-          style="border-radius: var(--radius);"
-        ></div>
-        --radius</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="radius-preview-box"
-          style="border-radius: var(--radius-small);"
-        ></div>
-        --radius-small</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="radius-preview-box"
-          style="border-radius: var(--radius-medium);"
-        ></div>
-        --radius-medium</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="radius-preview-box"
-          style="border-radius: var(--radius-large);"
-        ></div>
-        --radius-large</span
-      >
-      <span class="color-preview-label"
-        ><div
-          class="radius-preview-box"
-          style="border-radius: var(--radius-full);"
-        ></div>
-        --radius-full</span
-      >
-    </div>
-
-    <div class="mock-panel">
-      <Block>
-        <div
-          use:tooltip={{
-            nowrap: true,
-            placement: "bottom",
-            duration: 75,
-            instant: true,
-            class: "px-2 py-1",
-            text: "Delete",
-          }}
+  <div class="main-scroll">
+    <div class="main-container">
+      <div class="mock-panel">
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--background);"
+          ></div>
+          --background</span
         >
-          Tooltip test
-        </div>
-        <BlockTitle>MeltCheckbox</BlockTitle>
-        <BlockBody>Comes in two wariants:</BlockBody>
-        <MeltCheckbox
-          target={t}
-          title={"Block style (Default)"}
-          disabled={buttonsDisabled}
-        />
-        <MeltCheckbox
-          target={t}
-          title={"Block style (Default)"}
-          disabled={buttonsDisabled}
-        />
-        <MeltCheckbox
-          target={t}
-          style={"transparent"}
-          title={"Transparent style"}
-          disabled={buttonsDisabled}
-        />
-        <MeltCheckbox
-          target={t}
-          style={"transparent"}
-          title={"Transparent style"}
-          disabled={buttonsDisabled}
-        />
-      </Block>
-      <Block border="red">
-        <BlockTitle>Important border added</BlockTitle>
-        <BlockBody>This is dangerous setting:</BlockBody>
-        <MeltCheckbox
-          target={t}
-          title={"Destory enabled"}
-          disabled={buttonsDisabled}
-        />
-      </Block>
-      <Block>
-        <BlockTitle>Toggle</BlockTitle>
-        <Toggle title={"Test toggle"} disabled={buttonsDisabled} />
-      </Block>
-    </div>
-
-    <div class="mock-panel">
-      <Block>
-        <div
-          style="width: fit-content;"
-          use:tooltip={{
-            text: "Confirm text",
-            placement: "top",
-            buttons: [
-              {
-                label: "Cancel",
-                handler: undefined,
-              },
-              {
-                label: "Confirm",
-                handler: () => {
-                  alert(1);
-                },
-              },
-            ],
-            triggerEvents: ["show-buttons", "hover"],
-          }}
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--background-muted);"
+          ></div>
+          --background-muted</span
         >
-          <MoltenPushButton
-            disabled={buttonsDisabled}
-            click={() => {}}
-            text={"Outlined confirm"}
-            style={"outlined"}
-          />
-        </div>
-        <BlockTitle>MoltenPushButton</BlockTitle>
-
-        <BlockBody>This has dropdown value {clearButtonTarget}</BlockBody>
-        <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
-        <MoltenPushButtonGroup
-          options={clearButtonOptions}
-          bind:target={clearButtonTarget}
-          style="normal"
-          disabled={buttonsDisabled}
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--background-soft);"
+          ></div>
+          --background-soft</span
         >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--foreground);"
+          ></div>
+          --foreground</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--foreground-muted);"
+          ></div>
+          --foreground-muted</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--foreground-soft);"
+          ></div>
+          --foreground-soft</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--foreground-disabled);"
+          ></div>
+          --foreground-disabled</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--shadow);"
+          ></div>
+          --shadow</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--border);"
+          ></div>
+          --border</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--accent);"
+          ></div>
+          --accent</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--accent-muted);"
+          ></div>
+          --accent-muted</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--accent-soft);"
+          ></div>
+          --accent-soft</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--focus);"
+          ></div>
+          --focus</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--error);"
+          ></div>
+          --error</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--popover-background);"
+          ></div>
+          --popover-background</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--popover-selection);"
+          ></div>
+          --popover-selection</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="color-preview-box"
+            style="background-color: var(--popover-reference);"
+          ></div>
+          --popover-reference</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="radius-preview-box"
+            style="border-radius: var(--radius);"
+          ></div>
+          --radius</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="radius-preview-box"
+            style="border-radius: var(--radius-small);"
+          ></div>
+          --radius-small</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="radius-preview-box"
+            style="border-radius: var(--radius-medium);"
+          ></div>
+          --radius-medium</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="radius-preview-box"
+            style="border-radius: var(--radius-large);"
+          ></div>
+          --radius-large</span
+        >
+        <span class="color-preview-label"
+          ><div
+            class="radius-preview-box"
+            style="border-radius: var(--radius-full);"
+          ></div>
+          --radius-full</span
+        >
+      </div>
+
+      <div class="mock-panel">
+        <Block>
           <div
             use:tooltip={{
-              text: "Clear the current selection",
+              nowrap: true,
+              placement: "bottom",
+              duration: 75,
+              instant: true,
+              class: "px-2 py-1",
+              text: "Delete",
+            }}
+          >
+            Tooltip test
+          </div>
+          <BlockTitle>MeltCheckbox</BlockTitle>
+          <BlockBody>Comes in two wariants:</BlockBody>
+          <MeltCheckbox
+            target={t}
+            title={"Block style (Default)"}
+            disabled={buttonsDisabled}
+          />
+          <MeltCheckbox
+            target={t}
+            title={"Block style (Default)"}
+            disabled={buttonsDisabled}
+          />
+          <MeltCheckbox
+            target={t}
+            style={"transparent"}
+            title={"Transparent style"}
+            disabled={buttonsDisabled}
+          />
+          <MeltCheckbox
+            target={t}
+            style={"transparent"}
+            title={"Transparent style"}
+            disabled={buttonsDisabled}
+          />
+        </Block>
+        <Block border="red">
+          <BlockTitle>Important border added</BlockTitle>
+          <BlockBody>This is dangerous setting:</BlockBody>
+          <MeltCheckbox
+            target={t}
+            title={"Destory enabled"}
+            disabled={buttonsDisabled}
+          />
+        </Block>
+        <Block>
+          <BlockTitle>Toggle</BlockTitle>
+          <Toggle title={"Test toggle"} disabled={buttonsDisabled} />
+        </Block>
+      </div>
+
+      <div class="mock-panel">
+        <Block>
+          <div
+            style="width: fit-content;"
+            use:tooltip={{
+              text: "Confirm text",
               placement: "top",
               buttons: [
                 {
@@ -432,59 +398,69 @@ console.log(answer);</code></pre>
                 {
                   label: "Confirm",
                   handler: () => {
-                    handleAction();
-                    closeDropdown();
+                    alert(1);
                   },
                 },
               ],
               triggerEvents: ["show-buttons", "hover"],
             }}
-            slot="button"
-            let:closeDropdown
-            let:handleAction
-            let:selectedLabel
           >
             <MoltenPushButton
               disabled={buttonsDisabled}
               click={() => {}}
-              text={selectedLabel || "Clear"}
-              style={"normal"}
-              options={clearButtonOptions}
-              bind:target={clearButtonTarget}
-              bind:width={clearButtonWidth}
-              decorations={["(", ")"]}
-              grouped={true}
+              text={"Outlined confirm"}
+              style={"outlined"}
             />
           </div>
-        </MoltenPushButtonGroup>
+          <BlockTitle>MoltenPushButton</BlockTitle>
 
-        <BlockBody>This has three variants:</BlockBody>
-        <MoltenPushButton
-          disabled={buttonsDisabled}
-          click={() => {}}
-          text={"Accept"}
-          style={"accept"}
-        />
-        <MoltenPushButton
-          disabled={buttonsDisabled}
-          click={() => {}}
-          text={"Store"}
-          snap={"wide"}
-        />
-        <MoltenPushButton
-          disabled={buttonsDisabled}
-          click={() => {}}
-          text={"Outlined"}
-          style={"outlined"}
-        />
-        <BlockBody>Now in a row layout:</BlockBody>
-        <BlockRow>
-          <MoltenPushButton
+          <BlockBody>This has dropdown value {clearButtonTarget}</BlockBody>
+          <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
+          <MoltenPushButtonGroup
+            options={clearButtonOptions}
+            bind:target={clearButtonTarget}
+            style="normal"
             disabled={buttonsDisabled}
-            click={() => {}}
-            text={"Normal"}
-            style={"normal"}
-          />
+          >
+            <div
+              use:tooltip={{
+                text: "Clear the current selection",
+                placement: "top",
+                buttons: [
+                  {
+                    label: "Cancel",
+                    handler: undefined,
+                  },
+                  {
+                    label: "Confirm",
+                    handler: () => {
+                      handleAction();
+                      closeDropdown();
+                    },
+                  },
+                ],
+                triggerEvents: ["show-buttons", "hover"],
+              }}
+              slot="button"
+              let:closeDropdown
+              let:handleAction
+              let:selectedLabel
+            >
+              <MoltenPushButton
+                disabled={buttonsDisabled}
+                click={() => {}}
+                text={selectedLabel || "Clear"}
+                style={"normal"}
+                options={clearButtonOptions}
+                bind:target={clearButtonTarget}
+                bind:width={clearButtonWidth}
+                decorations={["(", ")"]}
+                grouped={true}
+              />
+            </div>
+          </MoltenPushButtonGroup>
+
+          <BlockBody>This has three variants:</BlockBody>
           <MoltenPushButton
             disabled={buttonsDisabled}
             click={() => {}}
@@ -494,65 +470,43 @@ console.log(answer);</code></pre>
           <MoltenPushButton
             disabled={buttonsDisabled}
             click={() => {}}
+            text={"Store"}
+            snap={"wide"}
+          />
+          <MoltenPushButton
+            disabled={buttonsDisabled}
+            click={() => {}}
             text={"Outlined"}
             style={"outlined"}
-          /></BlockRow
-        >
-      </Block>
-    </div>
+          />
+          <BlockBody>Now in a row layout:</BlockBody>
+          <BlockRow>
+            <MoltenPushButton
+              disabled={buttonsDisabled}
+              click={() => {}}
+              text={"Normal"}
+              style={"normal"}
+            />
+            <MoltenPushButton
+              disabled={buttonsDisabled}
+              click={() => {}}
+              text={"Accept"}
+              style={"accept"}
+            />
+            <MoltenPushButton
+              disabled={buttonsDisabled}
+              click={() => {}}
+              text={"Outlined"}
+              style={"outlined"}
+            /></BlockRow
+          >
+        </Block>
+      </div>
 
-    <div class="mock-panel">
-      <Block>
-        <BlockTitle>MeltCombo</BlockTitle>
-        <BlockBody>This has no variants:</BlockBody>
-        <MeltCombo
-          title={"Field 1"}
-          bind:value={input3Value}
-          suggestions={suggestion3}
-          disabled={buttonsDisabled}
-        />
-        <MeltCombo
-          title={"Field 2"}
-          bind:value={input4Value}
-          suggestions={suggestion4}
-          disabled={buttonsDisabled}
-        />
-        <BlockTitle>MeltCombo</BlockTitle>
-        <BlockBody>Now in a row:</BlockBody>
-        <BlockRow>
-          <MeltCombo
-            title={"Ch"}
-            bind:value={input3Value}
-            suggestions={suggestionEvenTest}
-            disabled={buttonsDisabled}
-          />
-          <MeltCombo
-            title={"A Very Long Field Name"}
-            bind:value={input4Value}
-            suggestions={suggestionEvenTest}
-            disabled={buttonsDisabled}
-          />
-        </BlockRow>
-        <BlockBody>Row with even spacing:</BlockBody>
-        <BlockRow even>
-          <MeltCombo
-            title={"Ch"}
-            bind:value={input3Value}
-            suggestions={suggestionEvenTest}
-            disabled={buttonsDisabled}
-          />
-          <MeltCombo
-            title={"A Very Long Field Name"}
-            bind:value={input4Value}
-            suggestions={suggestionEvenTest}
-            disabled={buttonsDisabled}
-          />
-        </BlockRow>
-      </Block>
-      <Block border="red">
-        <BlockTitle>Important border added</BlockTitle>
-        <BlockBody>This is dangerous setting:</BlockBody>
-        <BlockRow>
+      <div class="mock-panel">
+        <Block>
+          <BlockTitle>MeltCombo</BlockTitle>
+          <BlockBody>This has no variants:</BlockBody>
           <MeltCombo
             title={"Field 1"}
             bind:value={input3Value}
@@ -565,360 +519,439 @@ console.log(answer);</code></pre>
             suggestions={suggestion4}
             disabled={buttonsDisabled}
           />
-        </BlockRow>
-      </Block>
-    </div>
+          <BlockTitle>MeltCombo</BlockTitle>
+          <BlockBody>Now in a row:</BlockBody>
+          <BlockRow>
+            <MeltCombo
+              title={"Ch"}
+              bind:value={input3Value}
+              suggestions={suggestionEvenTest}
+              disabled={buttonsDisabled}
+            />
+            <MeltCombo
+              title={"A Very Long Field Name"}
+              bind:value={input4Value}
+              suggestions={suggestionEvenTest}
+              disabled={buttonsDisabled}
+            />
+          </BlockRow>
+          <BlockBody>Row with even spacing:</BlockBody>
+          <BlockRow even>
+            <MeltCombo
+              title={"Ch"}
+              bind:value={input3Value}
+              suggestions={suggestionEvenTest}
+              disabled={buttonsDisabled}
+            />
+            <MeltCombo
+              title={"A Very Long Field Name"}
+              bind:value={input4Value}
+              suggestions={suggestionEvenTest}
+              disabled={buttonsDisabled}
+            />
+          </BlockRow>
+        </Block>
+        <Block border="red">
+          <BlockTitle>Important border added</BlockTitle>
+          <BlockBody>This is dangerous setting:</BlockBody>
+          <BlockRow>
+            <MeltCombo
+              title={"Field 1"}
+              bind:value={input3Value}
+              suggestions={suggestion3}
+              disabled={buttonsDisabled}
+            />
+            <MeltCombo
+              title={"Field 2"}
+              bind:value={input4Value}
+              suggestions={suggestion4}
+              disabled={buttonsDisabled}
+            />
+          </BlockRow>
+        </Block>
+      </div>
 
-    <div class="mock-panel">
-      <span>ContextMenu and context-target:</span>
-      <span
-        use:contextTarget={{
-          items: [
-            {
-              text: [`No handler`, ""],
-              handler: () => {},
-              isDisabled: () => false,
-            },
-            {
-              text: [`Disabled`, ""],
-              handler: () => {},
-              isDisabled: () => true,
-            },
-            {
-              text: [`Change Text Color`, ""],
-              handler: () => changeTextColor(),
-              isDisabled: () => false,
-            },
-            {
-              text: [`I Have an Icon!`, ""],
-              handler: () => {},
-              isDisabled: () => true,
-              iconPath: "clear_element",
-            },
-            {
-              text: [`I Have Second Text`, "Ctrl + A"],
-              handler: () => {},
-              isDisabled: () => true,
-            },
-          ],
-        }}
-        style="color: {textColor}; font-weight: 700;">Right Click ME!</span
-      >
-    </div>
-    <div class="mock-panel">
-      <span>SvgIcon:</span>
-      <div class="svg-row">
-        <SvgIcon iconPath="folder_closed" fill="#FFF" />
-        <SvgIcon iconPath="file" fill="#FFF" />
-        <SvgIcon iconPath="folder_open" fill="#FFF" />
-        <SvgIcon iconPath="edit" fill="#FFF" />
-        <SvgIcon iconPath="edit" fill="#F00" />
-        <SvgIcon iconPath="edit" fill="#00F" />
+      <div class="mock-panel">
+        <span>ContextMenu and context-target:</span>
+        <span
+          use:contextTarget={{
+            items: [
+              {
+                text: [`No handler`, ""],
+                handler: () => {},
+                isDisabled: () => false,
+              },
+              {
+                text: [`Disabled`, ""],
+                handler: () => {},
+                isDisabled: () => true,
+              },
+              {
+                text: [`Change Text Color`, ""],
+                handler: () => changeTextColor(),
+                isDisabled: () => false,
+              },
+              {
+                text: [`I Have an Icon!`, ""],
+                handler: () => {},
+                isDisabled: () => true,
+                iconPath: "clear_element",
+              },
+              {
+                text: [`I Have Second Text`, "Ctrl + A"],
+                handler: () => {},
+                isDisabled: () => true,
+              },
+            ],
+          }}
+          style="color: {textColor}; font-weight: 700;">Right Click ME!</span
+        >
+      </div>
+      <div class="mock-panel">
+        <span>SvgIcon:</span>
+        <div class="svg-row">
+          <SvgIcon iconPath="folder_closed" fill="#FFF" />
+          <SvgIcon iconPath="file" fill="#FFF" />
+          <SvgIcon iconPath="folder_open" fill="#FFF" />
+          <SvgIcon iconPath="edit" fill="#FFF" />
+          <SvgIcon iconPath="edit" fill="#F00" />
+          <SvgIcon iconPath="edit" fill="#00F" />
+        </div>
+      </div>
+      <div class="mock-panel">
+        <Block>
+          <BlockTitle>IconButton</BlockTitle>
+          <BlockBody>Default and compact:</BlockBody>
+          <BlockRow>
+            <IconButton iconPath="edit" tooltipText="Edit" />
+            <IconButton
+              iconPath="deleteIcon"
+              compact
+              tooltipText="Delete (compact)"
+            />
+          </BlockRow>
+          <BlockBody>Disabled:</BlockBody>
+          <IconButton iconPath="deleteIcon" disabled tooltipText="Delete" />
+          <BlockBody>As a link:</BlockBody>
+          <IconButton
+            iconPath="folder_open"
+            href="https://intech.studio/"
+            target="_blank"
+            rel="noreferrer"
+            tooltipText="Open in new tab"
+          />
+        </Block>
+      </div>
+      <div class="mock-panel">
+        <span>MeltSlider:</span>
+        <span>Value: {sliderValue}</span>
+        <MeltSlider
+          target={sliderValue}
+          min={0}
+          max={100}
+          step={1}
+          disabled={buttonsDisabled}
+          on:change={(e) => {
+            sliderValue = e.detail.value;
+            sliderChangeValue = e.detail.value;
+          }}
+          on:commit={(e) => (sliderCommitValue = e.detail.value)}
+          on:blur={() => (sliderBlurCount += 1)}
+        />
+        <div>change (live): {sliderChangeValue ?? "—"}</div>
+        <div>commit (release): {sliderCommitValue ?? "—"}</div>
+        <div>blur count: {sliderBlurCount}</div>
+        <span>With gradient track: {sliderGradientValue}</span>
+        <MeltSlider
+          bind:target={sliderGradientValue}
+          min={0}
+          max={360}
+          step={1}
+          trackBackground="linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%), hsl(360,100%,50%))"
+          thumbBackground={`hsl(${sliderGradientValue}, 100%, 50%)`}
+          disabled={buttonsDisabled}
+        />
+      </div>
+
+      <div class="mock-panel">
+        <Block>
+          <BlockTitle>MoltenInput</BlockTitle>
+          <BlockBody>Text: {moltenInputText}</BlockBody>
+          <MoltenInput
+            bind:target={moltenInputText}
+            placeholder="Type something…"
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>Password:</BlockBody>
+          <MoltenInput
+            bind:target={moltenInputPassword}
+            password
+            placeholder="Password"
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>
+            Char limit (10): {moltenInputLimited.length}/10
+          </BlockBody>
+          <MoltenInput
+            bind:target={moltenInputLimited}
+            availableCharacters={10}
+            placeholder="Max 10 chars"
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>Disabled:</BlockBody>
+          <MoltenInput target={"Can't edit this"} disabled />
+        </Block>
+      </div>
+
+      <div class="mock-panel">
+        <Block>
+          <BlockTitle>MeltSelect</BlockTitle>
+          <BlockBody>Enabled:</BlockBody>
+          <MeltSelect
+            bind:target={meltSelectValue1}
+            options={[
+              { title: "0", value: 0 },
+              { title: "1", value: 1 },
+              { title: "2", value: 2 },
+              { title: "3", value: 3 },
+            ]}
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>With label:</BlockBody>
+          <MeltSelect
+            bind:target={meltSelectValue1}
+            title="My Label"
+            options={[
+              { title: "0", value: 0 },
+              { title: "1", value: 1 },
+              { title: "2", value: 2 },
+              { title: "3", value: 3 },
+            ]}
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>With label and info:</BlockBody>
+          <MeltSelect
+            bind:target={meltSelectValue1}
+            title="My Label"
+            options={[
+              { title: "0", value: 0, info: "Description for option 0" },
+              { title: "1", value: 1, info: "Description for option 1" },
+              { title: "2", value: 2, info: "Description for option 2" },
+              { title: "3", value: 3, info: "Description for option 3" },
+            ]}
+            disabled={buttonsDisabled}
+          />
+        </Block>
+      </div>
+      <div class="mock-panel">
+        <Block>
+          <BlockTitle>MeltRadio</BlockTitle>
+          <BlockBody>Button horizontal</BlockBody>
+          <MeltRadio
+            bind:target={meltRadioValue1}
+            style="button"
+            orientation="horizontal"
+            size="full"
+            options={[
+              { title: "0", value: 0 },
+              { title: "1", value: 1 },
+              { title: "2", value: 2 },
+            ]}
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>Button vertical</BlockBody>
+          <MeltRadio
+            bind:target={meltRadioValue2}
+            style="button"
+            orientation="vertical"
+            size="full"
+            options={[
+              { title: "0", value: 0 },
+              { title: "1", value: 1 },
+              { title: "2", value: 2 },
+            ]}
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>Radio horizontal</BlockBody>
+          <MeltRadio
+            bind:target={meltRadioValue3}
+            style="radio"
+            orientation="horizontal"
+            size="full"
+            options={[
+              { title: "0", value: 0 },
+              { title: "1", value: 1 },
+              { title: "2", value: 2 },
+            ]}
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>Radio vertical</BlockBody>
+          <MeltRadio
+            bind:target={meltRadioValue4}
+            style="radio"
+            orientation="vertical"
+            size="full"
+            options={[
+              { title: "0", value: 0 },
+              { title: "1", value: 1 },
+              { title: "2", value: 2 },
+            ]}
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>Button with individual options disabled</BlockBody>
+          <MeltRadio
+            bind:target={meltRadioValue5}
+            style="button"
+            orientation="horizontal"
+            size="full"
+            options={[
+              { title: "0", value: 0 },
+              { title: "1", value: 1, disabled: true },
+              { title: "2", value: 2 },
+              { title: "3", value: 3, disabled: true },
+            ]}
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>Radio with individual options disabled</BlockBody>
+          <MeltRadio
+            bind:target={meltRadioValue6}
+            style="radio"
+            orientation="vertical"
+            size="full"
+            options={[
+              { title: "Enabled", value: 0 },
+              { title: "Disabled", value: 1, disabled: true },
+              { title: "Also enabled", value: 2 },
+            ]}
+            disabled={buttonsDisabled}
+          /></Block
+        >
+      </div>
+      <div class="mock-panel">
+        <Block>
+          <BlockTitle>LogStream</BlockTitle>
+          <BlockBody>
+            Push messages into an isolated stream; watch it stack, aggregate
+            repeats into a count, cap at 3 visible, and auto-dismiss after 5s.
+          </BlockBody>
+          <BlockBody>Visible messages: {demoLogStreamContentCount}</BlockBody>
+          <BlockRow>
+            <MoltenPushButton
+              text="Normal"
+              click={() =>
+                pushDemoLog(LogMessageType.NORMAL, "Normal log message")}
+              disabled={buttonsDisabled}
+            />
+            <MoltenPushButton
+              text="Success"
+              click={() =>
+                pushDemoLog(LogMessageType.SUCCESS, "Operation succeeded")}
+              disabled={buttonsDisabled}
+            />
+            <MoltenPushButton
+              text="Alert"
+              click={() =>
+                pushDemoLog(LogMessageType.ALERT, "Careful, alert triggered")}
+              disabled={buttonsDisabled}
+            />
+          </BlockRow>
+          <BlockRow>
+            <MoltenPushButton
+              text="Fail"
+              click={() => pushDemoLog(LogMessageType.FAIL, "Something failed")}
+              disabled={buttonsDisabled}
+            />
+            <MoltenPushButton
+              text="Progress"
+              click={() =>
+                pushDemoLog(LogMessageType.PROGRESS, "Working on it…")}
+              disabled={buttonsDisabled}
+            />
+          </BlockRow>
+          <BlockBody>Push the same message twice to see it count up:</BlockBody>
+          <MoltenPushButton
+            text="Push repeated message"
+            click={() => pushDemoLog(LogMessageType.NORMAL, "Repeated message")}
+            disabled={buttonsDisabled}
+          />
+          <BlockBody
+            >Push distinct messages fast to see the 3-message cap:</BlockBody
+          >
+          <MoltenPushButton
+            text="Push burst"
+            click={pushDemoBurst}
+            disabled={buttonsDisabled}
+          />
+          <BlockBody>Reset the stream:</BlockBody>
+          <MoltenPushButton
+            text="Reset"
+            style="outlined"
+            click={() => demoLogStream.reset()}
+            disabled={buttonsDisabled}
+          />
+        </Block>
+      </div>
+
+      <div class="mock-panel">
+        <Block>
+          <BlockTitle>Color Pickers</BlockTitle>
+          <BlockBody>
+            HSL: h={Math.round(pickerColor.h)} s={Math.round(pickerColor.s)} l={Math.round(
+              pickerColor.l,
+            )}
+          </BlockBody>
+          <BlockBody>SquareColorPicker:</BlockBody>
+          <div class="picker-box">
+            <SquareColorPicker
+              color={pickerColor}
+              on:input={(e) => (pickerColor = e.detail.color)}
+            />
+          </div>
+          <BlockBody>CircleColorPicker:</BlockBody>
+          <div class="picker-box">
+            <CircleColorPicker
+              color={pickerColor}
+              on:input={(e) => (pickerColor = e.detail.color)}
+            />
+          </div>
+          <BlockBody>SliderColorPicker:</BlockBody>
+          <SliderColorPicker
+            color={pickerColor}
+            on:input={(e) => (pickerColor = e.detail.color)}
+          />
+        </Block>
+      </div>
+
+      <div class="mock-panel">
+        <Block>
+          <BlockTitle>ColorLayerSelector</BlockTitle>
+          <BlockBody>Selected layer: {layerSelected}</BlockBody>
+          <ColorLayerSelector
+            colors={layerColors}
+            selected={layerSelected}
+            on:add-layer={handleAddLayer}
+            on:remove-layer={handleRemoveLayer}
+            on:layer-click={(e) => (layerSelected = e.detail.index)}
+          />
+        </Block>
+      </div>
+
+      <div class="mock-panel">
+        <Block>
+          <BlockTitle>MarkdownContainer</BlockTitle>
+          <BlockBody>
+            <MarkdownContainer markdown={markdownSample} />
+          </BlockBody>
+        </Block>
       </div>
     </div>
-    <div class="mock-panel">
-      <Block>
-        <BlockTitle>IconButton</BlockTitle>
-        <BlockBody>Default and compact:</BlockBody>
-        <BlockRow>
-          <IconButton iconPath="edit" tooltipText="Edit" />
-          <IconButton
-            iconPath="deleteIcon"
-            compact
-            tooltipText="Delete (compact)"
-          />
-        </BlockRow>
-        <BlockBody>Disabled:</BlockBody>
-        <IconButton iconPath="deleteIcon" disabled tooltipText="Delete" />
-        <BlockBody>As a link:</BlockBody>
-        <IconButton
-          iconPath="folder_open"
-          href="https://intech.studio/"
-          target="_blank"
-          rel="noreferrer"
-          tooltipText="Open in new tab"
-        />
-      </Block>
-    </div>
-    <div class="mock-panel">
-      <span>MeltSlider:</span>
-      <span>Value: {sliderValue}</span>
-      <MeltSlider
-        target={sliderValue}
-        min={0}
-        max={100}
-        step={1}
-        disabled={buttonsDisabled}
-        on:change={(e) => {
-          sliderValue = e.detail.value;
-          sliderChangeValue = e.detail.value;
-        }}
-        on:commit={(e) => (sliderCommitValue = e.detail.value)}
-        on:blur={() => (sliderBlurCount += 1)}
-      />
-      <div>change (live): {sliderChangeValue ?? "—"}</div>
-      <div>commit (release): {sliderCommitValue ?? "—"}</div>
-      <div>blur count: {sliderBlurCount}</div>
-      <span>With gradient track: {sliderGradientValue}</span>
-      <MeltSlider
-        bind:target={sliderGradientValue}
-        min={0}
-        max={360}
-        step={1}
-        trackBackground="linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%), hsl(360,100%,50%))"
-        thumbBackground={`hsl(${sliderGradientValue}, 100%, 50%)`}
-        disabled={buttonsDisabled}
-      />
-    </div>
-
-    <div class="mock-panel">
-      <Block>
-        <BlockTitle>MoltenInput</BlockTitle>
-        <BlockBody>Text: {moltenInputText}</BlockBody>
-        <MoltenInput
-          bind:target={moltenInputText}
-          placeholder="Type something…"
-          disabled={buttonsDisabled}
-        />
-        <BlockBody>Password:</BlockBody>
-        <MoltenInput
-          bind:target={moltenInputPassword}
-          password
-          placeholder="Password"
-          disabled={buttonsDisabled}
-        />
-        <BlockBody>
-          Char limit (10): {moltenInputLimited.length}/10
-        </BlockBody>
-        <MoltenInput
-          bind:target={moltenInputLimited}
-          availableCharacters={10}
-          placeholder="Max 10 chars"
-          disabled={buttonsDisabled}
-        />
-        <BlockBody>Disabled:</BlockBody>
-        <MoltenInput target={"Can't edit this"} disabled />
-      </Block>
-    </div>
-
-    <div class="mock-panel">
-      <Block>
-        <BlockTitle>MeltSelect</BlockTitle>
-        <BlockBody>Enabled:</BlockBody>
-        <MeltSelect
-          bind:target={meltSelectValue1}
-          options={[
-            { title: "0", value: 0 },
-            { title: "1", value: 1 },
-            { title: "2", value: 2 },
-            { title: "3", value: 3 },
-          ]}
-          disabled={buttonsDisabled}
-        />
-        <BlockBody>With label:</BlockBody>
-        <MeltSelect
-          bind:target={meltSelectValue1}
-          title="My Label"
-          options={[
-            { title: "0", value: 0 },
-            { title: "1", value: 1 },
-            { title: "2", value: 2 },
-            { title: "3", value: 3 },
-          ]}
-          disabled={buttonsDisabled}
-        />
-        <BlockBody>With label and info:</BlockBody>
-        <MeltSelect
-          bind:target={meltSelectValue1}
-          title="My Label"
-          options={[
-            { title: "0", value: 0, info: "Description for option 0" },
-            { title: "1", value: 1, info: "Description for option 1" },
-            { title: "2", value: 2, info: "Description for option 2" },
-            { title: "3", value: 3, info: "Description for option 3" },
-          ]}
-          disabled={buttonsDisabled}
-        />
-      </Block>
-    </div>
-    <div class="mock-panel">
-      <Block>
-        <BlockTitle>MeltRadio</BlockTitle>
-        <BlockBody>Button horizontal</BlockBody>
-        <MeltRadio
-          bind:target={meltRadioValue1}
-          style="button"
-          orientation="horizontal"
-          size="full"
-          options={[
-            { title: "0", value: 0 },
-            { title: "1", value: 1 },
-            { title: "2", value: 2 },
-          ]}
-          disabled={buttonsDisabled}
-        />
-        <BlockBody>Button vertical</BlockBody>
-        <MeltRadio
-          bind:target={meltRadioValue2}
-          style="button"
-          orientation="vertical"
-          size="full"
-          options={[
-            { title: "0", value: 0 },
-            { title: "1", value: 1 },
-            { title: "2", value: 2 },
-          ]}
-          disabled={buttonsDisabled}
-        />
-        <BlockBody>Radio horizontal</BlockBody>
-        <MeltRadio
-          bind:target={meltRadioValue3}
-          style="radio"
-          orientation="horizontal"
-          size="full"
-          options={[
-            { title: "0", value: 0 },
-            { title: "1", value: 1 },
-            { title: "2", value: 2 },
-          ]}
-          disabled={buttonsDisabled}
-        />
-        <BlockBody>Radio vertical</BlockBody>
-        <MeltRadio
-          bind:target={meltRadioValue4}
-          style="radio"
-          orientation="vertical"
-          size="full"
-          options={[
-            { title: "0", value: 0 },
-            { title: "1", value: 1 },
-            { title: "2", value: 2 },
-          ]}
-          disabled={buttonsDisabled}
-        />
-        <BlockBody>Button with individual options disabled</BlockBody>
-        <MeltRadio
-          bind:target={meltRadioValue5}
-          style="button"
-          orientation="horizontal"
-          size="full"
-          options={[
-            { title: "0", value: 0 },
-            { title: "1", value: 1, disabled: true },
-            { title: "2", value: 2 },
-            { title: "3", value: 3, disabled: true },
-          ]}
-          disabled={buttonsDisabled}
-        />
-        <BlockBody>Radio with individual options disabled</BlockBody>
-        <MeltRadio
-          bind:target={meltRadioValue6}
-          style="radio"
-          orientation="vertical"
-          size="full"
-          options={[
-            { title: "Enabled", value: 0 },
-            { title: "Disabled", value: 1, disabled: true },
-            { title: "Also enabled", value: 2 },
-          ]}
-          disabled={buttonsDisabled}
-        /></Block
-      >
-    </div>
-    <div class="mock-panel">
-      <MoltenPushButton
-        text="Show me a LogMessage"
-        click={handleShowLogMessage}
-        disabled={buttonsDisabled}
-      />
-      <MeltSelect
-        bind:target={logMessageType}
-        options={[
-          { title: "Normal", value: LogMessageType.NORMAL },
-          { title: "Success", value: LogMessageType.SUCCESS },
-          { title: "Alert", value: LogMessageType.ALERT },
-          { title: "Fail", value: LogMessageType.FAIL },
-          { title: "Progress", value: LogMessageType.PROGRESS },
-        ]}
-        disabled={buttonsDisabled}
-      />
-
-      <LogMessage
-        count={0}
-        type={logMessageType}
-        text={"I am a static one. Push the button to show another. Push it again to make it count up! Click the dynamic one to make it dismiss!"}
-      />
-      {#if logMessageCount > 0}
-        <div
-          in:fly|global={{ x: -10, duration: 500 }}
-          out:fly|global={{ x: 10, duration: 500 }}
-        >
-          <LogMessage
-            count={logMessageCount}
-            type={logMessageType}
-            text={"Hey, I am a little log message here! What else should this say? Well, maybe it would be probable good to tell a story as long, as this would wrap around to show that what is my width."}
-            on:click={() => {
-              console.log("yay");
-              logMessageCount = 0;
-            }}
-          />
-        </div>
-      {/if}
-    </div>
-
-    <div class="mock-panel">
-      <Block>
-        <BlockTitle>Color Pickers</BlockTitle>
-        <BlockBody>
-          HSL: h={Math.round(pickerColor.h)} s={Math.round(pickerColor.s)} l={Math.round(
-            pickerColor.l,
-          )}
-        </BlockBody>
-        <BlockBody>SquareColorPicker:</BlockBody>
-        <div class="picker-box">
-          <SquareColorPicker
-            color={pickerColor}
-            on:input={(e) => (pickerColor = e.detail.color)}
-          />
-        </div>
-        <BlockBody>CircleColorPicker:</BlockBody>
-        <div class="picker-box">
-          <CircleColorPicker
-            color={pickerColor}
-            on:input={(e) => (pickerColor = e.detail.color)}
-          />
-        </div>
-        <BlockBody>SliderColorPicker:</BlockBody>
-        <SliderColorPicker
-          color={pickerColor}
-          on:input={(e) => (pickerColor = e.detail.color)}
-        />
-      </Block>
-    </div>
-
-    <div class="mock-panel">
-      <Block>
-        <BlockTitle>ColorLayerSelector</BlockTitle>
-        <BlockBody>Selected layer: {layerSelected}</BlockBody>
-        <ColorLayerSelector
-          colors={layerColors}
-          selected={layerSelected}
-          on:add-layer={handleAddLayer}
-          on:remove-layer={handleRemoveLayer}
-          on:layer-click={(e) => (layerSelected = e.detail.index)}
-        />
-      </Block>
-    </div>
-
-    <div class="mock-panel">
-      <Block>
-        <BlockTitle>MarkdownContainer</BlockTitle>
-        <BlockBody>
-          <MarkdownContainer markdown={markdownSample} />
-        </BlockBody>
-      </Block>
-    </div>
   </div>
+
+  <LogStream
+    store={demoLogStream}
+    bottom="2rem"
+    on:content-change={(e) => (demoLogStreamContentCount = e.detail.count)}
+  />
 </main>
 
 <style>
@@ -948,11 +981,16 @@ console.log(answer);</code></pre>
   }
 
   main {
-    padding: 5rem;
     background-color: var(--background);
     height: 100vh;
-    overflow-y: auto;
+    overflow: hidden;
     position: relative;
+  }
+
+  div.main-scroll {
+    height: 100%;
+    padding: 5rem;
+    overflow-y: auto;
   }
 
   span {
