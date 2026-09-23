@@ -30,6 +30,9 @@
 
   import { tooltip } from "./lib/tooltip.ts";
 
+  import GridSplitpanes from "./lib/GridSplitpanes.svelte";
+  import GridPane from "./lib/GridPane.svelte";
+
   let t = false;
 
   // Expose buttonsDisabled to window for external control
@@ -170,9 +173,9 @@ console.log(answer);</code></pre>
 </script>
 
 <main on:contextmenu|preventDefault>
-  <div class="main-scroll">
-    <div class="main-container">
-      <div class="mock-panel">
+  <GridSplitpanes class="app-frame">
+    <GridPane size={20} minSize={10} maxSize={45} class="pane-left">
+      <div class="frame-scroll">
         <span class="color-preview-label"
           ><div
             class="color-preview-box"
@@ -328,577 +331,618 @@ console.log(answer);</code></pre>
           --radius-full</span
         >
       </div>
+    </GridPane>
 
-      <div class="mock-panel">
-        <Block>
-          <div
-            use:tooltip={{
-              nowrap: true,
-              placement: "bottom",
-              duration: 75,
-              instant: true,
-              class: "px-2 py-1",
-              text: "Delete",
-            }}
-          >
-            Tooltip test
+    <GridPane class="pane-middle">
+      <div class="main-scroll">
+        <div class="main-container">
+          <div class="mock-panel">
+            <Block>
+              <div
+                use:tooltip={{
+                  nowrap: true,
+                  placement: "bottom",
+                  duration: 75,
+                  instant: true,
+                  class: "px-2 py-1",
+                  text: "Delete",
+                }}
+              >
+                Tooltip test
+              </div>
+              <BlockTitle>MeltCheckbox</BlockTitle>
+              <BlockBody>Comes in two wariants:</BlockBody>
+              <MeltCheckbox
+                target={t}
+                title={"Block style (Default)"}
+                disabled={buttonsDisabled}
+              />
+              <MeltCheckbox
+                target={t}
+                title={"Block style (Default)"}
+                disabled={buttonsDisabled}
+              />
+              <MeltCheckbox
+                target={t}
+                style={"transparent"}
+                title={"Transparent style"}
+                disabled={buttonsDisabled}
+              />
+              <MeltCheckbox
+                target={t}
+                style={"transparent"}
+                title={"Transparent style"}
+                disabled={buttonsDisabled}
+              />
+            </Block>
+            <Block border="red">
+              <BlockTitle>Important border added</BlockTitle>
+              <BlockBody>This is dangerous setting:</BlockBody>
+              <MeltCheckbox
+                target={t}
+                title={"Destory enabled"}
+                disabled={buttonsDisabled}
+              />
+            </Block>
+            <Block>
+              <BlockTitle>Toggle</BlockTitle>
+              <Toggle title={"Test toggle"} disabled={buttonsDisabled} />
+            </Block>
           </div>
-          <BlockTitle>MeltCheckbox</BlockTitle>
-          <BlockBody>Comes in two wariants:</BlockBody>
-          <MeltCheckbox
-            target={t}
-            title={"Block style (Default)"}
-            disabled={buttonsDisabled}
-          />
-          <MeltCheckbox
-            target={t}
-            title={"Block style (Default)"}
-            disabled={buttonsDisabled}
-          />
-          <MeltCheckbox
-            target={t}
-            style={"transparent"}
-            title={"Transparent style"}
-            disabled={buttonsDisabled}
-          />
-          <MeltCheckbox
-            target={t}
-            style={"transparent"}
-            title={"Transparent style"}
-            disabled={buttonsDisabled}
-          />
-        </Block>
-        <Block border="red">
-          <BlockTitle>Important border added</BlockTitle>
-          <BlockBody>This is dangerous setting:</BlockBody>
-          <MeltCheckbox
-            target={t}
-            title={"Destory enabled"}
-            disabled={buttonsDisabled}
-          />
-        </Block>
-        <Block>
-          <BlockTitle>Toggle</BlockTitle>
-          <Toggle title={"Test toggle"} disabled={buttonsDisabled} />
-        </Block>
-      </div>
 
-      <div class="mock-panel">
-        <Block>
-          <div
-            style="width: fit-content;"
-            use:tooltip={{
-              text: "Confirm text",
-              placement: "top",
-              buttons: [
-                {
-                  label: "Cancel",
-                  handler: undefined,
-                },
-                {
-                  label: "Confirm",
-                  handler: () => {
-                    alert(1);
-                  },
-                },
-              ],
-              triggerEvents: ["show-buttons", "hover"],
-            }}
-          >
-            <MoltenPushButton
-              disabled={buttonsDisabled}
-              click={() => {}}
-              text={"Outlined confirm"}
-              style={"outlined"}
-            />
-          </div>
-          <BlockTitle>MoltenPushButton</BlockTitle>
-
-          <BlockBody>This has dropdown value {clearButtonTarget}</BlockBody>
-          <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
-          <MoltenPushButtonGroup
-            options={clearButtonOptions}
-            bind:target={clearButtonTarget}
-            style="normal"
-            disabled={buttonsDisabled}
-          >
-            <div
-              use:tooltip={{
-                text: "Clear the current selection",
-                placement: "top",
-                buttons: [
-                  {
-                    label: "Cancel",
-                    handler: undefined,
-                  },
-                  {
-                    label: "Confirm",
-                    handler: () => {
-                      handleAction();
-                      closeDropdown();
+          <div class="mock-panel">
+            <Block>
+              <div
+                style="width: fit-content;"
+                use:tooltip={{
+                  text: "Confirm text",
+                  placement: "top",
+                  buttons: [
+                    {
+                      label: "Cancel",
+                      handler: undefined,
                     },
-                  },
-                ],
-                triggerEvents: ["show-buttons", "hover"],
-              }}
-              slot="button"
-              let:closeDropdown
-              let:handleAction
-              let:selectedLabel
-            >
+                    {
+                      label: "Confirm",
+                      handler: () => {
+                        alert(1);
+                      },
+                    },
+                  ],
+                  triggerEvents: ["show-buttons", "hover"],
+                }}
+              >
+                <MoltenPushButton
+                  disabled={buttonsDisabled}
+                  click={() => {}}
+                  text={"Outlined confirm"}
+                  style={"outlined"}
+                />
+              </div>
+              <BlockTitle>MoltenPushButton</BlockTitle>
+
+              <BlockBody>This has dropdown value {clearButtonTarget}</BlockBody>
+              <BlockBody>Button width: {clearButtonWidth}px</BlockBody>
+              <MoltenPushButtonGroup
+                options={clearButtonOptions}
+                bind:target={clearButtonTarget}
+                style="normal"
+                disabled={buttonsDisabled}
+              >
+                <div
+                  use:tooltip={{
+                    text: "Clear the current selection",
+                    placement: "top",
+                    buttons: [
+                      {
+                        label: "Cancel",
+                        handler: undefined,
+                      },
+                      {
+                        label: "Confirm",
+                        handler: () => {
+                          handleAction();
+                          closeDropdown();
+                        },
+                      },
+                    ],
+                    triggerEvents: ["show-buttons", "hover"],
+                  }}
+                  slot="button"
+                  let:closeDropdown
+                  let:handleAction
+                  let:selectedLabel
+                >
+                  <MoltenPushButton
+                    disabled={buttonsDisabled}
+                    click={() => {}}
+                    text={selectedLabel || "Clear"}
+                    style={"normal"}
+                    options={clearButtonOptions}
+                    bind:target={clearButtonTarget}
+                    bind:width={clearButtonWidth}
+                    decorations={["(", ")"]}
+                    grouped={true}
+                  />
+                </div>
+              </MoltenPushButtonGroup>
+
+              <BlockBody>This has three variants:</BlockBody>
               <MoltenPushButton
                 disabled={buttonsDisabled}
                 click={() => {}}
-                text={selectedLabel || "Clear"}
-                style={"normal"}
-                options={clearButtonOptions}
-                bind:target={clearButtonTarget}
-                bind:width={clearButtonWidth}
-                decorations={["(", ")"]}
-                grouped={true}
+                text={"Accept"}
+                style={"accept"}
               />
+              <MoltenPushButton
+                disabled={buttonsDisabled}
+                click={() => {}}
+                text={"Store"}
+                snap={"wide"}
+              />
+              <MoltenPushButton
+                disabled={buttonsDisabled}
+                click={() => {}}
+                text={"Outlined"}
+                style={"outlined"}
+              />
+              <BlockBody>Now in a row layout:</BlockBody>
+              <BlockRow>
+                <MoltenPushButton
+                  disabled={buttonsDisabled}
+                  click={() => {}}
+                  text={"Normal"}
+                  style={"normal"}
+                />
+                <MoltenPushButton
+                  disabled={buttonsDisabled}
+                  click={() => {}}
+                  text={"Accept"}
+                  style={"accept"}
+                />
+                <MoltenPushButton
+                  disabled={buttonsDisabled}
+                  click={() => {}}
+                  text={"Outlined"}
+                  style={"outlined"}
+                /></BlockRow
+              >
+            </Block>
+          </div>
+
+          <div class="mock-panel">
+            <Block>
+              <BlockTitle>MeltCombo</BlockTitle>
+              <BlockBody>This has no variants:</BlockBody>
+              <MeltCombo
+                title={"Field 1"}
+                bind:value={input3Value}
+                suggestions={suggestion3}
+                disabled={buttonsDisabled}
+              />
+              <MeltCombo
+                title={"Field 2"}
+                bind:value={input4Value}
+                suggestions={suggestion4}
+                disabled={buttonsDisabled}
+              />
+              <BlockTitle>MeltCombo</BlockTitle>
+              <BlockBody>Now in a row:</BlockBody>
+              <BlockRow>
+                <MeltCombo
+                  title={"Ch"}
+                  bind:value={input3Value}
+                  suggestions={suggestionEvenTest}
+                  disabled={buttonsDisabled}
+                />
+                <MeltCombo
+                  title={"A Very Long Field Name"}
+                  bind:value={input4Value}
+                  suggestions={suggestionEvenTest}
+                  disabled={buttonsDisabled}
+                />
+              </BlockRow>
+              <BlockBody>Row with even spacing:</BlockBody>
+              <BlockRow even>
+                <MeltCombo
+                  title={"Ch"}
+                  bind:value={input3Value}
+                  suggestions={suggestionEvenTest}
+                  disabled={buttonsDisabled}
+                />
+                <MeltCombo
+                  title={"A Very Long Field Name"}
+                  bind:value={input4Value}
+                  suggestions={suggestionEvenTest}
+                  disabled={buttonsDisabled}
+                />
+              </BlockRow>
+            </Block>
+            <Block border="red">
+              <BlockTitle>Important border added</BlockTitle>
+              <BlockBody>This is dangerous setting:</BlockBody>
+              <BlockRow>
+                <MeltCombo
+                  title={"Field 1"}
+                  bind:value={input3Value}
+                  suggestions={suggestion3}
+                  disabled={buttonsDisabled}
+                />
+                <MeltCombo
+                  title={"Field 2"}
+                  bind:value={input4Value}
+                  suggestions={suggestion4}
+                  disabled={buttonsDisabled}
+                />
+              </BlockRow>
+            </Block>
+          </div>
+
+          <div class="mock-panel">
+            <span>ContextMenu and context-target:</span>
+            <span
+              use:contextTarget={{
+                items: [
+                  {
+                    text: [`No handler`, ""],
+                    handler: () => {},
+                    isDisabled: () => false,
+                  },
+                  {
+                    text: [`Disabled`, ""],
+                    handler: () => {},
+                    isDisabled: () => true,
+                  },
+                  {
+                    text: [`Change Text Color`, ""],
+                    handler: () => changeTextColor(),
+                    isDisabled: () => false,
+                  },
+                  {
+                    text: [`I Have an Icon!`, ""],
+                    handler: () => {},
+                    isDisabled: () => true,
+                    iconPath: "clear_element",
+                  },
+                  {
+                    text: [`I Have Second Text`, "Ctrl + A"],
+                    handler: () => {},
+                    isDisabled: () => true,
+                  },
+                ],
+              }}
+              style="color: {textColor}; font-weight: 700;"
+              >Right Click ME!</span
+            >
+          </div>
+          <div class="mock-panel">
+            <span>SvgIcon:</span>
+            <div class="svg-row">
+              <SvgIcon iconPath="folder_closed" fill="#FFF" />
+              <SvgIcon iconPath="file" fill="#FFF" />
+              <SvgIcon iconPath="folder_open" fill="#FFF" />
+              <SvgIcon iconPath="edit" fill="#FFF" />
+              <SvgIcon iconPath="edit" fill="#F00" />
+              <SvgIcon iconPath="edit" fill="#00F" />
             </div>
-          </MoltenPushButtonGroup>
+          </div>
+          <div class="mock-panel">
+            <Block>
+              <BlockTitle>IconButton</BlockTitle>
+              <BlockBody>Default and compact:</BlockBody>
+              <BlockRow>
+                <IconButton iconPath="edit" tooltipText="Edit" />
+                <IconButton
+                  iconPath="deleteIcon"
+                  compact
+                  tooltipText="Delete (compact)"
+                />
+              </BlockRow>
+              <BlockBody>Disabled:</BlockBody>
+              <IconButton iconPath="deleteIcon" disabled tooltipText="Delete" />
+              <BlockBody>As a link:</BlockBody>
+              <IconButton
+                iconPath="folder_open"
+                href="https://intech.studio/"
+                target="_blank"
+                rel="noreferrer"
+                tooltipText="Open in new tab"
+              />
+            </Block>
+          </div>
+          <div class="mock-panel">
+            <span>MeltSlider:</span>
+            <span>Value: {sliderValue}</span>
+            <MeltSlider
+              target={sliderValue}
+              min={0}
+              max={100}
+              step={1}
+              disabled={buttonsDisabled}
+              on:change={(e) => {
+                sliderValue = e.detail.value;
+                sliderChangeValue = e.detail.value;
+              }}
+              on:commit={(e) => (sliderCommitValue = e.detail.value)}
+              on:blur={() => (sliderBlurCount += 1)}
+            />
+            <div>change (live): {sliderChangeValue ?? "—"}</div>
+            <div>commit (release): {sliderCommitValue ?? "—"}</div>
+            <div>blur count: {sliderBlurCount}</div>
+            <span>With gradient track: {sliderGradientValue}</span>
+            <MeltSlider
+              bind:target={sliderGradientValue}
+              min={0}
+              max={360}
+              step={1}
+              trackBackground="linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%), hsl(360,100%,50%))"
+              thumbBackground={`hsl(${sliderGradientValue}, 100%, 50%)`}
+              disabled={buttonsDisabled}
+            />
+          </div>
 
-          <BlockBody>This has three variants:</BlockBody>
-          <MoltenPushButton
-            disabled={buttonsDisabled}
-            click={() => {}}
-            text={"Accept"}
-            style={"accept"}
-          />
-          <MoltenPushButton
-            disabled={buttonsDisabled}
-            click={() => {}}
-            text={"Store"}
-            snap={"wide"}
-          />
-          <MoltenPushButton
-            disabled={buttonsDisabled}
-            click={() => {}}
-            text={"Outlined"}
-            style={"outlined"}
-          />
-          <BlockBody>Now in a row layout:</BlockBody>
-          <BlockRow>
-            <MoltenPushButton
-              disabled={buttonsDisabled}
-              click={() => {}}
-              text={"Normal"}
-              style={"normal"}
-            />
-            <MoltenPushButton
-              disabled={buttonsDisabled}
-              click={() => {}}
-              text={"Accept"}
-              style={"accept"}
-            />
-            <MoltenPushButton
-              disabled={buttonsDisabled}
-              click={() => {}}
-              text={"Outlined"}
-              style={"outlined"}
-            /></BlockRow
-          >
-        </Block>
-      </div>
+          <div class="mock-panel">
+            <Block>
+              <BlockTitle>MoltenInput</BlockTitle>
+              <BlockBody>Text: {moltenInputText}</BlockBody>
+              <MoltenInput
+                bind:target={moltenInputText}
+                placeholder="Type something…"
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>Password:</BlockBody>
+              <MoltenInput
+                bind:target={moltenInputPassword}
+                password
+                placeholder="Password"
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>
+                Char limit (10): {moltenInputLimited.length}/10
+              </BlockBody>
+              <MoltenInput
+                bind:target={moltenInputLimited}
+                availableCharacters={10}
+                placeholder="Max 10 chars"
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>Disabled:</BlockBody>
+              <MoltenInput target={"Can't edit this"} disabled />
+            </Block>
+          </div>
 
-      <div class="mock-panel">
-        <Block>
-          <BlockTitle>MeltCombo</BlockTitle>
-          <BlockBody>This has no variants:</BlockBody>
-          <MeltCombo
-            title={"Field 1"}
-            bind:value={input3Value}
-            suggestions={suggestion3}
-            disabled={buttonsDisabled}
-          />
-          <MeltCombo
-            title={"Field 2"}
-            bind:value={input4Value}
-            suggestions={suggestion4}
-            disabled={buttonsDisabled}
-          />
-          <BlockTitle>MeltCombo</BlockTitle>
-          <BlockBody>Now in a row:</BlockBody>
-          <BlockRow>
-            <MeltCombo
-              title={"Ch"}
-              bind:value={input3Value}
-              suggestions={suggestionEvenTest}
-              disabled={buttonsDisabled}
-            />
-            <MeltCombo
-              title={"A Very Long Field Name"}
-              bind:value={input4Value}
-              suggestions={suggestionEvenTest}
-              disabled={buttonsDisabled}
-            />
-          </BlockRow>
-          <BlockBody>Row with even spacing:</BlockBody>
-          <BlockRow even>
-            <MeltCombo
-              title={"Ch"}
-              bind:value={input3Value}
-              suggestions={suggestionEvenTest}
-              disabled={buttonsDisabled}
-            />
-            <MeltCombo
-              title={"A Very Long Field Name"}
-              bind:value={input4Value}
-              suggestions={suggestionEvenTest}
-              disabled={buttonsDisabled}
-            />
-          </BlockRow>
-        </Block>
-        <Block border="red">
-          <BlockTitle>Important border added</BlockTitle>
-          <BlockBody>This is dangerous setting:</BlockBody>
-          <BlockRow>
-            <MeltCombo
-              title={"Field 1"}
-              bind:value={input3Value}
-              suggestions={suggestion3}
-              disabled={buttonsDisabled}
-            />
-            <MeltCombo
-              title={"Field 2"}
-              bind:value={input4Value}
-              suggestions={suggestion4}
-              disabled={buttonsDisabled}
-            />
-          </BlockRow>
-        </Block>
-      </div>
+          <div class="mock-panel">
+            <Block>
+              <BlockTitle>MeltSelect</BlockTitle>
+              <BlockBody>Enabled:</BlockBody>
+              <MeltSelect
+                bind:target={meltSelectValue1}
+                options={[
+                  { title: "0", value: 0 },
+                  { title: "1", value: 1 },
+                  { title: "2", value: 2 },
+                  { title: "3", value: 3 },
+                ]}
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>With label:</BlockBody>
+              <MeltSelect
+                bind:target={meltSelectValue1}
+                title="My Label"
+                options={[
+                  { title: "0", value: 0 },
+                  { title: "1", value: 1 },
+                  { title: "2", value: 2 },
+                  { title: "3", value: 3 },
+                ]}
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>With label and info:</BlockBody>
+              <MeltSelect
+                bind:target={meltSelectValue1}
+                title="My Label"
+                options={[
+                  { title: "0", value: 0, info: "Description for option 0" },
+                  { title: "1", value: 1, info: "Description for option 1" },
+                  { title: "2", value: 2, info: "Description for option 2" },
+                  { title: "3", value: 3, info: "Description for option 3" },
+                ]}
+                disabled={buttonsDisabled}
+              />
+            </Block>
+          </div>
+          <div class="mock-panel">
+            <Block>
+              <BlockTitle>MeltRadio</BlockTitle>
+              <BlockBody>Button horizontal</BlockBody>
+              <MeltRadio
+                bind:target={meltRadioValue1}
+                style="button"
+                orientation="horizontal"
+                size="full"
+                options={[
+                  { title: "0", value: 0 },
+                  { title: "1", value: 1 },
+                  { title: "2", value: 2 },
+                ]}
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>Button vertical</BlockBody>
+              <MeltRadio
+                bind:target={meltRadioValue2}
+                style="button"
+                orientation="vertical"
+                size="full"
+                options={[
+                  { title: "0", value: 0 },
+                  { title: "1", value: 1 },
+                  { title: "2", value: 2 },
+                ]}
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>Radio horizontal</BlockBody>
+              <MeltRadio
+                bind:target={meltRadioValue3}
+                style="radio"
+                orientation="horizontal"
+                size="full"
+                options={[
+                  { title: "0", value: 0 },
+                  { title: "1", value: 1 },
+                  { title: "2", value: 2 },
+                ]}
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>Radio vertical</BlockBody>
+              <MeltRadio
+                bind:target={meltRadioValue4}
+                style="radio"
+                orientation="vertical"
+                size="full"
+                options={[
+                  { title: "0", value: 0 },
+                  { title: "1", value: 1 },
+                  { title: "2", value: 2 },
+                ]}
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>Button with individual options disabled</BlockBody>
+              <MeltRadio
+                bind:target={meltRadioValue5}
+                style="button"
+                orientation="horizontal"
+                size="full"
+                options={[
+                  { title: "0", value: 0 },
+                  { title: "1", value: 1, disabled: true },
+                  { title: "2", value: 2 },
+                  { title: "3", value: 3, disabled: true },
+                ]}
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>Radio with individual options disabled</BlockBody>
+              <MeltRadio
+                bind:target={meltRadioValue6}
+                style="radio"
+                orientation="vertical"
+                size="full"
+                options={[
+                  { title: "Enabled", value: 0 },
+                  { title: "Disabled", value: 1, disabled: true },
+                  { title: "Also enabled", value: 2 },
+                ]}
+                disabled={buttonsDisabled}
+              /></Block
+            >
+          </div>
+          <div class="mock-panel">
+            <Block>
+              <BlockTitle>LogStream</BlockTitle>
+              <BlockBody>
+                Push messages into an isolated stream; watch it stack, aggregate
+                repeats into a count, cap at 3 visible, and auto-dismiss after
+                5s.
+              </BlockBody>
+              <BlockBody
+                >Visible messages: {demoLogStreamContentCount}</BlockBody
+              >
+              <BlockRow>
+                <MoltenPushButton
+                  text="Normal"
+                  click={() =>
+                    pushDemoLog(LogMessageType.NORMAL, "Normal log message")}
+                  disabled={buttonsDisabled}
+                />
+                <MoltenPushButton
+                  text="Success"
+                  click={() =>
+                    pushDemoLog(LogMessageType.SUCCESS, "Operation succeeded")}
+                  disabled={buttonsDisabled}
+                />
+                <MoltenPushButton
+                  text="Alert"
+                  click={() =>
+                    pushDemoLog(
+                      LogMessageType.ALERT,
+                      "Careful, alert triggered",
+                    )}
+                  disabled={buttonsDisabled}
+                />
+              </BlockRow>
+              <BlockRow>
+                <MoltenPushButton
+                  text="Fail"
+                  click={() =>
+                    pushDemoLog(LogMessageType.FAIL, "Something failed")}
+                  disabled={buttonsDisabled}
+                />
+                <MoltenPushButton
+                  text="Progress"
+                  click={() =>
+                    pushDemoLog(LogMessageType.PROGRESS, "Working on it…")}
+                  disabled={buttonsDisabled}
+                />
+              </BlockRow>
+              <BlockBody
+                >Push the same message twice to see it count up:</BlockBody
+              >
+              <MoltenPushButton
+                text="Push repeated message"
+                click={() =>
+                  pushDemoLog(LogMessageType.NORMAL, "Repeated message")}
+                disabled={buttonsDisabled}
+              />
+              <BlockBody
+                >Push distinct messages fast to see the 3-message cap:</BlockBody
+              >
+              <MoltenPushButton
+                text="Push burst"
+                click={pushDemoBurst}
+                disabled={buttonsDisabled}
+              />
+              <BlockBody>Reset the stream:</BlockBody>
+              <MoltenPushButton
+                text="Reset"
+                style="outlined"
+                click={() => demoLogStream.reset()}
+                disabled={buttonsDisabled}
+              />
+            </Block>
+          </div>
 
-      <div class="mock-panel">
-        <span>ContextMenu and context-target:</span>
-        <span
-          use:contextTarget={{
-            items: [
-              {
-                text: [`No handler`, ""],
-                handler: () => {},
-                isDisabled: () => false,
-              },
-              {
-                text: [`Disabled`, ""],
-                handler: () => {},
-                isDisabled: () => true,
-              },
-              {
-                text: [`Change Text Color`, ""],
-                handler: () => changeTextColor(),
-                isDisabled: () => false,
-              },
-              {
-                text: [`I Have an Icon!`, ""],
-                handler: () => {},
-                isDisabled: () => true,
-                iconPath: "clear_element",
-              },
-              {
-                text: [`I Have Second Text`, "Ctrl + A"],
-                handler: () => {},
-                isDisabled: () => true,
-              },
-            ],
-          }}
-          style="color: {textColor}; font-weight: 700;">Right Click ME!</span
-        >
-      </div>
-      <div class="mock-panel">
-        <span>SvgIcon:</span>
-        <div class="svg-row">
-          <SvgIcon iconPath="folder_closed" fill="#FFF" />
-          <SvgIcon iconPath="file" fill="#FFF" />
-          <SvgIcon iconPath="folder_open" fill="#FFF" />
-          <SvgIcon iconPath="edit" fill="#FFF" />
-          <SvgIcon iconPath="edit" fill="#F00" />
-          <SvgIcon iconPath="edit" fill="#00F" />
+          <div class="mock-panel">
+            <Block>
+              <BlockTitle>ColorLayerSelector</BlockTitle>
+              <BlockBody>Selected layer: {layerSelected}</BlockBody>
+              <ColorLayerSelector
+                colors={layerColors}
+                selected={layerSelected}
+                on:add-layer={handleAddLayer}
+                on:remove-layer={handleRemoveLayer}
+                on:layer-click={(e) => (layerSelected = e.detail.index)}
+              />
+            </Block>
+          </div>
+
+          <div class="mock-panel">
+            <Block>
+              <BlockTitle>MarkdownContainer</BlockTitle>
+              <BlockBody>
+                <MarkdownContainer markdown={markdownSample} />
+              </BlockBody>
+            </Block>
+          </div>
         </div>
       </div>
-      <div class="mock-panel">
-        <Block>
-          <BlockTitle>IconButton</BlockTitle>
-          <BlockBody>Default and compact:</BlockBody>
-          <BlockRow>
-            <IconButton iconPath="edit" tooltipText="Edit" />
-            <IconButton
-              iconPath="deleteIcon"
-              compact
-              tooltipText="Delete (compact)"
-            />
-          </BlockRow>
-          <BlockBody>Disabled:</BlockBody>
-          <IconButton iconPath="deleteIcon" disabled tooltipText="Delete" />
-          <BlockBody>As a link:</BlockBody>
-          <IconButton
-            iconPath="folder_open"
-            href="https://intech.studio/"
-            target="_blank"
-            rel="noreferrer"
-            tooltipText="Open in new tab"
-          />
-        </Block>
-      </div>
-      <div class="mock-panel">
-        <span>MeltSlider:</span>
-        <span>Value: {sliderValue}</span>
-        <MeltSlider
-          target={sliderValue}
-          min={0}
-          max={100}
-          step={1}
-          disabled={buttonsDisabled}
-          on:change={(e) => {
-            sliderValue = e.detail.value;
-            sliderChangeValue = e.detail.value;
-          }}
-          on:commit={(e) => (sliderCommitValue = e.detail.value)}
-          on:blur={() => (sliderBlurCount += 1)}
-        />
-        <div>change (live): {sliderChangeValue ?? "—"}</div>
-        <div>commit (release): {sliderCommitValue ?? "—"}</div>
-        <div>blur count: {sliderBlurCount}</div>
-        <span>With gradient track: {sliderGradientValue}</span>
-        <MeltSlider
-          bind:target={sliderGradientValue}
-          min={0}
-          max={360}
-          step={1}
-          trackBackground="linear-gradient(to right, hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%), hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%), hsl(360,100%,50%))"
-          thumbBackground={`hsl(${sliderGradientValue}, 100%, 50%)`}
-          disabled={buttonsDisabled}
-        />
-      </div>
+    </GridPane>
 
-      <div class="mock-panel">
-        <Block>
-          <BlockTitle>MoltenInput</BlockTitle>
-          <BlockBody>Text: {moltenInputText}</BlockBody>
-          <MoltenInput
-            bind:target={moltenInputText}
-            placeholder="Type something…"
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>Password:</BlockBody>
-          <MoltenInput
-            bind:target={moltenInputPassword}
-            password
-            placeholder="Password"
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>
-            Char limit (10): {moltenInputLimited.length}/10
-          </BlockBody>
-          <MoltenInput
-            bind:target={moltenInputLimited}
-            availableCharacters={10}
-            placeholder="Max 10 chars"
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>Disabled:</BlockBody>
-          <MoltenInput target={"Can't edit this"} disabled />
-        </Block>
-      </div>
-
-      <div class="mock-panel">
-        <Block>
-          <BlockTitle>MeltSelect</BlockTitle>
-          <BlockBody>Enabled:</BlockBody>
-          <MeltSelect
-            bind:target={meltSelectValue1}
-            options={[
-              { title: "0", value: 0 },
-              { title: "1", value: 1 },
-              { title: "2", value: 2 },
-              { title: "3", value: 3 },
-            ]}
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>With label:</BlockBody>
-          <MeltSelect
-            bind:target={meltSelectValue1}
-            title="My Label"
-            options={[
-              { title: "0", value: 0 },
-              { title: "1", value: 1 },
-              { title: "2", value: 2 },
-              { title: "3", value: 3 },
-            ]}
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>With label and info:</BlockBody>
-          <MeltSelect
-            bind:target={meltSelectValue1}
-            title="My Label"
-            options={[
-              { title: "0", value: 0, info: "Description for option 0" },
-              { title: "1", value: 1, info: "Description for option 1" },
-              { title: "2", value: 2, info: "Description for option 2" },
-              { title: "3", value: 3, info: "Description for option 3" },
-            ]}
-            disabled={buttonsDisabled}
-          />
-        </Block>
-      </div>
-      <div class="mock-panel">
-        <Block>
-          <BlockTitle>MeltRadio</BlockTitle>
-          <BlockBody>Button horizontal</BlockBody>
-          <MeltRadio
-            bind:target={meltRadioValue1}
-            style="button"
-            orientation="horizontal"
-            size="full"
-            options={[
-              { title: "0", value: 0 },
-              { title: "1", value: 1 },
-              { title: "2", value: 2 },
-            ]}
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>Button vertical</BlockBody>
-          <MeltRadio
-            bind:target={meltRadioValue2}
-            style="button"
-            orientation="vertical"
-            size="full"
-            options={[
-              { title: "0", value: 0 },
-              { title: "1", value: 1 },
-              { title: "2", value: 2 },
-            ]}
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>Radio horizontal</BlockBody>
-          <MeltRadio
-            bind:target={meltRadioValue3}
-            style="radio"
-            orientation="horizontal"
-            size="full"
-            options={[
-              { title: "0", value: 0 },
-              { title: "1", value: 1 },
-              { title: "2", value: 2 },
-            ]}
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>Radio vertical</BlockBody>
-          <MeltRadio
-            bind:target={meltRadioValue4}
-            style="radio"
-            orientation="vertical"
-            size="full"
-            options={[
-              { title: "0", value: 0 },
-              { title: "1", value: 1 },
-              { title: "2", value: 2 },
-            ]}
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>Button with individual options disabled</BlockBody>
-          <MeltRadio
-            bind:target={meltRadioValue5}
-            style="button"
-            orientation="horizontal"
-            size="full"
-            options={[
-              { title: "0", value: 0 },
-              { title: "1", value: 1, disabled: true },
-              { title: "2", value: 2 },
-              { title: "3", value: 3, disabled: true },
-            ]}
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>Radio with individual options disabled</BlockBody>
-          <MeltRadio
-            bind:target={meltRadioValue6}
-            style="radio"
-            orientation="vertical"
-            size="full"
-            options={[
-              { title: "Enabled", value: 0 },
-              { title: "Disabled", value: 1, disabled: true },
-              { title: "Also enabled", value: 2 },
-            ]}
-            disabled={buttonsDisabled}
-          /></Block
-        >
-      </div>
-      <div class="mock-panel">
-        <Block>
-          <BlockTitle>LogStream</BlockTitle>
-          <BlockBody>
-            Push messages into an isolated stream; watch it stack, aggregate
-            repeats into a count, cap at 3 visible, and auto-dismiss after 5s.
-          </BlockBody>
-          <BlockBody>Visible messages: {demoLogStreamContentCount}</BlockBody>
-          <BlockRow>
-            <MoltenPushButton
-              text="Normal"
-              click={() =>
-                pushDemoLog(LogMessageType.NORMAL, "Normal log message")}
-              disabled={buttonsDisabled}
-            />
-            <MoltenPushButton
-              text="Success"
-              click={() =>
-                pushDemoLog(LogMessageType.SUCCESS, "Operation succeeded")}
-              disabled={buttonsDisabled}
-            />
-            <MoltenPushButton
-              text="Alert"
-              click={() =>
-                pushDemoLog(LogMessageType.ALERT, "Careful, alert triggered")}
-              disabled={buttonsDisabled}
-            />
-          </BlockRow>
-          <BlockRow>
-            <MoltenPushButton
-              text="Fail"
-              click={() => pushDemoLog(LogMessageType.FAIL, "Something failed")}
-              disabled={buttonsDisabled}
-            />
-            <MoltenPushButton
-              text="Progress"
-              click={() =>
-                pushDemoLog(LogMessageType.PROGRESS, "Working on it…")}
-              disabled={buttonsDisabled}
-            />
-          </BlockRow>
-          <BlockBody>Push the same message twice to see it count up:</BlockBody>
-          <MoltenPushButton
-            text="Push repeated message"
-            click={() => pushDemoLog(LogMessageType.NORMAL, "Repeated message")}
-            disabled={buttonsDisabled}
-          />
-          <BlockBody
-            >Push distinct messages fast to see the 3-message cap:</BlockBody
-          >
-          <MoltenPushButton
-            text="Push burst"
-            click={pushDemoBurst}
-            disabled={buttonsDisabled}
-          />
-          <BlockBody>Reset the stream:</BlockBody>
-          <MoltenPushButton
-            text="Reset"
-            style="outlined"
-            click={() => demoLogStream.reset()}
-            disabled={buttonsDisabled}
-          />
-        </Block>
-      </div>
-
-      <div class="mock-panel">
+    <GridPane size={20} minSize={10} maxSize={45} class="pane-right">
+      <div class="frame-scroll">
         <Block>
           <BlockTitle>Color Pickers</BlockTitle>
           <BlockBody>
-            HSL: h={Math.round(pickerColor.h)} s={Math.round(pickerColor.s)} l={Math.round(
-              pickerColor.l,
-            )}
+            HSL: h={Math.round(pickerColor.h)} s={Math.round(pickerColor.s)}
+            l={Math.round(pickerColor.l)}
           </BlockBody>
           <BlockBody>SquareColorPicker:</BlockBody>
           <div class="picker-box">
@@ -921,31 +965,8 @@ console.log(answer);</code></pre>
           />
         </Block>
       </div>
-
-      <div class="mock-panel">
-        <Block>
-          <BlockTitle>ColorLayerSelector</BlockTitle>
-          <BlockBody>Selected layer: {layerSelected}</BlockBody>
-          <ColorLayerSelector
-            colors={layerColors}
-            selected={layerSelected}
-            on:add-layer={handleAddLayer}
-            on:remove-layer={handleRemoveLayer}
-            on:layer-click={(e) => (layerSelected = e.detail.index)}
-          />
-        </Block>
-      </div>
-
-      <div class="mock-panel">
-        <Block>
-          <BlockTitle>MarkdownContainer</BlockTitle>
-          <BlockBody>
-            <MarkdownContainer markdown={markdownSample} />
-          </BlockBody>
-        </Block>
-      </div>
-    </div>
-  </div>
+    </GridPane>
+  </GridSplitpanes>
 
   <LogStream
     store={demoLogStream}
@@ -993,6 +1014,12 @@ console.log(answer);</code></pre>
     overflow-y: auto;
   }
 
+  div.frame-scroll {
+    height: 100%;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
   span {
   }
   div.main-container {
@@ -1012,6 +1039,18 @@ console.log(answer);</code></pre>
   div.picker-box {
     width: 10rem;
     height: 10rem;
+  }
+  :global(.app-frame) {
+    height: 100%;
+  }
+  :global(.splitpanes.grid-uikit-theme .splitpanes__pane.pane-left) {
+    background-color: var(--background);
+  }
+  :global(.splitpanes.grid-uikit-theme .splitpanes__pane.pane-middle) {
+    background-color: var(--background-muted);
+  }
+  :global(.splitpanes.grid-uikit-theme .splitpanes__pane.pane-right) {
+    background-color: var(--background);
   }
   div.folder-container {
     display: flex;
