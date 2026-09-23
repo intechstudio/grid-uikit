@@ -1,0 +1,46 @@
+.splitpanes.grid-uikit-theme .splitpanes__pane {
+  position: relative;
+  overflow: visible;
+  background-color: transparent;
+}
+
+.splitpanes.grid-uikit-theme .splitpanes__splitter {
+  position: relative;
+  background-color: transparent;
+  min-width: 0;
+  min-height: 0;
+}
+
+.splitpanes.grid-uikit-theme .splitpanes__splitter:before {
+  content: "";
+  position: absolute;
+  background-color: transparent;
+  z-index: 1;
+}
+
+.splitpanes.grid-uikit-theme
+  .splitpanes__splitter.splitpanes__splitter__active {
+  z-index: 2;
+}
+
+.grid-uikit-theme.splitpanes--vertical > .splitpanes__splitter {
+  width: 0;
+}
+.grid-uikit-theme.splitpanes--vertical > .splitpanes__splitter:before {
+  top: 0;
+  left: -3px;
+  right: -3px;
+  height: 100%;
+  cursor: col-resize;
+}
+
+.grid-uikit-theme.splitpanes--horizontal > .splitpanes__splitter {
+  height: 0;
+}
+.grid-uikit-theme.splitpanes--horizontal > .splitpanes__splitter:before {
+  left: 0;
+  top: -3px;
+  bottom: -3px;
+  width: 100%;
+  cursor: row-resize;
+}

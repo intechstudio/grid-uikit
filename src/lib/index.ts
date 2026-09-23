@@ -47,3 +47,5 @@ export {
   type LogStreamMessage,
   type LogStreamOptions,
 } from "./logStream";
+export { default as GridSplitpanes } from "./GridSplitpanes.svelte";
+export { default as GridPane } from "./GridPane.svelte";
