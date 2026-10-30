@@ -6,6 +6,9 @@
   export let disabled = false;
   export let title = "";
   export let valueInfoEnabled = false;
+  // "chip": a compact select with its title in front of it ("Layout: En ▼"),
+  // for a setting that sits beside other content.
+  export let style: "default" | "chip" = "default";
 
   type SelectOption = { title: string; value: any; info?: string };
 
@@ -56,11 +59,23 @@
   }
 </script>
 
-<div class="container" class:container-grow={size === "full"}>
+<div
+  class="container"
+  class:container-grow={size === "full"}
+  class:container-chip={style === "chip"}
+>
   {#if title?.length > 0}
-    <label>{title}</label>
+    <label class:chip-label={style === "chip"}
+      >{title}{style === "chip" ? ":" : ""}</label
+    >
   {/if}
-  <button {...$trigger} use:trigger class="select" class:disabled>
+  <button
+    {...$trigger}
+    use:trigger
+    class="select"
+    class:chip={style === "chip"}
+    class:disabled
+  >
     <span>{$selectedLabel || " "}</span>
     <span>&#9660;</span>
   </button>
@@ -79,7 +94,7 @@
       {/each}
     </div>
   {/if}
-  {#if valueInfoEnabled}
+  {#if valueInfoEnabled && style !== "chip"}
     <div class="info-value">{infoValue}&nbsp;</div>
   {/if}
 </div>
@@ -101,6 +116,14 @@
   div.container-grow {
     flex-grow: 1;
   }
+  div.container-chip {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+  }
+  label.chip-label {
+    color: var(--foreground-muted);
+  }
   button.select {
     color: var(--foreground);
     width: 100%;
@@ -120,6 +143,14 @@
     margin: 0; /* 2 */
     background-color: var(--background-muted);
     cursor: pointer;
+  }
+  button.select.chip {
+    width: auto;
+    gap: 0.5em;
+    align-items: center;
+    padding: 0.125em 0.5em;
+    border-color: var(--border);
+    border-radius: var(--radius);
   }
   button.select:focus {
     outline: var(--focus-outline);
