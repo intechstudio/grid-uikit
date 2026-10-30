@@ -737,6 +737,19 @@ console.log(answer);</code></pre>
                 ]}
                 disabled={buttonsDisabled}
               />
+              <BlockBody>Chip:</BlockBody>
+              <MeltSelect
+                bind:target={meltSelectValue1}
+                title="Layout"
+                style="chip"
+                options={[
+                  { title: "0", value: 0 },
+                  { title: "1", value: 1 },
+                  { title: "2", value: 2 },
+                  { title: "3", value: 3 },
+                ]}
+                disabled={buttonsDisabled}
+              />
               <BlockBody>With label and info:</BlockBody>
               <MeltSelect
                 bind:target={meltSelectValue1}
