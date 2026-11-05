@@ -10,7 +10,13 @@
   // for a setting that sits beside other content.
   export let style: "default" | "chip" = "default";
 
-  type SelectOption = { title: string; value: any; info?: string };
+  // An option with `disabled` is listed but can't be picked (dimmed).
+  type SelectOption = {
+    title: string;
+    value: any;
+    info?: string;
+    disabled?: boolean;
+  };
 
   function getDefaultSelected() {
     const obj = options.find((e: SelectOption) => e.value === target);
@@ -84,7 +90,11 @@
     <div {...$menu} use:menu on:mousedown|preventDefault class="menu">
       {#each options as item}
         <div
-          {...$option({ value: item.value, label: item.title })}
+          {...$option({
+            value: item.value,
+            label: item.title,
+            disabled: item.disabled === true,
+          })}
           use:option
           class="option"
           class:option-selected={$isSelected(item.value)}
@@ -176,6 +186,15 @@
   div.option[data-highlighted] {
     background-color: var(--popover-selection);
     color: var(--foreground);
+  }
+  div.option[data-disabled] {
+    color: var(--foreground-disabled);
+    cursor: not-allowed;
+  }
+  div.option[data-disabled]:hover,
+  div.option[data-disabled][data-highlighted] {
+    background-color: transparent;
+    color: var(--foreground-disabled);
   }
   div.option-selected {
     background-color: var(--popover-reference);
