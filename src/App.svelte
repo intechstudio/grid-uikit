@@ -750,6 +750,18 @@ console.log(answer);</code></pre>
                 ]}
                 disabled={buttonsDisabled}
               />
+              <BlockBody>With disabled options:</BlockBody>
+              <MeltSelect
+                bind:target={meltSelectValue1}
+                title="My Label"
+                options={[
+                  { title: "0", value: 0 },
+                  { title: "1 (disabled)", value: 1, disabled: true },
+                  { title: "2", value: 2 },
+                  { title: "3 (disabled)", value: 3, disabled: true },
+                ]}
+                disabled={buttonsDisabled}
+              />
               <BlockBody>With label and info:</BlockBody>
               <MeltSelect
                 bind:target={meltSelectValue1}
