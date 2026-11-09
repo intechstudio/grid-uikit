@@ -10,6 +10,8 @@
   export let max: number;
   export let step: number;
   export let disabled = false;
+  // Stretch the slider to fill its container instead of capping it at 200px.
+  export let fill = false;
   // Optional custom track background (e.g. a color gradient). When set, the
   // track shows this background and the selected-range fill is hidden so the
   // full background stays visible.
@@ -61,7 +63,7 @@
   $: syncInternalToExternal($value[0]);
 </script>
 
-<span {...$root} use:root class="container" class:disabled>
+<span {...$root} use:root class="container" class:disabled class:fill>
   <span
     class="range-full"
     class:disabled
@@ -102,6 +104,9 @@
     height: 26px;
     margin-left: calc(var(--thumb-size) / 2);
     margin-right: calc(var(--thumb-size) / 2);
+  }
+  span.container.fill {
+    max-width: none;
   }
   span.range-full {
     display: block;
