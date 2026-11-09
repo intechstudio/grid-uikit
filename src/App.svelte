@@ -669,6 +669,15 @@ console.log(answer);</code></pre>
             <div>change (live): {sliderChangeValue ?? "—"}</div>
             <div>commit (release): {sliderCommitValue ?? "—"}</div>
             <div>blur count: {sliderBlurCount}</div>
+            <span>Fill container:</span>
+            <MeltSlider
+              bind:target={sliderValue}
+              min={0}
+              max={100}
+              step={1}
+              fill
+              disabled={buttonsDisabled}
+            />
             <span>With gradient track: {sliderGradientValue}</span>
             <MeltSlider
               bind:target={sliderGradientValue}
