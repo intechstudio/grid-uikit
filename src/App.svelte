@@ -678,6 +678,17 @@ console.log(answer);</code></pre>
               fill
               disabled={buttonsDisabled}
             />
+            <span>Vertical (in a 120px box): {sliderValue}</span>
+            <div style="height: 120px">
+              <MeltSlider
+                bind:target={sliderValue}
+                min={0}
+                max={100}
+                step={1}
+                orientation="vertical"
+                disabled={buttonsDisabled}
+              />
+            </div>
             <span>With gradient track: {sliderGradientValue}</span>
             <MeltSlider
               bind:target={sliderGradientValue}

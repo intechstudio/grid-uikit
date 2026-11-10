@@ -10,6 +10,9 @@
   export let max: number;
   export let step: number;
   export let disabled = false;
+  // "vertical": the slider stands up, its minimum at the bottom, and takes
+  // the height of its container (up to 200px, all of it with `fill`).
+  export let orientation: "horizontal" | "vertical" = "horizontal";
   // Stretch the slider to fill its container instead of capping it at 200px.
   export let fill = false;
   // Optional custom track background (e.g. a color gradient). When set, the
@@ -28,6 +31,7 @@
     max: max,
     step: step,
     disabled: disabled,
+    orientation: orientation,
     onValueCommitted: handleValueCommited,
   });
 
@@ -63,7 +67,14 @@
   $: syncInternalToExternal($value[0]);
 </script>
 
-<span {...$root} use:root class="container" class:disabled class:fill>
+<span
+  {...$root}
+  use:root
+  class="container"
+  class:disabled
+  class:fill
+  class:vertical={orientation === "vertical"}
+>
   <span
     class="range-full"
     class:disabled
@@ -108,6 +119,21 @@
   span.container.fill {
     max-width: none;
   }
+  span.container.vertical {
+    flex-direction: column;
+    justify-content: center;
+    width: 26px;
+    max-width: none;
+    height: 100%;
+    max-height: 200px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: calc(var(--thumb-size) / 2);
+    margin-bottom: calc(var(--thumb-size) / 2);
+  }
+  span.container.vertical.fill {
+    max-height: none;
+  }
   span.range-full {
     display: block;
     width: 100%;
@@ -118,6 +144,14 @@
   }
   span.range-full.has-background {
     background-color: transparent;
+  }
+  span.container.vertical span.range-full {
+    width: 8px;
+    height: 100%;
+  }
+  span.container.vertical span.range-selected {
+    width: 100%;
+    height: auto;
   }
   span.range-selected {
     height: 8px;
@@ -133,6 +167,10 @@
     width: calc(var(--thumb-size) / 2);
     background-color: var(--foreground-muted);
     border-radius: var(--radius);
+  }
+  span.container.vertical span.thumb {
+    width: var(--thumb-size);
+    height: calc(var(--thumb-size) / 2);
   }
   span.thumb.has-color {
     width: var(--thumb-size);
