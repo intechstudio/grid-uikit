@@ -9,6 +9,8 @@
   export let iconData: string | undefined = undefined;
   export let disabled: boolean = false;
   export let compact: boolean = false;
+  export let style: "transparent" | "normal" | "outlined" | "accept" =
+    "transparent";
   export let tooltipText: string | undefined = undefined;
   export let onClick: (() => void) | undefined = undefined;
   export let onMouseDown: ((e: MouseEvent) => void) | undefined = undefined;
@@ -99,7 +101,7 @@
           (tooltipButtons ? ["show-buttons", "hover"] : undefined),
       }
     : undefined}
-  class="icon-button"
+  class="icon-button style-{style}"
   class:compact
 >
   <div class="icon-button-inner" class:pressed class:clicking>
@@ -126,8 +128,36 @@
     padding: 0.375rem;
   }
 
-  .icon-button:hover {
+  .icon-button.style-transparent:hover {
     background-color: var(--background-muted);
+  }
+
+  .icon-button.style-normal {
+    background-color: var(--background-muted);
+    border: 1px solid var(--foreground-soft);
+  }
+
+  .icon-button.style-normal:hover {
+    background-color: var(--background);
+  }
+
+  .icon-button.style-outlined {
+    background-color: var(--background-muted);
+    border: var(--border-thickness) solid var(--accent);
+  }
+
+  .icon-button.style-outlined:hover {
+    background-color: var(--accent-soft);
+    border-color: var(--accent-muted);
+  }
+
+  .icon-button.style-accept {
+    background-color: var(--accent-soft);
+    border: var(--border-thickness) solid var(--accent-muted);
+  }
+
+  .icon-button.style-accept:hover {
+    background-color: var(--accent);
   }
 
   .icon-button:focus {
@@ -140,8 +170,21 @@
     cursor: default;
   }
 
-  .icon-button:disabled:hover {
+  .icon-button.style-transparent:disabled:hover {
     background-color: transparent;
+  }
+
+  .icon-button.style-normal:disabled:hover {
+    background-color: var(--background-muted);
+  }
+
+  .icon-button.style-outlined:disabled:hover {
+    background-color: var(--background-muted);
+    border-color: var(--accent);
+  }
+
+  .icon-button.style-accept:disabled:hover {
+    background-color: var(--accent-soft);
   }
 
   .icon-button-inner {
