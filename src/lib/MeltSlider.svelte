@@ -150,7 +150,7 @@
     height: 100%;
   }
   span.container.vertical span.range-selected {
-    width: 100%;
+    width: 8px;
     height: auto;
   }
   span.range-selected {
